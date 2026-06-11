@@ -403,6 +403,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .stream-btn.soundcloud:hover { background: #ff5500; border-color: #ff5500; color: white; }
 .stream-btn.instagram:hover { background: #E1306C; border-color: #E1306C; color: white; }
 
+/* ===== ARTISTES VISUELS ===== */
+.visuels {
+  background: var(--bg-3);
+  border-top: 1px solid var(--border);
+}
+.artiste-cover-visual {
+  color: #A78BFA;  /* violet doux — monde du visuel vs or pour la musique */
+  background: linear-gradient(135deg, #0d0d1a 0%, #1a0a2e 100%);
+}
+
 /* ===== PROJETS ===== */
 .projets {
   padding: 120px 0;
