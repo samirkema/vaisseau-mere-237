@@ -401,6 +401,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .stream-btn.youtube:hover { background: #FF0000; border-color: #FF0000; color: white; }
 .stream-btn.boomplay:hover { background: #f60; border-color: #f60; color: white; }
 .stream-btn.soundcloud:hover { background: #ff5500; border-color: #ff5500; color: white; }
+.stream-btn.instagram:hover { background: #E1306C; border-color: #E1306C; color: white; }
 
 /* ===== PROJETS ===== */
 .projets {
