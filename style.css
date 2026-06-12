@@ -529,9 +529,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   color: var(--text-2);
   line-height: 1.65;
 }
-.service-card--web {
-  border-top: 2px solid var(--accent);
-}
 
 .services-cta {
   text-align: center;
