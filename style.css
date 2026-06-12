@@ -725,7 +725,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-family: var(--mono);
   color: var(--text-3);
   letter-spacing: 0.05em;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
+.footer-credit {
+  color: var(--text-3);
+  opacity: 0.7;
+}
+.credit-link {
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.credit-link:hover { opacity: 0.75; }
+.credit-offer { font-style: italic; }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
