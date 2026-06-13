@@ -456,6 +456,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   align-items: center;
   justify-content: center;
 }
+.projet-cover-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
 .projet-cover-placeholder {
   font-size: 13px;
   font-family: var(--mono);
