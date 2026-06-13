@@ -1,4 +1,5 @@
 .DS_Store
 *.pdf
+!doc/*.pdf
 WhatsApp Image*
 fonts/
