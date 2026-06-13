@@ -64,6 +64,29 @@ form?.addEventListener('submit', (e) => {
   }, 3000);
 });
 
+// Modale biographie artiste
+const bioModal = document.getElementById('bio-modal');
+const bioOverlay = bioModal?.querySelector('.bio-modal-overlay');
+const bioClose = bioModal?.querySelector('.bio-modal-close');
+
+function openBioModal() {
+  bioModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeBioModal() {
+  bioModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.artiste-bio-trigger').forEach(el => {
+  el.addEventListener('click', openBioModal);
+});
+bioOverlay?.addEventListener('click', closeBioModal);
+bioClose?.addEventListener('click', closeBioModal);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeBioModal();
+});
+
 // Reveal animations on scroll
 const reveals = document.querySelectorAll('.artiste-card, .projet-card, .service-card, .boutique-item');
 const revealObserver = new IntersectionObserver((entries) => {

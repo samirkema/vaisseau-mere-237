@@ -113,11 +113,11 @@
 
         <!-- Artiste 2 — NU9VE -->
         <div class="artiste-card">
-          <div class="artiste-cover">
+          <div class="artiste-cover artiste-bio-trigger" data-artiste="nu9ve">
             <img src="images/nu9ve.png" alt="NU9VE" class="artiste-cover-img">
           </div>
           <div class="artiste-info">
-            <h3>NU9VE</h3>
+            <h3 class="artiste-bio-trigger" data-artiste="nu9ve">NU9VE</h3>
             <p class="artiste-genre">Rap · Street-pop · Afro-urbain · Cameroun</p>
             <div class="streaming-links">
               <a href="https://www.instagram.com/dydyauthentique/" class="stream-btn instagram" title="Instagram" target="_blank">
@@ -488,6 +488,27 @@
       </div>
     </div>
   </footer>
+
+  <!-- ===== MODALE BIOGRAPHIE ===== -->
+  <div class="bio-modal" id="bio-modal" role="dialog" aria-modal="true" aria-label="Biographie NU9VE">
+    <div class="bio-modal-overlay"></div>
+    <div class="bio-modal-content">
+      <button class="bio-modal-close" aria-label="Fermer">✕</button>
+      <div class="bio-modal-inner">
+        <div class="bio-modal-photo">
+          <img src="images/nu9ve.png" alt="NU9VE">
+        </div>
+        <div class="bio-modal-text">
+          <p class="bio-modal-tag">Rap · Street-pop · Afro-urbain · Cameroun</p>
+          <h2>NU9VE</h2>
+          <p class="bio-modal-community">DYDYNASTIE</p>
+          <p class="bio-modal-bio">Rappeur, chanteur et compositeur, Dydy09 ou encore Nu9ve est un artiste déterminé qui impose sa vision avec une autorité naturelle et un charisme indéniable. Évoluant avec agilité entre univers sonores denses, il s'est rapidement forgé une réputation de kickeur hors pair.</p>
+          <p class="bio-modal-bio">Il s'est fait remarquer avec son premier succès intitulé <strong>CARRÉ</strong>, ensuite il a enchaîné avec la série <strong>DYDY DRILL</strong>. Sur son projet <strong>CODE PIN</strong>, Dydy09 s'est rallié au beatmaker ICE, ensemble ils ont débloqué une synergie parfaite. L'artiste a ensuite prouvé sa palette technique en s'associant au beatmaker Cabaraiz sur l'EP <strong>REMISE EN FORME</strong>, un projet synonyme de performance brute et de discipline lyricale.</p>
+          <p class="bio-modal-bio">Au-delà des studios, Dydy ne se contente pas d'avoir des auditeurs : il guide un peuple. À la tête de la <strong>DYDYNASTIE</strong>, son mouvement et sa fanbase, l'artiste a dépassé le simple statut de musicien pour devenir un véritable repère. Porté par une communauté loyale qui le considère comme un meneur et le couronne roi de sa génération, Dydy09 avance avec l'assurance de ceux qui sont nés pour régner sur la nouvelle ère de la street-pop.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
