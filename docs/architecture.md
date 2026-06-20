@@ -4,14 +4,15 @@
 
 | Couche | Technologie | Pourquoi |
 |--------|-------------|----------|
-| Frontend + Backend | **Next.js 15 (App Router)** | SSR réel → sécurité serveur, une seule app, une seule déploiement |
+| Frontend + Backend | **Next.js 16 (App Router)** | SSR réel → sécurité serveur, une seule app, un seul déploiement |
 | Auth | **Supabase Auth** | Email verification + reset password natifs, sessions httpOnly cookie |
 | Base de données | **Supabase PostgreSQL** | Déjà connu, RLS puissant, gratuit |
 | Stockage images | **Supabase Storage** | Buckets sécurisés, URLs signées, plus de base64 en BDD |
-| Hébergement | **Vercel** | Gratuit, optimal pour Next.js, déploiement auto depuis GitHub |
+| Hébergement | **Vercel** | Optimal pour Next.js — déploiement manuel `npx vercel --prod` (GitHub non lié) |
 | Emails | **Resend** | Déjà en place, simple |
-| Paiement fiat | **Stripe** | Standard, fiable, iframe sécurisée |
-| Paiement crypto | **NowPayments** | Déjà intégré en V1 pour Bitcoin |
+| Paiement fiat | **Stripe** | Standard, fiable, Checkout hébergé |
+| Paiement crypto | **NowPayments** | BTC / ETH / autres — invoice API + IPN callback |
+| Traitement image | **jimp** | Pur JavaScript, pas de binaire natif → compatible Vercel Linux x64 |
 
 **Ce qui disparaît :** Jekyll, `nft-gate.js` (vérif NFT client-side — remplacé par `/api/nft/verify` côté serveur), `localStorage` pour l'auth, base64 images en BDD, Render (remplacé par Vercel).
 
@@ -211,8 +212,12 @@ otakushop-v2/
 │   │   │   │   ├── verify/route.ts       # POST : vérifie signature + possession NFT → set tier
 │   │   │   │   └── revalidate/route.ts   # POST (cron) : revalide tous les profils nft
 │   │   │   ├── payment/
-│   │   │   │   ├── stripe/route.ts
-│   │   │   │   └── crypto/route.ts
+│   │   │   │   ├── stripe/route.ts               # Abonnement Stripe
+│   │   │   │   ├── stripe/webhook/route.ts        # Webhook Stripe (abonnement + tableau)
+│   │   │   │   ├── crypto/route.ts               # Abonnement NowPayments (stub)
+│   │   │   │   ├── nowpayments/webhook/route.ts   # IPN NowPayments (tableaux)
+│   │   │   │   ├── tableau/stripe/route.ts        # Checkout tableau par carte
+│   │   │   │   └── tableau/crypto/route.ts        # Invoice NowPayments tableau
 │   │   │   ├── upload/
 │   │   │   │   └── route.ts          # Upload vers Supabase Storage
 │   │   │   └── admin/
@@ -235,7 +240,9 @@ otakushop-v2/
 │   │   │   ├── Toolbar.tsx
 │   │   │   └── useCanvas.ts          # Hook : état dessin, undo, zoom
 │   │   ├── galerie/
-│   │   │   └── TableauCard.tsx
+│   │   │   ├── TableauCard.tsx
+│   │   │   ├── ImageGallery.tsx      # Visionneuse multi-photos (client)
+│   │   │   └── TableauCheckout.tsx   # Sélecteur format + paiement (client)
 │   │   ├── manga/
 │   │   │   └── MangaReader.tsx
 │   │   └── admin/
@@ -330,13 +337,31 @@ create table public.tableaux (
   title         text not null,
   description   text,
   artist        text,
-  main_image    text not null,   -- path Supabase Storage: tableaux/xxx.jpg
-  thumbnail     text not null,   -- path Supabase Storage: tableaux/thumbs/xxx.jpg
-  price_eur     numeric(10,2),
-  price_btc     numeric(18,8),
+  main_image    text not null,   -- URL publique Supabase: {tableauId}/main.jpg
+  thumbnail     text not null,   -- URL publique Supabase: {tableauId}/thumb.jpg
+  price_eur     numeric(10,2),   -- prix minimum (= min des formats si formats définis)
+  formats       jsonb default '[]'::jsonb,  -- [{ label: "A4", price_eur: 80 }, ...]
+  images        jsonb default '[]'::jsonb,  -- URLs photos supplémentaires
   available     boolean not null default true,
   created_at    timestamptz not null default now(),
   created_by    uuid references public.profiles(id)
+);
+
+-- ══════════════════════════════════════
+-- COMMANDES TABLEAUX
+-- ══════════════════════════════════════
+create table public.orders (
+  id             uuid primary key default gen_random_uuid(),
+  tableau_id     uuid references public.tableaux(id) on delete set null,
+  format         text,                        -- ex : "40×50 cm"
+  amount_eur     numeric(10,2) not null,
+  customer_email text,                        -- saisi par l'acheteur avant paiement
+  customer_name  text,                        -- fourni par Stripe Checkout
+  payment_ref    text,                        -- pi_xxx (Stripe) ou nowpay-xxx
+  method         text not null default 'stripe',  -- 'stripe' | 'crypto'
+  status         text not null default 'completed'
+                 check (status in ('pending', 'completed', 'failed')),
+  created_at     timestamptz not null default now()
 );
 
 -- ══════════════════════════════════════
@@ -601,11 +626,13 @@ create policy "Lecture de ses transactions" on public.wallet_transactions
 
 ```
 Bucket: tableaux        (public)
-  tableaux/{uuid}.webp
-  tableaux/thumbs/{uuid}.webp
+  {tableauId}/main.jpg          ← image principale (resize max 1200px, JPEG)
+  {tableauId}/thumb.jpg         ← miniature 400×280 crop cover (JPEG)
+  {tableauId}/img-{slotUUID}.jpg ← photos supplémentaires (resize max 1200px)
+  covers/{workId}.jpg           ← couvertures manga (resize max 900px)
 
 Bucket: manga           (privé — URLs signées pour abonnés seulement)
-  manga/{work_id}/{page_number}.webp
+  {work_id}/{page_number:04d}.jpg
 
 Bucket: remixes         (public)
   remixes/{user_id}/{photo_id}.webp
@@ -613,6 +640,8 @@ Bucket: remixes         (public)
 Bucket: avatars         (public)
   avatars/{user_id}.webp
 ```
+
+**Traitement image :** toutes les images passent par **jimp** (pur JavaScript) côté serveur avant upload. Sharp a été retiré car son binaire darwin-arm64 n'est pas compatible Vercel Linux x64. Sortie JPEG universelle.
 
 **Principe :** les images manga sont dans un bucket privé. L'API génère des URLs signées (valables 1h) uniquement pour les utilisateurs abonnés. Impossible d'accéder aux pages manga sans être abonné, même en connaissant le chemin.
 
@@ -725,24 +754,53 @@ visiteur (non connecté)
 
 ## Gestion des paiements
 
-```
-Abonnement fiat (Stripe)
-  → Stripe Checkout (iframe sécurisée, jamais les données carte dans ton code)
-  → Webhook Stripe → POST /api/payment/stripe/webhook
-  → Met à jour subscription_tier + subscription_expires_at en BDD
-  → Enregistre dans payments
+### Abonnement (accès manga/jeux/remix)
 
-Abonnement crypto (NowPayments)
-  → Lien NowPayments existant
-  → Webhook NowPayments → POST /api/payment/crypto/webhook
-  → Même logique
+```
+Fiat (Stripe)
+  → Stripe Checkout (Hosted, jamais les données carte dans le code)
+  → Webhook POST /api/payment/stripe/webhook  ← vérifie signature whsec_
+  → Met à jour subscription_tier + subscription_expires_at + table payments
+  → Email de reçu (Resend) à l'abonné
+
+Crypto (NowPayments)
+  → Invoice NowPayments
+  → IPN callback POST /api/payment/nowpayments/webhook  ← vérifie HMAC-SHA512
+  → Même logique abonnement
 
 Code d'activation
   → POST /api/subscription/activate { method: 'code', code: '...' }
-  → Comparaison côté serveur uniquement, en temps constant (jamais côté client)
-  → Hash salé (argon2/bcrypt), pas un SHA-256 brut non salé (sinon brute-forçable)
-  → Rate-limiting par IP et par compte (anti brute-force)
-  → Met à jour BDD
+  → Hash salé serveur, comparaison en temps constant, rate-limiting IP + compte
+```
+
+### Vente de tableau (achat unique)
+
+```
+Stripe (carte)
+  → POST /api/payment/tableau/stripe { tableauId, formatIndex, customerEmail }
+     ↳ Prix lu en base (jamais fourni par le client)
+     ↳ price_data dynamique (pas de Price ID pré-créé)
+     ↳ customer_email pré-rempli dans Checkout
+  → Stripe Checkout → success /galerie/{id}?payment=success
+  → Webhook /api/payment/stripe/webhook détecte metadata.tableauId
+     ↳ INSERT orders (status=completed)
+     ↳ Email admin (ADMIN_EMAIL) — notification de vente
+     ↳ Email acheteur — confirmation + détails livraison
+
+Crypto (NowPayments)
+  → POST /api/payment/tableau/crypto { tableauId, formatIndex, customerEmail }
+     ↳ INSERT orders (status=pending) avec customer_email
+     ↳ Crée invoice NowPayments avec ipn_callback_url automatique
+  → Acheteur paie → NowPayments envoie IPN
+  → Webhook /api/payment/nowpayments/webhook
+     ↳ Vérifie HMAC-SHA512 (NOWPAYMENTS_IPN_SECRET)
+     ↳ UPDATE orders SET status=completed WHERE id=pendingId
+     ↳ Email admin + email acheteur (si email fourni)
+
+Sécurité communes
+  → Le montant est TOUJOURS lu en base côté serveur
+  → Le client envoie tableauId + formatIndex, jamais un prix
+  → Dédoublonnage sur payment_ref (idempotent si IPN/webhook rejoué)
 ```
 
 ---
@@ -779,30 +837,36 @@ Revalidation périodique :
 # .env.local
 
 # Supabase
-NEXT_PUBLIC_SUPABASE_URL=https://ckgeqcsmraitajjewvfy.supabase.co
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...         # clé publique (client)
-SUPABASE_SERVICE_ROLE_KEY=eyJ...             # clé privée (serveur uniquement)
+SUPABASE_SERVICE_ROLE_KEY=eyJ...             # clé privée (serveur uniquement — jamais NEXT_PUBLIC_)
 
-# Auth : gérée par Supabase (pas de NextAuth).
-# Les secrets de session (JWT) sont gérés par Supabase → aucune variable NEXTAUTH_* requise.
+# App
+NEXT_PUBLIC_APP_URL=https://otakushop.fr     # URL de production (pour les redirections Stripe/NowPayments)
 
-# Paiements
+# Paiements (toutes serveur uniquement — jamais NEXT_PUBLIC_)
 STRIPE_SECRET_KEY=sk_live_...
 STRIPE_WEBHOOK_SECRET=whsec_...
 NOWPAYMENTS_API_KEY=...
 NOWPAYMENTS_IPN_SECRET=...
 
+# Notifications admin
+ADMIN_EMAIL=ton@email.com                    # reçoit un email à chaque vente de tableau
+
 # Emails
 RESEND_API_KEY=re_...
+EMAIL_FROM=Otaku Shop <noreply@otakushop.fr>  # optionnel, défaut: noreply@otakushop.io
 
 # Activation codes
-ACTIVATION_CODE_HASH=$argon2id$v=19$...       # hash salé du code (argon2/bcrypt), pas SHA-256 brut
+ACTIVATION_CODE_HASH=$argon2id$v=19$...       # hash salé (argon2/bcrypt), jamais SHA-256 brut
 
 # NFT — vérification côté serveur uniquement (jamais NEXT_PUBLIC_)
 ALCHEMY_API_KEY=...
-NFT_CONTRACT_ADDRESS=0x...                    # contrat du NFT Otaku Shop
-NFT_REQUIRED_TOKEN_ID=                        # optionnel : token ID spécifique, vide = posséder n'importe lequel
+NFT_CONTRACT_ADDRESS=0x...
+NFT_REQUIRED_TOKEN_ID=                        # optionnel : vide = n'importe quel token
 ```
+
+**Règle absolue :** `STRIPE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NOWPAYMENTS_API_KEY`, `NOWPAYMENTS_IPN_SECRET`, `RESEND_API_KEY`, `ALCHEMY_API_KEY` ne doivent **jamais** avoir le préfixe `NEXT_PUBLIC_`.
 
 **Règle absolue :** toute variable sans `NEXT_PUBLIC_` est invisible côté navigateur.
 

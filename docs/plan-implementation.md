@@ -104,8 +104,11 @@ Le chemin critique est **P0 → P1**, puis **P2/P3/P4 parallélisables**, puis *
 ### Phase 4 — Paiements, abonnement & accès NFT
 **Objectif :** un utilisateur peut payer en fiat, en BTC, ou en Monnaie Maison, ou prouver la possession d'un NFT, et son accès s'ouvre. **→ US 3.1, 3.2, 7.1.**
 
-- [ ] **Stripe Checkout** + `api/payment/stripe/webhook` → met à jour `subscription_tier` + `subscription_expires_at` + log `payments`. (US 3.1 C1)
-- [ ] **NowPayments (BTC)** + `api/payment/crypto/webhook` (vérif signature IPN). (US 3.2)
+- [x] **Stripe Checkout abonnement** + `api/payment/stripe/webhook` → met à jour `subscription_tier` + `subscription_expires_at` + log `payments`. (US 3.1 C1)
+- [x] **Vente tableau par carte** — `api/payment/tableau/stripe` (price_data dynamique depuis DB, email acheteur collecté) + branche `tableauId` dans le webhook Stripe → INSERT `orders`, email admin + acheteur.
+- [x] **Vente tableau en crypto** — `api/payment/tableau/crypto` (invoice NowPayments, `ipn_callback_url` automatique, commande pending avec email) + `api/payment/nowpayments/webhook` (HMAC-SHA512, UPDATE orders completed).
+- [x] **Table `orders`** (migration 010) : suivi des commandes tableau (format, montant, email, ref paiement, statut pending/completed).
+- [ ] **NowPayments abonnement** + webhook — logique d'activation abonnement via crypto (US 3.2, distinct de la vente tableau).
 - [ ] **Code d'activation** : `api/subscription/activate` (hash **salé argon2/bcrypt** comparé côté serveur en temps constant + rate-limiting par IP et par compte).
 - [ ] **Monnaie Maison (`otaku_coin`)** : `wallets` + `wallet_transactions` ; achat → débit du solde instantané + ledger transactionnel. (US 3.2 C1)
 - [ ] **Vérification NFT** — `api/nft/verify` :
@@ -117,7 +120,6 @@ Le chemin critique est **P0 → P1**, puis **P2/P3/P4 parallélisables**, puis *
 - [ ] **Revalidation NFT** — `api/nft/revalidate` (cron GitHub Actions toutes les 24h, service_role) :
   - Pour chaque profil `nft` : re-vérifie la possession via Alchemy.
   - Si wallet ne détient plus le NFT → `subscription_tier = 'free'`. (US 7.1 C3)
-- [ ] Parcours d'abonnement / panier (voir décision « à la carte vs abonnement » §3).
 - [ ] Pages tarifs + état d'abonnement dans `compte/` (afficher le tier courant : free / subscriber / nft).
 
 **Validation :** webhook Stripe simulé → `subscription_tier` passe à `subscriber` ; flux NFT simulé → tier passe à `nft` et les routes `/manga` s'ouvrent ; wallet revendu → cron rétrograde à `free` ; débit `otaku_coin` atomique (pas de solde négatif).
@@ -128,9 +130,9 @@ Le chemin critique est **P0 → P1**, puis **P2/P3/P4 parallélisables**, puis *
 **Objectif :** gérer le catalogue, les utilisateurs et l'analytique sans toucher au code. **→ US 5.2, 5.4.**
 
 - [ ] `admin/layout.tsx` + `components/admin/Sidebar.tsx` (protégé middleware, rôle `admin`/`superadmin`).
-- [ ] **Tableaux** : `admin/tableaux` — CRUD + upload drag & drop.
+- [x] **Tableaux** : `admin/tableaux` — CRUD + upload drag & drop + formats multiples (JSONB) + photos supplémentaires (JSONB `images`).
 - [ ] **Manga** : `admin/manga` — CRUD œuvre + upload des planches (drag & drop), **optimisation serveur en WebP + génération thumbnails**, publication instantanée. (US 5.2 C1)
-- [ ] `api/upload/route.ts` — upload vers Storage + pipeline d'optimisation.
+- [x] `api/upload/route.ts` — upload vers Supabase Storage + resize/crop via **jimp** (JPEG). Sharp retiré (binaire natif incompatible Vercel Linux x64).
 - [ ] **Users** : `admin/users` — liste, changement `subscription_tier`, bannissement.
   - `PATCH /api/admin/users/[id]` : vérifie **côté serveur** que `session.profile.role === 'superadmin'` avant d'autoriser un changement de `role` vers `'admin'` ou `'superadmin'` — un admin reçoit une `403` pour cette opération.
   - La promotion admin (superadmin uniquement) et la rétrogradation sont les seules opérations sur le champ `role` autorisées via l'UI ; le trigger `prevent_privilege_escalation` constitue un second filet indépendant.
@@ -194,7 +196,7 @@ Les points D1–D4 et D8 ont été **intégrés dans `architecture.md`** et ne s
 | ~~D3~~ | ~~Reprise de lecture~~ | ✅ **Résolu** — table `reading_progress` | — |
 | ~~D4~~ | ~~Monnaie Maison / solde~~ | ✅ **Résolu** — `wallets` + `wallet_transactions` | — |
 | **D5** | **`mailenentier_admin`** (US 5.1) | ⚠️ **Décision produit requise** | Le suffixe `_admin` ne doit **jamais** être une frontière de sécurité (sécurité = rôle BDD). Au plus : aiguillage UX qui redirige vers `/admin` si le rôle est confirmé. La note d'avertissement est dans `architecture.md`. |
-| **D6** | **Achat à la carte vs abonnement** (US 3.1) | ⚠️ **Décision produit requise** | Abonnement pour le manga + achat unitaire pour les tableaux ? Si oui : besoin d'un concept `orders`/panier non encore modélisé. |
+| ~~D6~~ | ~~Achat à la carte vs abonnement~~ | ✅ **Résolu** — abonnement pour le manga, achat unitaire pour les tableaux. Table `orders` créée (migration 010). | — |
 | D7 | **Découpage en chapitres** (US 1.2) | 🔵 Optionnel | Ajouter `chapter_number` sur `manga_pages` si le découpage par chapitre est voulu ; `reading_progress` suivrait alors le chapitre. |
 | ~~D8~~ | ~~Intégration LLM~~ | ✅ **Résolu** — Claude côté serveur, sortie `display_config` uniquement, garde-fou documenté en P6 | — |
 
