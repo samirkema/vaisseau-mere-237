@@ -52,7 +52,8 @@ export async function POST(request: Request) {
     priceEur = data.price_eur;
   }
 
-  const orderId = `tableau-${tableauId.slice(0, 8)}-${Date.now()}`;
+  // Format parseable par le webhook IPN : tableauId__formatIndex__timestamp
+  const orderId = `${tableauId}__${typeof formatIndex === 'number' ? formatIndex : 0}__${Date.now()}`;
 
   const resp = await fetch(`${NOWPAY_HOST}/invoice`, {
     method: 'POST',
