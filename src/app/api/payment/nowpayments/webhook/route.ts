@@ -3,6 +3,7 @@ import { createHmac }   from 'crypto';
 import { createServiceClient } from '@/lib/supabase/server';
 import { sendTableauOrderToAdmin, sendTableauOrderConfirmation } from '@/lib/email';
 
+
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
@@ -49,70 +50,55 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'order_id manquant' }, { status: 400 });
   }
 
-  // order_id format : tableauId__formatIndex__timestamp
-  const parts      = orderId.split('__');
-  const tableauId  = parts[0];
-  const formatIndex = parseInt(parts[1] ?? '0', 10);
+  // order_id format : pendingOrderId__tableauId__formatIndex
+  const parts     = orderId.split('__');
+  const pendingId = parts[0];
+  const tableauId = parts[1] ?? '';
 
   const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-  if (!UUID_RE.test(tableauId)) {
-    console.error('[nowpayments/webhook] tableauId invalide dans order_id:', orderId);
+  if (!UUID_RE.test(pendingId) || !UUID_RE.test(tableauId)) {
+    console.error('[nowpayments/webhook] order_id invalide:', orderId);
     return NextResponse.json({ error: 'order_id invalide' }, { status: 400 });
   }
 
-  const svc = createServiceClient();
+  const svc        = createServiceClient();
+  const paymentRef = `nowpay-${body.payment_id ?? ''}`;
+  const amountEur  = typeof body.price_amount === 'number' ? body.price_amount : 0;
 
-  // Récupérer titre + format depuis la base
+  // Mettre à jour la commande pending (qui contient déjà l'email de l'acheteur)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: tableau } = await (svc as any)
-    .from('tableaux')
-    .select('title, price_eur, formats')
-    .eq('id', tableauId)
-    .single();
-
-  type FormatEntry = { label: string; price_eur: number };
-  const formats: FormatEntry[] = Array.isArray(tableau?.formats) ? tableau.formats : [];
-  const fmt = formats[formatIndex];
-
-  const tableauTitle = (tableau?.title as string | undefined) ?? tableauId;
-  const format       = fmt?.label ?? (body.order_description as string | undefined) ?? '—';
-  const amountEur    = typeof body.price_amount === 'number' ? body.price_amount : (fmt?.price_eur ?? tableau?.price_eur ?? 0);
-  const paymentRef   = `nowpay-${body.payment_id ?? ''}`;
-  const customerEmail = null; // NowPayments ne transmet pas l'email acheteur
-
-  // Dédoublonnage : vérifier que la commande n'est pas déjà enregistrée
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: existing } = await (svc as any)
+  const { data: updated, error: updateErr } = await (svc as any)
     .from('orders')
-    .select('id')
-    .eq('payment_ref', paymentRef)
+    .update({ status: 'completed', payment_ref: paymentRef, amount_eur: amountEur })
+    .eq('id', pendingId)
+    .eq('status', 'pending') // dédoublonnage
+    .select('customer_email, format, tableau_id')
     .maybeSingle();
 
-  if (!existing) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error: orderErr } = await (svc as any).from('orders').insert({
-      tableau_id:     tableauId,
-      format,
-      amount_eur:     amountEur,
-      customer_email: customerEmail,
-      payment_ref:    paymentRef,
-      method:         'crypto',
-      status:         'completed',
-    });
-    if (orderErr) console.error('[nowpayments/webhook] order insert:', orderErr.message);
-  }
+  if (updateErr) console.error('[nowpayments/webhook] order update:', updateErr.message);
+
+  // Récupérer titre du tableau
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: tableau } = await (svc as any)
+    .from('tableaux').select('title').eq('id', tableauId).single();
+
+  const tableauTitle  = (tableau?.title as string | undefined) ?? tableauId;
+  const format        = (updated as { format?: string } | null)?.format ?? '—';
+  const customerEmail = (updated as { customer_email?: string } | null)?.customer_email ?? null;
 
   const adminEmail = process.env.ADMIN_EMAIL ?? null;
   if (adminEmail) {
     sendTableauOrderToAdmin({
-      adminEmail,
-      tableauTitle,
-      format,
-      amountEur,
-      customerEmail:  null,
-      customerName:   null,
-      paymentRef,
-    }).catch(err => console.error('[nowpayments/webhook] admin email:', err));
+      adminEmail, tableauTitle, format, amountEur,
+      customerEmail, customerName: null, paymentRef,
+    }).catch(e => console.error('[nowpayments/webhook] admin email:', e));
+  }
+
+  if (customerEmail) {
+    sendTableauOrderConfirmation({
+      to: customerEmail, customerName: null,
+      tableauTitle, format, amountEur, paymentRef,
+    }).catch(e => console.error('[nowpayments/webhook] buyer email:', e));
   }
 
   return NextResponse.json({ received: true });

@@ -12,20 +12,25 @@ interface Props {
 
 export function TableauCheckout({ tableauId, formats, priceEur }: Props) {
   const [selectedIdx, setSelectedIdx] = useState(0);
+  const [email,   setEmail]   = useState('');
   const [loading, setLoading] = useState<'stripe' | 'crypto' | null>(null);
-  const [err, setErr] = useState<string | null>(null);
+  const [err,     setErr]     = useState<string | null>(null);
 
-  const hasFormats = formats.length > 0;
+  const hasFormats   = formats.length > 0;
   const currentPrice = hasFormats ? formats[selectedIdx]?.price_eur : priceEur;
 
   async function pay(type: 'stripe' | 'crypto') {
+    if (!email.trim() || !email.includes('@')) {
+      setErr('Merci de saisir votre adresse email avant de payer.');
+      return;
+    }
     setLoading(type);
     setErr(null);
     try {
       const res = await fetch(`/api/payment/tableau/${type}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tableauId, formatIndex: selectedIdx }),
+        body: JSON.stringify({ tableauId, formatIndex: selectedIdx, customerEmail: email.trim() }),
       });
       let json: Record<string, unknown> = {};
       try { json = await res.json(); } catch { /* */ }
@@ -73,6 +78,34 @@ export function TableauCheckout({ tableauId, formats, priceEur }: Props) {
           {currentPrice} €
         </p>
       )}
+
+      {/* Message livraison */}
+      <div style={{
+        background: 'rgba(249,115,22,0.05)', border: '1px solid rgba(249,115,22,0.15)',
+        borderRadius: '10px', padding: '12px 14px', marginBottom: '16px',
+      }}>
+        <p style={{ color: '#aaa', fontSize: '0.8rem', lineHeight: 1.5, margin: 0 }}>
+          Dès votre achat confirmé, nous vous contacterons par email pour régler les détails et organiser la livraison.
+        </p>
+      </div>
+
+      {/* Email */}
+      <div style={{ marginBottom: '14px' }}>
+        <label style={{ display: 'block', color: '#555', fontSize: '0.75rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '6px' }}>
+          Votre email *
+        </label>
+        <input
+          type="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          placeholder="vous@exemple.com"
+          style={{
+            width: '100%', padding: '11px 14px', borderRadius: '8px',
+            border: '1px solid #1e1e1e', background: '#0a0a0a',
+            color: '#fff', fontSize: '0.875rem', boxSizing: 'border-box',
+          }}
+        />
+      </div>
 
       {/* Boutons de paiement */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>

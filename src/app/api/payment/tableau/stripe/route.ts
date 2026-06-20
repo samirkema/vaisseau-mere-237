@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   try { body = await request.json(); }
   catch { return NextResponse.json({ error: 'Corps JSON invalide' }, { status: 400 }); }
 
-  const { tableauId, formatIndex } = body as { tableauId?: string; formatIndex?: number };
+  const { tableauId, formatIndex, customerEmail } = body as { tableauId?: string; formatIndex?: number; customerEmail?: string };
 
   if (!tableauId || typeof tableauId !== 'string') {
     return NextResponse.json({ error: 'tableauId requis' }, { status: 400 });
@@ -62,6 +62,7 @@ export async function POST(request: Request) {
         },
       },
     }],
+    customer_email: customerEmail || undefined,
     success_url: `${APP_URL}/galerie/${tableauId}?payment=success`,
     cancel_url:  `${APP_URL}/galerie/${tableauId}?payment=cancelled`,
     metadata: { tableauId, format: label },

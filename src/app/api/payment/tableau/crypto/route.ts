@@ -17,7 +17,7 @@ export async function POST(request: Request) {
   try { body = await request.json(); }
   catch { return NextResponse.json({ error: 'Corps JSON invalide' }, { status: 400 }); }
 
-  const { tableauId, formatIndex } = body as { tableauId?: string; formatIndex?: number };
+  const { tableauId, formatIndex, customerEmail } = body as { tableauId?: string; formatIndex?: number; customerEmail?: string };
 
   if (!tableauId || typeof tableauId !== 'string') {
     return NextResponse.json({ error: 'tableauId requis' }, { status: 400 });
@@ -52,8 +52,23 @@ export async function POST(request: Request) {
     priceEur = data.price_eur;
   }
 
-  // Format parseable par le webhook IPN : tableauId__formatIndex__timestamp
-  const orderId = `${tableauId}__${typeof formatIndex === 'number' ? formatIndex : 0}__${Date.now()}`;
+  const fmtIndex = typeof formatIndex === 'number' ? formatIndex : 0;
+
+  // Créer une commande pending pour stocker l'email avant le paiement
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: pendingOrder } = await (svc as any).from('orders').insert({
+    tableau_id:     tableauId,
+    format:         label,
+    amount_eur:     priceEur,
+    customer_email: customerEmail ?? null,
+    method:         'crypto',
+    status:         'pending',
+  }).select('id').single();
+
+  const pendingId = (pendingOrder as { id?: string } | null)?.id ?? crypto.randomUUID();
+
+  // Format parseable par le webhook IPN : pendingId__tableauId__formatIndex
+  const orderId = `${pendingId}__${tableauId}__${fmtIndex}`;
 
   const resp = await fetch(`${NOWPAY_HOST}/invoice`, {
     method: 'POST',
