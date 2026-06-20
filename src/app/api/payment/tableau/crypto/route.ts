@@ -59,12 +59,13 @@ export async function POST(request: Request) {
     method: 'POST',
     headers: { 'x-api-key': API_KEY, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      price_amount:   priceEur,
-      price_currency: 'eur',
-      order_id:       orderId,
+      price_amount:      priceEur,
+      price_currency:    'eur',
+      order_id:          orderId,
       order_description: `${data.title} — ${label}`,
-      success_url: `${APP_URL}/galerie/${tableauId}?payment=success`,
-      cancel_url:  `${APP_URL}/galerie/${tableauId}?payment=cancelled`,
+      ipn_callback_url:  `${APP_URL}/api/payment/nowpayments/webhook`,
+      success_url:       `${APP_URL}/galerie/${tableauId}?payment=success`,
+      cancel_url:        `${APP_URL}/galerie/${tableauId}?payment=cancelled`,
     }),
   });
 
