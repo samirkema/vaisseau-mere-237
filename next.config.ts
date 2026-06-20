@@ -26,6 +26,8 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Sharp doit rester dans node_modules (binaire natif .node) — ne pas bundler
+  serverExternalPackages: ['sharp'],
   turbopack: {
     root: path.resolve(__dirname),
   },
