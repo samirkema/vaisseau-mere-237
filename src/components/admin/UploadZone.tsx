@@ -34,12 +34,15 @@ export function UploadZone({ type, workId, pageNumber, tableauId, label, onUploa
       if (tableauId)  form.append('tableauId',  tableauId);
 
       const res = await fetch('/api/upload', { method: 'POST', body: form });
-      const json = await res.json();
-      if (!res.ok) { setErr(json.error ?? 'Erreur inconnue'); return; }
-
+      let json: Record<string, unknown> = {};
+      try { json = await res.json(); } catch { /* réponse non-JSON (erreur serveur texte brut) */ }
+      if (!res.ok) {
+        setErr((json.error as string) ?? `Erreur ${res.status} — vérifiez les variables d'environnement Vercel`);
+        return;
+      }
       onUpload({ type, ...json } as UploadResult);
-    } catch {
-      setErr('Erreur réseau');
+    } catch (err) {
+      setErr(err instanceof Error ? err.message : 'Connexion impossible');
     } finally {
       setLoad(false);
     }

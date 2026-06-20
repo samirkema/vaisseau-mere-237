@@ -16,6 +16,18 @@ const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f
 //   page    : workId, pageNumber
 //   tableau : tableauId (optionnel — uuid généré si absent)
 export async function POST(request: Request) {
+  try {
+    return await handleUpload(request);
+  } catch (err) {
+    console.error('[api/upload] unhandled error:', err);
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : 'Erreur interne du serveur' },
+      { status: 500 },
+    );
+  }
+}
+
+async function handleUpload(request: Request) {
   const guard = await requireAdminApi();
   if (guard.error) return guard.error;
 
