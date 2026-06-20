@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { ImageGallery } from '@/components/galerie/ImageGallery';
+import { TableauCheckout } from '@/components/galerie/TableauCheckout';
 
 export const metadata = { title: 'Galerie — Otaku Shop' };
 
@@ -94,41 +95,18 @@ export default async function GalerieDetailPage({
               {tableau.title.toUpperCase()}
             </h1>
 
-            {formats.length > 0 ? (
-              <div style={{ marginBottom: '24px' }}>
-                <p style={{ color: '#555', fontSize: '0.8rem', marginBottom: '8px', letterSpacing: '1px', textTransform: 'uppercase' }}>Formats disponibles</p>
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                  <tbody>
-                    {formats.map((f, i) => (
-                      <tr key={i} style={{ borderBottom: '1px solid #1a1a1a' }}>
-                        <td style={{ padding: '8px 0', color: '#bbb', fontSize: '0.875rem' }}>{f.label}</td>
-                        <td style={{ padding: '8px 0', color: '#f97316', fontWeight: 700, fontSize: '0.875rem', textAlign: 'right' }}>{f.price_eur} €</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : tableau.price_eur != null ? (
+            {formats.length === 0 && tableau.price_eur != null ? (
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', marginBottom: '24px' }}>
                 <span style={{ color: '#555' }}>Prix</span>
                 <span style={{ color: '#f97316', fontWeight: 700 }}>À partir de {tableau.price_eur} €</span>
               </div>
             ) : null}
 
-            <a
-              href={`mailto:kilimangarocontact@gmail.com?subject=Commande tableau — ${tableau.title}`}
-              className="order-btn"
-              style={{
-                display: 'block', textAlign: 'center',
-                background: 'rgba(249,115,22,0.08)',
-                border: '1px solid rgba(249,115,22,0.3)',
-                color: '#f97316', borderRadius: '10px', padding: '14px',
-                fontSize: '0.85rem', fontWeight: 800, letterSpacing: '1.5px',
-                textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s',
-              }}
-            >
-              COMMANDER CE TABLEAU
-            </a>
+            <TableauCheckout
+              tableauId={tableau.id}
+              formats={formats}
+              priceEur={tableau.price_eur ?? null}
+            />
           </div>
 
           {/* NAVIGATION */}
