@@ -59,7 +59,7 @@ body {
   display: inline-block;
 }
 
-/* ── INPUTS DARK ── */
+/* ── INPUTS DARK (site public uniquement) ── */
 input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
 textarea,
 select {
@@ -70,4 +70,26 @@ select {
 input::placeholder,
 textarea::placeholder {
   color: #3a3a3a;
+}
+
+/* ── ADMIN — toujours en mode clair, indépendant du thème ── */
+/* Reset des inputs : annule le style dark ci-dessus */
+.admin-layout input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+.admin-layout textarea,
+.admin-layout select {
+  background-color: #ffffff;
+  color: #111827;
+  border-color: #d1d5db;
+}
+.admin-layout input::placeholder,
+.admin-layout textarea::placeholder {
+  color: #9ca3af;
+}
+/* Mode clair : double inversion pour annuler le filter: invert du body */
+[data-theme="light"] .admin-layout {
+  filter: invert(1) hue-rotate(180deg);
+}
+/* Les images dans l'admin ne doivent pas être re-inversées */
+[data-theme="light"] .admin-layout img {
+  filter: none;
 }

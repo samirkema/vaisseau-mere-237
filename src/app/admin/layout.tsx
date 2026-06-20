@@ -8,7 +8,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   await requireRole('admin');
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen admin-layout">
       <Sidebar />
       <div className="flex-1 bg-gray-50">
         <div className="max-w-6xl mx-auto px-6 py-8">{children}</div>
