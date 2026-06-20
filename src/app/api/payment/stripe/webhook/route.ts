@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type Stripe from 'stripe';
 import { getStripe } from '@/lib/stripe';
 import { createServiceClient } from '@/lib/supabase/server';
-import { sendPaymentReceipt } from '@/lib/email';
+import { sendPaymentReceipt, sendTableauOrderToAdmin, sendTableauOrderConfirmation } from '@/lib/email';
 
 // Le webhook doit lire le body brut pour que Stripe puisse vérifier la signature.
 // Next.js App Router ne pré-parse pas le body dans les Route Handlers.
@@ -21,9 +21,56 @@ export async function POST(request: Request) {
   }
 
   if (event.type === 'checkout.session.completed') {
-    const session = event.data.object as Stripe.Checkout.Session;
-    const userId  = session.metadata?.userId;
+    const session    = event.data.object as Stripe.Checkout.Session;
+    const tableauId  = session.metadata?.tableauId;
+    const userId     = session.metadata?.userId;
 
+    // ── Commande tableau ────────────────────────────────────────────────────
+    if (tableauId) {
+      const svc           = createServiceClient();
+      const format        = session.metadata?.format ?? '—';
+      const amountEur     = (session.amount_total ?? 0) / 100;
+      const customerEmail = session.customer_email ?? session.customer_details?.email ?? null;
+      const customerName  = session.customer_details?.name ?? null;
+      const paymentRef    = typeof session.payment_intent === 'string' ? session.payment_intent : null;
+
+      // Récupérer le titre du tableau
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: tableau } = await (svc as any)
+        .from('tableaux')
+        .select('title')
+        .eq('id', tableauId)
+        .single();
+      const tableauTitle = (tableau as { title?: string } | null)?.title ?? tableauId;
+
+      // Enregistrer la commande
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error: orderErr } = await (svc as any).from('orders').insert({
+        tableau_id:     tableauId,
+        format,
+        amount_eur:     amountEur,
+        customer_email: customerEmail,
+        customer_name:  customerName,
+        payment_ref:    paymentRef,
+        method:         'stripe',
+        status:         'completed',
+      });
+      if (orderErr) console.error('[stripe/webhook] order insert:', orderErr.message);
+
+      const adminEmail = process.env.ADMIN_EMAIL ?? null;
+      if (adminEmail) {
+        sendTableauOrderToAdmin({ adminEmail, tableauTitle, format, amountEur, customerEmail, customerName, paymentRef })
+          .catch(err => console.error('[stripe/webhook] admin email:', err));
+      }
+      if (customerEmail) {
+        sendTableauOrderConfirmation({ to: customerEmail, customerName, tableauTitle, format, amountEur, paymentRef })
+          .catch(err => console.error('[stripe/webhook] buyer email:', err));
+      }
+
+      return NextResponse.json({ received: true });
+    }
+
+    // ── Abonnement ──────────────────────────────────────────────────────────
     if (!userId) {
       console.error('[stripe/webhook] userId absent des métadonnées');
       return NextResponse.json({ error: 'userId manquant' }, { status: 400 });

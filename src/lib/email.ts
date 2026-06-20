@@ -89,6 +89,68 @@ export async function sendPaymentReceipt(opts: {
   });
 }
 
+export async function sendTableauOrderToAdmin(opts: {
+  adminEmail:    string;
+  tableauTitle:  string;
+  format:        string;
+  amountEur:     number;
+  customerEmail: string | null;
+  customerName:  string | null;
+  paymentRef:    string | null;
+}) {
+  const date = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
+
+  return getResend().emails.send({
+    from:    FROM,
+    to:      opts.adminEmail,
+    subject: `💰 Nouvelle commande — ${opts.tableauTitle} (${opts.amountEur.toFixed(2)} €)`,
+    html: `
+      <div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:24px">
+        <h1 style="color:#f97316;margin-bottom:8px">Nouvelle commande tableau</h1>
+        <table style="width:100%;border-collapse:collapse;margin:16px 0">
+          <tr><td style="padding:8px 0;color:#6b7280;width:140px">Tableau</td><td style="padding:8px 0;font-weight:700">${escapeHtml(opts.tableauTitle)}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280">Format</td><td style="padding:8px 0">${escapeHtml(opts.format)}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280">Montant</td><td style="padding:8px 0;font-weight:700;color:#f97316">${opts.amountEur.toFixed(2)} €</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280">Acheteur</td><td style="padding:8px 0">${escapeHtml(opts.customerName ?? '—')}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280">Email</td><td style="padding:8px 0">${escapeHtml(opts.customerEmail ?? '—')}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280">Référence</td><td style="padding:8px 0;font-family:monospace;font-size:12px">${opts.paymentRef ?? '—'}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280">Date</td><td style="padding:8px 0">${date}</td></tr>
+        </table>
+        <p style="color:#9ca3af;font-size:12px;margin-top:24px">Prépare l'expédition et contacte l'acheteur.</p>
+      </div>
+    `,
+  });
+}
+
+export async function sendTableauOrderConfirmation(opts: {
+  to:           string;
+  customerName: string | null;
+  tableauTitle: string;
+  format:       string;
+  amountEur:    number;
+  paymentRef:   string | null;
+}) {
+  return getResend().emails.send({
+    from:    FROM,
+    to:      opts.to,
+    subject: `Commande confirmée — ${opts.tableauTitle}`,
+    html: `
+      <div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:24px">
+        <h1 style="color:#f97316;margin-bottom:8px">Merci pour votre commande !</h1>
+        <p>Bonjour ${escapeHtml(opts.customerName ?? 'cher client')},</p>
+        <p>Votre commande a bien été reçue. Nous vous contacterons pour organiser l'expédition.</p>
+        <table style="width:100%;border-collapse:collapse;margin:16px 0">
+          <tr><td style="padding:8px 0;color:#6b7280;width:140px">Tableau</td><td style="padding:8px 0;font-weight:700">${escapeHtml(opts.tableauTitle)}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280">Format</td><td style="padding:8px 0">${escapeHtml(opts.format)}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280">Montant payé</td><td style="padding:8px 0;font-weight:700">${opts.amountEur.toFixed(2)} €</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280">Référence</td><td style="padding:8px 0;font-family:monospace;font-size:12px">${opts.paymentRef ?? '—'}</td></tr>
+        </table>
+        <p style="color:#9ca3af;font-size:12px;margin-top:32px">Conservez cet email comme justificatif.</p>
+      </div>
+    `,
+  });
+}
+
 // Échappe les caractères HTML pour éviter l'injection dans les templates email
 function escapeHtml(str: string): string {
   return str
