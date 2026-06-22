@@ -72,9 +72,9 @@ const artistes = {
     genre: 'Rap · Street-pop · Afro-urbain · Cameroun',
     communaute: 'DYDYNASTIE',
     bio: [
-      'Rappeur, chanteur et compositeur, Dydy09 ou encore Nu9ve est un artiste déterminé qui impose sa vision avec une autorité naturelle et un charisme indéniable. Évoluant avec agilité entre univers sonores denses, il s'est rapidement forgé une réputation de kickeur hors pair.',
-      'Il s'est fait remarquer avec son premier succès intitulé <strong>CARRÉ</strong>, ensuite il a enchaîné avec la série <strong>DYDY DRILL</strong>. Sur son projet <strong>CODE PIN</strong>, Dydy09 s'est rallié au beatmaker ICE, ensemble ils ont débloqué une synergie parfaite. L'artiste a ensuite prouvé sa palette technique en s'associant au beatmaker Cabaraiz sur l'EP <strong>REMISE EN FORME</strong>, un projet synonyme de performance brute et de discipline lyricale.',
-      'Au-delà des studios, Dydy ne se contente pas d'avoir des auditeurs : il guide un peuple. À la tête de la <strong>DYDYNASTIE</strong>, son mouvement et sa fanbase, l'artiste a dépassé le simple statut de musicien pour devenir un véritable repère. Porté par une communauté loyale qui le considère comme un meneur et le couronne roi de sa génération, Dydy09 avance avec l'assurance de ceux qui sont nés pour régner sur la nouvelle ère de la street-pop.'
+      `Rappeur, chanteur et compositeur, Dydy09 ou encore Nu9ve est un artiste déterminé qui impose sa vision avec une autorité naturelle et un charisme indéniable. Évoluant avec agilité entre univers sonores denses, il s'est rapidement forgé une réputation de kickeur hors pair.`,
+      `Il s'est fait remarquer avec son premier succès intitulé <strong>CARRÉ</strong>, ensuite il a enchaîné avec la série <strong>DYDY DRILL</strong>. Sur son projet <strong>CODE PIN</strong>, Dydy09 s'est rallié au beatmaker ICE, ensemble ils ont débloqué une synergie parfaite. L'artiste a ensuite prouvé sa palette technique en s'associant au beatmaker Cabaraiz sur l'EP <strong>REMISE EN FORME</strong>, un projet synonyme de performance brute et de discipline lyricale.`,
+      `Au-delà des studios, Dydy ne se contente pas d'avoir des auditeurs : il guide un peuple. À la tête de la <strong>DYDYNASTIE</strong>, son mouvement et sa fanbase, l'artiste a dépassé le simple statut de musicien pour devenir un véritable repère. Porté par une communauté loyale qui le considère comme un meneur et le couronne roi de sa génération, Dydy09 avance avec l'assurance de ceux qui sont nés pour régner sur la nouvelle ère de la street-pop.`
     ]
   },
   mrkof: {
@@ -83,9 +83,9 @@ const artistes = {
     genre: 'R&B · Afro-urbain · Street-pop · Cameroun',
     communaute: 'MAGIC BLOC',
     bio: [
-      'Ancré dans la vibrante scène urbaine camerounaise, Mr Kof — souvent surnommé <strong>LA SORCELLERIE</strong> — est un artiste qui bouscule les codes de la musique afro-urbaine contemporaine. À la croisée d'un R&B sensuel et d'influences Hip-Hop, il s'impose par une signature vocale unique et une audace narrative rare dans le paysage musical de sa région.',
-      'Ce qui distingue véritablement Mr Kof, c'est sa plume. L'artiste refuse les non-dits et s'illustre par des textes hardcores, crus et provocateurs, abordant sans filtre les relations, le désir et les réalités de sa génération. Cette identité brute et charnelle prend toute son ampleur dans son EP <strong>THE WITCHCRAFT'S HOUZ CHAP 1 : MAGIC ROOM</strong>, conçu en symbiose avec le beatmaker Cabaraiz.',
-      'Au-delà de la musique, Mr Kof a fédéré un véritable mouvement culturel en lançant le <strong>MAGIC BLOC</strong>. Bien plus qu'une simple fanbase, c'est un rassemblement puissant, une bannière sous laquelle se réunissent les passionnés qui se reconnaissent dans son authenticité et son rejet des faux-semblants.'
+      `Ancré dans la vibrante scène urbaine camerounaise, Mr Kof — souvent surnommé <strong>LA SORCELLERIE</strong> — est un artiste qui bouscule les codes de la musique afro-urbaine contemporaine. À la croisée d'un R&B sensuel et d'influences Hip-Hop, il s'impose par une signature vocale unique et une audace narrative rare dans le paysage musical de sa région.`,
+      `Ce qui distingue véritablement Mr Kof, c'est sa plume. L'artiste refuse les non-dits et s'illustre par des textes hardcores, crus et provocateurs, abordant sans filtre les relations, le désir et les réalités de sa génération. Cette identité brute et charnelle prend toute son ampleur dans son EP <strong>THE WITCHCRAFT'S HOUZ CHAP 1 : MAGIC ROOM</strong>, conçu en symbiose avec le beatmaker Cabaraiz.`,
+      `Au-delà de la musique, Mr Kof a fédéré un véritable mouvement culturel en lançant le <strong>MAGIC BLOC</strong>. Bien plus qu'une simple fanbase, c'est un rassemblement puissant, une bannière sous laquelle se réunissent les passionnés qui se reconnaissent dans son authenticité et son rejet des faux-semblants.`
     ]
   },
   izis: {
@@ -94,9 +94,9 @@ const artistes = {
     genre: 'Afro-R&B · Trap · Afro-urbain · Cameroun',
     communaute: null,
     bio: [
-      'Actif dans la scène urbaine underground camerounaise, Izis — récemment stylisé en <strong>Izis 27</strong> — s'impose comme l'une des voix les plus singulières et prometteuses de sa génération. Naviguant avec une agilité déconcertante entre les mélodies envoûtantes de l'afro-R&B, l'énergie brute de la Trap et les rythmiques afro-urbain, il façonne un univers musical hybride, à la fois intimiste et percutant.',
-      'C'est à travers son projet conceptuel <strong>G-LUV</strong>, massivement partagé sur Audiomack sous l'étendard d'OFFISKY, qu'il pose les fondations de son identité : un alliage de sonorités "lovers" et de récit du quotidien qui a immédiatement séduit une communauté de passionnés.',
-      'Izis s'illustre également par sa capacité à sublimer les univers de ses pairs lors de collaborations marquantes — notamment aux côtés de Dydy09 sur <strong>LOVE & STREET</strong> et <strong>COMPATIBLE</strong>, issu du projet Code Pin. Toujours en quête d'innovation et de renouvellement esthétique, sa détermination témoigne de sa volonté à repousser les frontières musicales.'
+      `Actif dans la scène urbaine underground camerounaise, Izis — récemment stylisé en <strong>Izis 27</strong> — s'impose comme l'une des voix les plus singulières et prometteuses de sa génération. Naviguant avec une agilité déconcertante entre les mélodies envoûtantes de l'afro-R&B, l'énergie brute de la Trap et les rythmiques afro-urbain, il façonne un univers musical hybride, à la fois intimiste et percutant.`,
+      `C'est à travers son projet conceptuel <strong>G-LUV</strong>, massivement partagé sur Audiomack sous l'étendard d'OFFISKY, qu'il pose les fondations de son identité : un alliage de sonorités "lovers" et de récit du quotidien qui a immédiatement séduit une communauté de passionnés.`,
+      `Izis s'illustre également par sa capacité à sublimer les univers de ses pairs lors de collaborations marquantes — notamment aux côtés de Dydy09 sur <strong>LOVE & STREET</strong> et <strong>COMPATIBLE</strong>, issu du projet Code Pin. Toujours en quête d'innovation et de renouvellement esthétique, sa détermination témoigne de sa volonté à repousser les frontières musicales.`
     ]
   }
 };
