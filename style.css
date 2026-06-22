@@ -855,7 +855,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .artiste-bio-trigger {
   cursor: pointer;
 }
-.artiste-bio-trigger:is(h3):hover {
+.artiste-bio-trigger:is(h3):hover,
+.artiste-bio-trigger:is(span):hover {
   color: var(--accent);
   transition: color var(--transition);
 }
