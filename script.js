@@ -124,7 +124,12 @@ function closeBioModal() {
 }
 
 document.querySelectorAll('.artiste-bio-trigger').forEach(el => {
-  el.addEventListener('click', () => openBioModal(el.dataset.artiste));
+  el.addEventListener('click', (e) => openBioModal(el.dataset.artiste));
+});
+
+// Empêcher les boutons streaming de déclencher la modale
+document.querySelectorAll('.streaming-links a, .stream-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => e.stopPropagation());
 });
 bioOverlay?.addEventListener('click', closeBioModal);
 bioClose?.addEventListener('click', closeBioModal);
