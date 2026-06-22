@@ -78,7 +78,7 @@ const artistes = {
     ]
   },
   mrkof: {
-    photo: '<div class="artiste-cover-placeholder" style="width:100%;height:100%;font-size:48px;">MK</div>',
+    photo: '<img src="images/mrkof.png" alt="Mr Kof In D Houz">',
     nom: 'Mr Kof In D Houz',
     genre: 'R&B · Afro-urbain · Street-pop · Cameroun',
     communaute: 'MAGIC BLOC',
@@ -89,7 +89,7 @@ const artistes = {
     ]
   },
   izis: {
-    photo: '<div class="artiste-cover-placeholder" style="width:100%;height:100%;font-size:48px;">IZ</div>',
+    photo: '<img src="images/izis.png" alt="IZIS 27">',
     nom: 'IZIS 27',
     genre: 'Afro-R&B · Trap · Afro-urbain · Cameroun',
     communaute: null,
