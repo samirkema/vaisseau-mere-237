@@ -123,13 +123,10 @@ function closeBioModal() {
   document.body.style.overflow = '';
 }
 
-document.querySelectorAll('.artiste-bio-trigger').forEach(el => {
-  el.addEventListener('click', (e) => openBioModal(el.dataset.artiste));
-});
-
-// Empêcher les boutons streaming de déclencher la modale
-document.querySelectorAll('.streaming-links a, .stream-btn').forEach(btn => {
-  btn.addEventListener('click', (e) => e.stopPropagation());
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.streaming-links')) return;
+  const trigger = e.target.closest('.artiste-bio-trigger');
+  if (trigger?.dataset.artiste) openBioModal(trigger.dataset.artiste);
 });
 bioOverlay?.addEventListener('click', closeBioModal);
 bioClose?.addEventListener('click', closeBioModal);
