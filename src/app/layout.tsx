@@ -5,6 +5,8 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Navbar } from '@/components/ui/Navbar';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { Footer } from '@/components/ui/Footer';
+import { CookieNotice } from '@/components/ui/CookieNotice';
 import './globals.css';
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] });
@@ -26,7 +28,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen antialiased">
         <Navbar />
         <main>{children}</main>
+        <Footer />
         <ThemeToggle />
+        <CookieNotice />
       </body>
     </html>
   );
