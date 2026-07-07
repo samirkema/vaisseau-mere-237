@@ -3,7 +3,7 @@
 
 export type Role = 'user' | 'admin' | 'superadmin';
 export type SubscriptionTier = 'free' | 'subscriber' | 'nft';
-export type MangaKind = 'manga' | 'webtoon' | 'bd';
+export type MangaKind = 'manga' | 'webtoon' | 'bd' | 'artbook';
 export type PaymentStatus = 'pending' | 'completed' | 'failed' | 'refunded';
 
 export interface DisplayConfig {

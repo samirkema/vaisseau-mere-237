@@ -91,8 +91,8 @@ export default async function MangaReaderPage({
 
   // ── Incrément atomique du compteur de vues (fire & forget) ────────────────
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  void (createServiceClient() as any)
-    .rpc('increment_views_count', { work_id: workId })
+  void Promise.resolve((createServiceClient() as any)
+    .rpc('increment_views_count', { work_id: workId }))
     .catch(() => {});
 
   const hasProgress = savedPage > 1;

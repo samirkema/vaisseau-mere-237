@@ -51,10 +51,12 @@ export function TableauCheckout({ tableauId, formats, priceEur }: Props) {
           <p style={{ color: '#555', fontSize: '0.75rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '10px' }}>
             Choisir un format
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div role="radiogroup" aria-label="Format du tableau" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {formats.map((f, i) => (
               <button
                 key={i}
+                role="radio"
+                aria-checked={i === selectedIdx}
                 onClick={() => setSelectedIdx(i)}
                 style={{
                   display: 'flex', justifyContent: 'space-between', alignItems: 'center',
@@ -91,10 +93,11 @@ export function TableauCheckout({ tableauId, formats, priceEur }: Props) {
 
       {/* Email */}
       <div style={{ marginBottom: '14px' }}>
-        <label style={{ display: 'block', color: '#555', fontSize: '0.75rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '6px' }}>
+        <label htmlFor="checkout-email" style={{ display: 'block', color: '#555', fontSize: '0.75rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '6px' }}>
           Votre email *
         </label>
         <input
+          id="checkout-email"
           type="email"
           value={email}
           onChange={e => setEmail(e.target.value)}

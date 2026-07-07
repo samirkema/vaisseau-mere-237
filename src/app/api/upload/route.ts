@@ -5,7 +5,8 @@ import { requireAdminApi } from '@/lib/admin-guard';
 
 export const runtime = 'nodejs';
 
-const ALLOWED_MIME = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif']);
+// jimp supporte JPEG, PNG, GIF, BMP, TIFF — pas AVIF ni WebP (pas de décodeur installé)
+const ALLOWED_MIME = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff']);
 const MAX_BYTES = 25 * 1024 * 1024; // 25 Mo
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 

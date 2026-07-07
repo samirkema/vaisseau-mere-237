@@ -38,8 +38,8 @@ export async function POST(request: Request) {
 
   if (!title?.trim())  return NextResponse.json({ error: 'title requis' }, { status: 400 });
   if (!language?.trim()) return NextResponse.json({ error: 'language requis' }, { status: 400 });
-  if (!kind || !['manga', 'webtoon', 'bd'].includes(kind)) {
-    return NextResponse.json({ error: 'kind invalide (manga | webtoon | bd)' }, { status: 400 });
+  if (!kind || !['manga', 'webtoon', 'bd', 'artbook'].includes(kind)) {
+    return NextResponse.json({ error: 'kind invalide (manga | webtoon | bd | artbook)' }, { status: 400 });
   }
 
   const svc = createServiceClient();
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
       published:   false,
       created_by:  guard.userId,
     })
-    .select('id, title, kind, published, created_at')
+    .select('id, title, kind, language, published, views_count, cover_url, created_at')
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

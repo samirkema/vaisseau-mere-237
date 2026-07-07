@@ -17,13 +17,18 @@ interface MangaWork {
 
 interface Props { initialWorks: MangaWork[] }
 
-const KIND_LABELS: Record<string, string> = { manga: 'Manga', webtoon: 'Webtoon', bd: 'BD' };
+const KIND_LABELS: Record<string, string> = {
+  manga:         'Manga',
+  webtoon:       'Webtoon',
+  bd:            'BD',
+  artbook: 'Artbook',
+};
 
 export function MangaAdminPanel({ initialWorks }: Props) {
   const [works,       setWorks]     = useState<MangaWork[]>(initialWorks);
   const [showForm,    setShowForm]  = useState(false);
   const [title,       setTitle]     = useState('');
-  const [kind,        setKind]      = useState<'manga' | 'webtoon' | 'bd'>('manga');
+  const [kind,        setKind]      = useState<'manga' | 'webtoon' | 'bd' | 'artbook'>('manga');
   const [language,    setLang]      = useState('fr');
   const [description, setDesc]      = useState('');
   const [coverUrl,    setCoverUrl]  = useState('');
@@ -97,6 +102,7 @@ export function MangaAdminPanel({ initialWorks }: Props) {
                 <option value="manga">Manga</option>
                 <option value="webtoon">Webtoon</option>
                 <option value="bd">BD</option>
+                <option value="artbook">Artbook</option>
               </select>
             </div>
             <div className="space-y-1">
@@ -155,7 +161,7 @@ export function MangaAdminPanel({ initialWorks }: Props) {
                     {w.published ? 'Publié' : 'Brouillon'}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-right text-gray-500">{w.views_count.toLocaleString('fr')}</td>
+                <td className="px-4 py-3 text-right text-gray-500">{(w.views_count ?? 0).toLocaleString('fr')}</td>
                 <td className="px-4 py-3 text-right space-x-2">
                   <button onClick={() => togglePublished(w)}
                     className="text-xs text-indigo-600 hover:underline">

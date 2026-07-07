@@ -43,9 +43,14 @@ export async function POST(request: Request) {
         .single();
       const tableauTitle = (tableau as { title?: string } | null)?.title ?? tableauId;
 
-      // Enregistrer la commande
+      if (!paymentRef) {
+        console.error('[stripe/webhook] payment_intent absent de la session');
+        return NextResponse.json({ error: 'payment_intent manquant' }, { status: 400 });
+      }
+
+      // Upsert idempotent : si payment_ref existe déjà (replay Stripe), on ignore
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { error: orderErr } = await (svc as any).from('orders').insert({
+      const { error: orderErr } = await (svc as any).from('orders').upsert({
         tableau_id:     tableauId,
         format,
         amount_eur:     amountEur,
@@ -54,8 +59,12 @@ export async function POST(request: Request) {
         payment_ref:    paymentRef,
         method:         'stripe',
         status:         'completed',
-      });
-      if (orderErr) console.error('[stripe/webhook] order insert:', orderErr.message);
+      }, { onConflict: 'payment_ref', ignoreDuplicates: true });
+
+      if (orderErr && orderErr.code !== '23505') {
+        console.error('[stripe/webhook] order upsert:', orderErr.message);
+        return NextResponse.json({ error: 'Erreur enregistrement commande' }, { status: 500 });
+      }
 
       const adminEmail = process.env.ADMIN_EMAIL ?? null;
       if (adminEmail) {

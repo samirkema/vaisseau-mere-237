@@ -15,10 +15,11 @@ type WorkRow = Pick<
 >;
 
 const KIND_TABS: { kind: MangaKind | 'all'; label: string }[] = [
-  { kind: 'all',     label: 'Tout' },
-  { kind: 'manga',   label: 'Mangas' },
-  { kind: 'webtoon', label: 'Webtoons' },
-  { kind: 'bd',      label: 'BD' },
+  { kind: 'all',           label: 'Tout' },
+  { kind: 'manga',         label: 'Mangas' },
+  { kind: 'webtoon',       label: 'Webtoons' },
+  { kind: 'bd',            label: 'BD' },
+  { kind: 'artbook', label: 'Artbooks' },
 ];
 
 export default async function MangaPage({

@@ -47,8 +47,8 @@ export async function PATCH(
   if (raw.cover_url   !== undefined) update.cover_url   = raw.cover_url ? String(raw.cover_url) : null;
   if (raw.published   !== undefined) update.published   = Boolean(raw.published);
   if (raw.kind !== undefined) {
-    if (!['manga', 'webtoon', 'bd'].includes(String(raw.kind))) {
-      return NextResponse.json({ error: 'kind invalide (manga | webtoon | bd)' }, { status: 400 });
+    if (!['manga', 'webtoon', 'bd', 'artbook'].includes(String(raw.kind))) {
+      return NextResponse.json({ error: 'kind invalide (manga | webtoon | bd | artbook)' }, { status: 400 });
     }
     update.kind = raw.kind;
   }
