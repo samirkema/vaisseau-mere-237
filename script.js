@@ -89,7 +89,7 @@ const artistes = {
     ]
   },
   lemartien: {
-    photo: '<div class="artiste-cover-placeholder artiste-cover-visual" style="width:100%;height:100%;font-size:3rem">M</div>',
+    photo: '<img src="images/martial.png" alt="Le Martien 237">',
     nom: 'Le Martien 237',
     genre: 'Direction Artistique · Graphisme · Photographie · Cameroun',
     communaute: null,
