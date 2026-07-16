@@ -97,6 +97,10 @@ const artistes = {
       `Derrière l'alias <strong>LE MARTIEN 237</strong> se cache un esprit créatif, designer graphique, photographe et directeur artistique basé au Cameroun. Il est l'un des visages de cette nouvelle génération de créateurs qui redéfinissent l'identité visuelle de la culture afro-urbaine.`,
       `Spécialisé dans le branding musical et la conception d'univers immersif, il traduit les vibrations sonores en images percutantes. Son travail phare sur les pochettes d'albums d'artistes montants tels que Dydy09 ou Mr Kof témoigne d'une signature unique.`,
       `Pour Le Martien 237, une image ne doit pas seulement illustrer — elle doit raconter une histoire, bousculer les codes et capturer l'essence d'une époque. Voyageant entre photographie texturée et graphisme d'avant-garde, il connecte le Cameroun au reste du monde à travers un objectif résolument tourné vers l'avenir.`
+    ],
+    covers: [
+      { src: 'images/cover by martial/dydy-drill-tracklist.jpeg', alt: 'Dydy Drill — NU9VE' },
+      { src: 'images/cover by martial/remise-en-forme-cover.jpeg', alt: 'Remise en Forme — NU9VE' }
     ]
   },
   izis: {
@@ -126,6 +130,14 @@ function openBioModal(id) {
   comm.textContent = a.communaute || '';
   comm.style.display = a.communaute ? '' : 'none';
   document.getElementById('modal-bio').innerHTML = a.bio.map(p => `<p class="bio-modal-bio">${p}</p>`).join('');
+  const coversEl = document.getElementById('modal-covers');
+  if (a.covers?.length) {
+    coversEl.innerHTML = `<p class="bio-modal-covers-title">Réalisations</p><div class="bio-modal-covers-grid">${a.covers.map(c => `<img src="${c.src}" alt="${c.alt}" title="${c.alt}">`).join('')}</div>`;
+    coversEl.style.display = '';
+  } else {
+    coversEl.innerHTML = '';
+    coversEl.style.display = 'none';
+  }
   bioModal.classList.add('open');
   document.body.style.overflow = 'hidden';
 }

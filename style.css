@@ -852,6 +852,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   line-height: 1.75;
 }
 .bio-modal-bio strong { color: var(--text); font-weight: 600; }
+.bio-modal-covers-title { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin: 28px 0 12px; }
+.bio-modal-covers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+.bio-modal-covers-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 4px; }
 .artiste-bio-trigger {
   cursor: pointer;
 }

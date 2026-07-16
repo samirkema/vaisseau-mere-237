@@ -2,4 +2,6 @@
 *.pdf
 !doc/*.pdf
 WhatsApp Image*
+!images/cover by martial/dydy-drill-tracklist.jpeg
+!images/cover by martial/remise-en-forme-cover.jpeg
 fonts/
