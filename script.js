@@ -88,6 +88,17 @@ const artistes = {
       `Au-delà de la musique, Mr Kof a fédéré un véritable mouvement culturel en lançant le <strong>MAGIC BLOC</strong>. Bien plus qu'une simple fanbase, c'est un rassemblement puissant, une bannière sous laquelle se réunissent les passionnés qui se reconnaissent dans son authenticité et son rejet des faux-semblants.`
     ]
   },
+  lemartien: {
+    photo: '<div class="artiste-cover-placeholder artiste-cover-visual" style="width:100%;height:100%;font-size:3rem">M</div>',
+    nom: 'Le Martien 237',
+    genre: 'Direction Artistique · Graphisme · Photographie · Cameroun',
+    communaute: null,
+    bio: [
+      `Derrière l'alias <strong>LE MARTIEN 237</strong> se cache un esprit créatif, designer graphique, photographe et directeur artistique basé au Cameroun. Il est l'un des visages de cette nouvelle génération de créateurs qui redéfinissent l'identité visuelle de la culture afro-urbaine.`,
+      `Spécialisé dans le branding musical et la conception d'univers immersif, il traduit les vibrations sonores en images percutantes. Son travail phare sur les pochettes d'albums d'artistes montants tels que Dydy09 ou Mr Kof témoigne d'une signature unique.`,
+      `Pour Le Martien 237, une image ne doit pas seulement illustrer — elle doit raconter une histoire, bousculer les codes et capturer l'essence d'une époque. Voyageant entre photographie texturée et graphisme d'avant-garde, il connecte le Cameroun au reste du monde à travers un objectif résolument tourné vers l'avenir.`
+    ]
+  },
   izis: {
     photo: '<img src="images/izis.png" alt="IZIS 27">',
     nom: 'IZIS 27',
