@@ -311,7 +311,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .about-placeholder { font-style: italic; color: var(--text-3); }
 .about-img-placeholder {
-  aspect-ratio: 4/5;
   background: var(--bg-3);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -319,6 +318,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   align-items: center;
   justify-content: center;
   color: var(--text-3);
+  overflow: hidden;
   font-size: 14px;
   font-family: var(--mono);
 }
