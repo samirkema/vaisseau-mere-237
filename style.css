@@ -135,10 +135,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .logo {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 3px;
   font-family: var(--mono);
   font-weight: 700;
+}
+.logo-img-nav {
+  height: 36px;
+  width: auto;
+  display: block;
+  mix-blend-mode: screen;
 }
 .logo-main {
   font-size: 22px;
@@ -242,6 +248,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   line-height: 0.95;
   letter-spacing: -0.04em;
   margin-bottom: 32px;
+}
+.hero-title-img {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  display: block;
+  mix-blend-mode: screen;
 }
 .hero-title em {
   font-style: italic;
