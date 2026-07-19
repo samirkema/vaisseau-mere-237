@@ -205,7 +205,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   align-items: center;
   padding: 120px 40px 80px;
   overflow: hidden;
-  background: var(--bg);
+  background: #000;
 }
 .hero-noise {
   position: absolute;
@@ -213,48 +213,33 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
 }
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -200px; left: -200px;
-  width: 700px; height: 700px;
-  background: radial-gradient(circle, rgba(232,197,71,0.07) 0%, transparent 65%);
-  pointer-events: none;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: -100px; right: -100px;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(255,75,38,0.05) 0%, transparent 65%);
-  pointer-events: none;
-}
 .hero-content {
   position: relative;
   z-index: 1;
-  max-width: 800px;
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
 }
+.hero-left { display: flex; align-items: center; }
+.hero-right { display: flex; flex-direction: column; gap: 24px; }
 .hero-tag {
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.2em;
   color: var(--accent-2);
   text-transform: uppercase;
-  margin-bottom: 24px;
 }
 .hero-title {
-  font-size: clamp(64px, 10vw, 120px);
-  font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-  margin-bottom: 32px;
+  margin: 0;
+  line-height: 0;
 }
 .hero-title-img {
   width: 100%;
-  max-width: 560px;
   height: auto;
   display: block;
-  mix-blend-mode: screen;
 }
 .hero-title em {
   font-style: italic;
@@ -324,16 +309,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .about-placeholder { font-style: italic; color: var(--text-3); }
 .about-img-placeholder {
-  background: var(--bg-3);
-  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-3);
   overflow: hidden;
-  font-size: 14px;
-  font-family: var(--mono);
+  line-height: 0;
 }
 
 /* ===== ARTISTES ===== */
@@ -914,6 +892,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .form-row { grid-template-columns: 1fr; }
   .footer-top { flex-direction: column; gap: 32px; }
   .footer-nav { text-align: left; }
+  .hero-content { grid-template-columns: 1fr; }
   .hero-actions { flex-direction: column; }
   .contact-form { padding: 24px; }
 }
