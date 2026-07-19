@@ -12,8 +12,8 @@
   --text: #f0ece4;
   --text-2: #9a9590;
   --text-3: #5a5550;
-  --accent: #E8C547;        /* or chaud — soleil camerounais */
-  --accent-2: #FF4B26;      /* rouge vif — énergie */
+  --accent: #3AAB35;        /* vert logo */
+  --accent-2: #7D1A6A;      /* violet logo */
   --accent-hover: #f0d060;
   --font: 'Space Grotesk', system-ui, sans-serif;
   --mono: 'Space Mono', monospace;
@@ -238,7 +238,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.2em;
-  color: var(--text-3);
+  color: var(--accent-2);
   text-transform: uppercase;
   margin-bottom: 24px;
 }
@@ -392,7 +392,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .artiste-genre {
   font-size: 12px;
   font-family: var(--mono);
-  color: var(--text-3);
+  color: var(--accent-2);
   letter-spacing: 0.08em;
   margin-bottom: 16px;
 }
@@ -491,7 +491,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-size: 10px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-2);
   margin-bottom: 10px;
 }
 .projet-info h3 {
@@ -501,7 +501,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .projet-artiste {
   font-size: 13px;
-  color: var(--text-3);
+  color: var(--accent-2);
   margin-bottom: 12px;
   font-family: var(--mono);
 }
@@ -840,7 +840,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .bio-modal-tag {
   font-family: var(--mono);
   font-size: 11px;
-  color: var(--accent);
+  color: var(--accent-2);
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -853,10 +853,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .bio-modal-community {
   font-family: var(--mono);
   font-size: 12px;
-  color: var(--text-3);
+  color: var(--accent-2);
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  border-left: 2px solid var(--accent);
+  border-left: 2px solid var(--accent-2);
   padding-left: 10px;
 }
 .bio-modal-bio {
@@ -865,7 +865,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   line-height: 1.75;
 }
 .bio-modal-bio strong { color: var(--text); font-weight: 600; }
-.bio-modal-covers-title { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin: 28px 0 12px; }
+.bio-modal-covers-title { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-2); margin: 28px 0 12px; }
 .bio-modal-covers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
 .bio-modal-covers-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 4px; }
 .artiste-bio-trigger {
