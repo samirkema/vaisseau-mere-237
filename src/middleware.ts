@@ -1,6 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
-import { isAdmin, isSubscriber } from '@/lib/roles';
+import { isAdmin, isNftHolder } from '@/lib/roles';
 import type { Database } from '@/lib/supabase/types';
 
 export async function middleware(req: NextRequest) {
@@ -25,15 +25,15 @@ export async function middleware(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
 
   const path = req.nextUrl.pathname;
-  const needsSubscriber = ['/manga', '/jeux', '/my-remix'].some(r => path.startsWith(r));
+  const needsNftContent = ['/manga', '/jeux', '/my-remix'].some(r => path.startsWith(r));
   const needsAdmin      = path.startsWith('/admin');
   const needsNft        = path.startsWith('/club-vip');
 
-  if ((needsSubscriber || needsAdmin || needsNft) && !user) {
+  if ((needsNftContent || needsAdmin || needsNft) && !user) {
     return NextResponse.redirect(new URL('/auth/login', req.url));
   }
 
-  if (needsSubscriber || needsAdmin || needsNft) {
+  if (needsNftContent || needsAdmin || needsNft) {
     const { data } = await supabase
       .from('profiles')
       .select('role, subscription_tier, subscription_expires_at')
@@ -55,8 +55,8 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL('/compte', req.url));
     }
 
-    if (needsSubscriber && !needsAdmin) {
-      const active = isSubscriber(profile?.subscription_tier, profile?.subscription_expires_at);
+    if (needsNftContent && !needsAdmin) {
+      const active = isNftHolder(profile?.subscription_tier);
       if (!active) return NextResponse.redirect(new URL('/compte', req.url));
     }
   }

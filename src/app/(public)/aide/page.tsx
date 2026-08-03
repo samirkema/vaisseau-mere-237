@@ -1,4 +1,4 @@
-export const metadata = { title: 'Aide & Tutoriel — Otaku Shop' };
+export const metadata = { title: 'Aide & Tutoriel — Otaku Shop Studio' };
 
 function RichText({ text }: { text: string }) {
   const parts = text.split(/(<strong>.*?<\/strong>)/g);
@@ -21,39 +21,34 @@ const GUIDE_CARDS = [
     body: 'Rendez-vous sur la page <strong>Mon Compte</strong> depuis l\'accueil. Choisissez un pseudo, entrez votre adresse email et créez un mot de passe. Votre compte est immédiatement actif. Si vous oubliez votre mot de passe, un lien de réinitialisation vous sera envoyé par email.',
   },
   {
-    icon: '⭐',
-    title: 'S\'abonner pour accéder à tout',
-    body: 'Sans abonnement, vous avez accès à la galerie de tableaux et à l\'aide. Pour débloquer le manga, la zone Immersion et les jeux, abonnez-vous depuis l\'onglet <strong>Abonnement</strong> de votre compte : entrez un code d\'activation reçu après paiement, ou vérifiez votre NFT Otaku Shop si vous en possédez un.',
+    icon: '🔗',
+    title: 'Accès NFT — Débloquer le contenu',
+    body: 'L\'accès au manga, à la zone Immersion et au Club VIP est exclusivement réservé aux détenteurs du NFT Otaku Shop. Connectez votre wallet MetaMask depuis l\'onglet <strong>NFT Holder</strong> de votre compte. La vérification est instantanée et l\'accès est permanent.',
   },
   {
     icon: '🖼️',
     title: 'La Galerie de Tableaux',
-    body: 'Accessible à tous sans abonnement. Parcourez la collection complète de tableaux et photomontages disponibles à la vente. Chaque pièce est disponible en deux formats (A4 à 25€ et 40×50 cm à 50€). Les détenteurs de NFT peuvent réclamer certaines pièces gratuitement.',
+    body: 'Accessible à tous sans NFT. Parcourez la collection complète de tableaux et photomontages disponibles à la vente. Chaque pièce est disponible en deux formats (A4 à 25€ et 40×50 cm à 50€). Les détenteurs de NFT peuvent réclamer certaines pièces gratuitement.',
   },
   {
     icon: '📖',
     title: 'Lire le Manga',
-    body: 'La section manga est réservée aux abonnés. Une fois votre abonnement activé, vous accédez à l\'intégralité du contenu : mangas, webtoons et livres numériques en français, anglais et japonais. Votre accès est valable 1 an à compter de l\'activation.',
+    body: 'La section manga est réservée aux détenteurs de NFT Otaku Shop. Une fois votre wallet vérifié, vous accédez à l\'intégralité du contenu : mangas, webtoons et livres numériques en français, anglais et japonais. L\'accès est permanent tant que vous détenez le NFT.',
   },
   {
     icon: '🎮',
     title: 'La Zone Immersion',
-    body: 'Réservée aux abonnés, la zone Immersion regroupe des expériences interactives exclusives. Le premier jeu disponible est <strong>My Remix</strong> : choisissez une photo de la galerie, dessinez par-dessus pour créer un photomontage unique, soumettez votre création et votez pour les meilleures œuvres de la communauté.',
+    body: 'Réservée aux détenteurs de NFT, la zone Immersion regroupe des expériences interactives exclusives. Le premier jeu disponible est <strong>My Remix</strong> : choisissez une photo de la galerie, dessinez par-dessus pour créer un photomontage unique, soumettez votre création et votez pour les meilleures œuvres de la communauté.',
   },
   {
-    icon: '🔗',
-    title: 'NFT & Wallet Crypto',
-    body: 'Si vous possédez un NFT de la collection SWAP-SWAP sur OpenSea, connectez votre wallet MetaMask depuis l\'onglet <strong>Wallet</strong> de votre compte. Cela vous donne un accès abonné gratuit et permanent. Sans NFT, tout le reste fonctionne normalement avec un abonnement classique.',
+    icon: '👑',
+    title: 'Club VIP',
+    body: 'L\'espace VIP est exclusivement réservé aux détenteurs de NFT. Il donne accès aux commandes sur mesure (tableau, photomontage, illustration personnalisée) et aux événements exclusifs. Vérifiez votre NFT depuis <strong>Mon Compte</strong> pour y accéder.',
   },
   {
     icon: '🎨',
     title: 'Commandes Personnalisées',
     body: 'Ce service est exclusivement réservé aux détenteurs de NFT Otaku Shop. Il vous permet de commander une œuvre entièrement sur mesure : tableau, photomontage ou illustration personnalisée selon votre vision. Connectez votre wallet pour vérifier votre NFT et accéder à ce service.',
-  },
-  {
-    icon: '🔑',
-    title: 'Code d\'activation',
-    body: 'Après paiement, vous recevez un code d\'activation unique. Saisissez-le dans l\'onglet <strong>Abonnement</strong> de votre compte pour débloquer l\'accès pendant 1 an. Conservez ce code précieusement — il ne peut être utilisé qu\'une seule fois par compte.',
   },
 ];
 
@@ -71,35 +66,11 @@ export default function AidePage() {
           textTransform: 'uppercase',
           margin: '0 0 10px',
         }}>
-          Toutes les informations sur OTAKU SHOP
+          Toutes les informations sur OTAKU SHOP STUDIO
         </h1>
         <p style={{ color: '#666', marginBottom: '0' }}>
           Découvrez notre concept et apprenez à utiliser la plateforme.
         </p>
-      </div>
-
-      {/* VIDÉO */}
-      <div style={{
-        position: 'relative',
-        paddingBottom: '56.25%',
-        height: 0,
-        maxWidth: '1000px',
-        margin: '0 auto 50px',
-        border: '3px solid #f97316',
-        borderRadius: '20px',
-        overflow: 'hidden',
-        boxShadow: '0 0 30px rgba(249,115,22,0.4)',
-        background: '#111',
-      }}>
-        <iframe
-          src="https://www.youtube-nocookie.com/embed/epgxVCeWwaQ?rel=0"
-          title="TOUTES LES INFORMATIONS ESSENTIELLES SUR OTAKUSHOP"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-        />
       </div>
 
       {/* MISE À JOUR BANNER */}
@@ -138,10 +109,10 @@ export default function AidePage() {
             marginBottom: '14px',
             textShadow: '0 0 10px rgba(249,115,22,0.3)',
           }}>
-            <span className="emoji">🗺️</span> Comment fonctionne Otaku Shop ?
+            <span className="emoji">🗺️</span> Comment fonctionne Otaku Shop Studio ?
           </h2>
           <p style={{ color: '#666', fontSize: '0.95rem', lineHeight: 1.7, maxWidth: '680px', margin: '0 auto' }}>
-            Otaku Shop est une plateforme dédiée aux passionnés de manga, webtoon et dessin. Elle fonctionne en deux modes : un mode classique accessible à tous, et un mode avancé lié à la blockchain pour ceux qui souhaitent aller plus loin.
+            Otaku Shop Studio est un studio manga et art dédié aux passionnés. La galerie est ouverte à tous. Le contenu exclusif — manga, zone Immersion, Club VIP — est réservé aux détenteurs du NFT Otaku Shop.
           </p>
         </div>
 

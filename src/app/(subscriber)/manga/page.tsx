@@ -2,12 +2,12 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getProfile } from '@/lib/auth';
-import { isSubscriber } from '@/lib/roles';
+import { isNftHolder } from '@/lib/roles';
 import { createClient } from '@/lib/supabase/server';
 import { WorkCard } from '@/components/catalogue/WorkCard';
 import type { MangaKind, Database } from '@/lib/supabase/types';
 
-export const metadata = { title: 'Catalogue Manga — Otaku Shop' };
+export const metadata = { title: 'Catalogue Manga — Otaku Shop Studio' };
 
 type WorkRow = Pick<
   Database['public']['Tables']['manga_works']['Row'],
@@ -28,7 +28,7 @@ export default async function MangaPage({
   searchParams: Promise<{ kind?: string }>;
 }) {
   const profile = await getProfile();
-  if (!profile || !isSubscriber(profile.subscription_tier, profile.subscription_expires_at)) {
+  if (!profile || !isNftHolder(profile.subscription_tier)) {
     redirect('/compte');
   }
 

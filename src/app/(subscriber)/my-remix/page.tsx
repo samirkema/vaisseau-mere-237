@@ -1,11 +1,11 @@
 // Niveau 2 de sécurité : Server Component vérifie l'abonnement indépendamment du proxy.
 import { redirect } from 'next/navigation';
 import { getProfile } from '@/lib/auth';
-import { isSubscriber } from '@/lib/roles';
+import { isNftHolder } from '@/lib/roles';
 import { createServiceClient } from '@/lib/supabase/server';
 import { RemixClientPage, type RemixData } from '@/components/canvas/RemixClientPage';
 
-export const metadata = { title: 'My Remix — Otaku Shop' };
+export const metadata = { title: 'My Remix — Otaku Shop Studio' };
 
 const STATIC_BASES = [
   { id: 'static-1', title: 'Mosquée au Caire',     thumbnail: '/remix-bases/1000044869.jpg' },
@@ -16,7 +16,7 @@ const STATIC_BASES = [
 
 export default async function MyRemixPage() {
   const profile = await getProfile();
-  if (!profile || !isSubscriber(profile.subscription_tier, profile.subscription_expires_at)) {
+  if (!profile || !isNftHolder(profile.subscription_tier)) {
     redirect('/compte');
   }
 
@@ -69,7 +69,7 @@ export default async function MyRemixPage() {
       {/* HERO */}
       <div style={{ textAlign: 'center', padding: '60px 20px 40px' }}>
         <p style={{ color: '#333', fontSize: '0.7rem', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '12px' }}>
-          Zone créative · Abonnés
+          Zone créative · NFT
         </p>
         <h1 style={{
           fontSize: 'clamp(2rem, 5vw, 3rem)',

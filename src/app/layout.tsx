@@ -13,8 +13,8 @@ const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] });
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Otaku Shop',
-  description: 'Mangas, webtoons et BD — en ligne et en streaming',
+  title: 'Otaku Shop Studio',
+  description: 'Studio manga & art — accès NFT exclusif',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getProfile } from '@/lib/auth';
-import { isSubscriber } from '@/lib/roles';
+import { isNftHolder } from '@/lib/roles';
 
-export const metadata = { title: 'Immersion — Otaku Shop' };
+export const metadata = { title: 'Immersion — Otaku Shop Studio' };
 
 const GAMES = [
   {
@@ -30,7 +30,7 @@ const GAMES = [
 
 export default async function JeuxPage() {
   const profile = await getProfile();
-  if (!profile || !isSubscriber(profile.subscription_tier, profile.subscription_expires_at)) {
+  if (!profile || !isNftHolder(profile.subscription_tier)) {
     redirect('/compte');
   }
 
@@ -46,7 +46,7 @@ export default async function JeuxPage() {
         {/* HERO */}
         <div style={{ textAlign: 'center', padding: '70px 20px 56px' }}>
           <p style={{ color: '#333', fontSize: '0.75rem', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '16px' }}>
-            Zone exclusive abonnés
+            Zone exclusive NFT
           </p>
           <h1 style={{
             fontSize: 'clamp(2rem, 5vw, 3rem)',

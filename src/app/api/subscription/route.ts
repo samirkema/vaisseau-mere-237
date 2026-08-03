@@ -9,10 +9,16 @@ import { isSubscriber } from '@/lib/roles';
 const MAX_ATTEMPTS_PER_USER_24H = 5;
 const MAX_ATTEMPTS_PER_IP_1H    = 10;
 
-// POST /api/subscription — active un abonnement par code secret (hashé bcrypt en BDD/env).
-// Body : { code: string }
-// Env requis : ACTIVATION_CODE_HASH (bcrypt hash), ACTIVATION_DAYS (optionnel, défaut 30)
-export async function POST(request: Request) {
+// POST /api/subscription — désactivé. L'accès est désormais exclusivement par NFT.
+export async function POST(_request: Request) {
+  return NextResponse.json(
+    { error: 'Activation par code désactivée — accès par NFT uniquement.' },
+    { status: 410 },
+  );
+}
+
+// Conservé pour référence historique — ne s'exécute jamais.
+async function _unusedLegacyActivation(request: Request) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 });

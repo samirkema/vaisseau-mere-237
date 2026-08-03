@@ -49,7 +49,7 @@ async function handleUpload(request: Request) {
 
   if (!file || !type) return NextResponse.json({ error: 'file et type requis' }, { status: 400 });
   if (!ALLOWED_MIME.has(file.type)) {
-    return NextResponse.json({ error: 'Type MIME non autorisé (jpeg / png / webp / gif / avif)' }, { status: 400 });
+    return NextResponse.json({ error: 'Type MIME non autorisé (jpeg / png / gif / bmp / tiff)' }, { status: 400 });
   }
   if (file.size > MAX_BYTES) {
     return NextResponse.json({ error: 'Fichier trop volumineux (max 25 Mo)' }, { status: 400 });

@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { getProfile } from '@/lib/auth';
-import { isAdmin, isSubscriber } from '@/lib/roles';
+import { isAdmin } from '@/lib/roles';
 
 export async function Navbar() {
   const profile = await getProfile();
-  const subscribed = isSubscriber(profile?.subscription_tier ?? null, profile?.subscription_expires_at ?? null);
+  const isNft = profile?.subscription_tier === 'nft';
 
   return (
     <nav style={{
@@ -32,7 +32,7 @@ export async function Navbar() {
           textShadow: '0 0 10px rgba(249,115,22,0.5)',
           letterSpacing: '3px',
         }}>
-          OTAKU SHOP
+          OTAKU SHOP STUDIO
         </Link>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '24px', fontSize: '0.875rem' }}>
@@ -43,17 +43,15 @@ export async function Navbar() {
 
           {profile ? (
             <>
-              {subscribed && (
+              {isNft && (
                 <>
                   <Link href="/manga" style={{ color: '#aaa', textDecoration: 'none' }}
                     className="hover:text-white transition-colors">Manga</Link>
                   <Link href="/jeux" style={{ color: '#aaa', textDecoration: 'none' }}
                     className="hover:text-white transition-colors">Jeux</Link>
+                  <Link href="/club-vip" style={{ color: '#f97316', textDecoration: 'none', fontWeight: 600 }}
+                    className="hover:text-white transition-colors">Club VIP</Link>
                 </>
-              )}
-              {profile.subscription_tier === 'nft' && (
-                <Link href="/club-vip" style={{ color: '#f97316', textDecoration: 'none', fontWeight: 600 }}
-                  className="hover:text-white transition-colors">Club VIP</Link>
               )}
               {isAdmin(profile.role) && (
                 <Link href="/admin" style={{ color: '#aaa', textDecoration: 'none' }}

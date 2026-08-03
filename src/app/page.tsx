@@ -1,12 +1,11 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { getProfile } from '@/lib/auth';
-import { isSubscriber } from '@/lib/roles';
 import { createClient } from '@/lib/supabase/server';
 import { WorkCard } from '@/components/catalogue/WorkCard';
 import type { MangaKind, Database } from '@/lib/supabase/types';
 
-export const metadata = { title: 'Otaku Shop — Mangas, Webtoons & BD' };
+export const metadata = { title: 'Otaku Shop Studio — Mangas, Webtoons & BD' };
 
 type WorkRow = Pick<
   Database['public']['Tables']['manga_works']['Row'],
@@ -84,9 +83,9 @@ async function SearchResults({ q }: { q: string }) {
 
 const ACTIONS = [
   { id: 'galerie',  href: '/galerie', icon: '🖼️',  title: 'GALERIE',   desc: 'Collection complète de tableaux.', accent: '#f97316', requiresSub: false },
-  { id: 'manga',    href: '/manga',   icon: '📖',  title: 'MANGA',     desc: 'Mangas, webtoons et BD en streaming illimité dans l\'univers d\'Otaku Shop.',      accent: '#f97316', requiresSub: true  },
-  { id: 'jeux',     href: '/jeux',    icon: '🎮',  title: 'IMMERSION', desc: 'My Remix et jeux exclusifs dans l\'univers d\'Otaku Shop.',  accent: '#f97316', requiresSub: true  },
-  { id: 'aide',     href: '/aide',    icon: '💡',  title: 'AIDE',      desc: 'Guide complet et tutoriel vidéo de la plateforme.',  accent: '#f97316', requiresSub: false },
+  { id: 'manga',    href: '/manga',   icon: '📖',  title: 'MANGA',     desc: 'Mangas, webtoons et BD en streaming illimité dans l\'univers d\'Otaku Shop Studio.',      accent: '#f97316', requiresSub: true  },
+  { id: 'jeux',     href: '/jeux',    icon: '🎮',  title: 'IMMERSION', desc: 'My Remix et jeux exclusifs dans l\'univers d\'Otaku Shop Studio.',  accent: '#f97316', requiresSub: true  },
+  { id: 'aide',     href: '/aide',    icon: '💡',  title: 'AIDE',      desc: 'Guide complet sur la plateforme et le concept NFT.',  accent: '#f97316', requiresSub: false },
 ];
 
 export default async function HomePage({
@@ -98,7 +97,6 @@ export default async function HomePage({
   const q = (rawQ ?? '').trim();
 
   const profile = await getProfile();
-  const subscribed = isSubscriber(profile?.subscription_tier ?? null, profile?.subscription_expires_at ?? null);
   const isNft = profile?.subscription_tier === 'nft';
 
   return (
@@ -126,7 +124,7 @@ export default async function HomePage({
             textShadow: '0 0 30px rgba(249,115,22,0.4)',
             margin: '0 0 14px',
           }}>
-            OTAKU SHOP
+            OTAKU SHOP STUDIO
           </h1>
           <p style={{ color: '#555', fontSize: '0.8rem', letterSpacing: '2px', margin: '10px 0 0' }}>
             Le 9ème art débloqué par la blockchain
@@ -139,7 +137,7 @@ export default async function HomePage({
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
 
             {ACTIONS.map((box) => {
-              const locked = box.requiresSub && !subscribed;
+              const locked = box.requiresSub && !isNft;
               return (
                 <div key={box.id} className="action-card" style={{
                   background: '#0a0a0a',
@@ -167,9 +165,9 @@ export default async function HomePage({
                   </Link>
                   {locked && (
                     <div style={{ marginTop: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <span style={{ color: '#333', fontSize: '0.75rem' }}><span className="emoji">🔒</span> Abonnés</span>
+                      <span style={{ color: '#333', fontSize: '0.75rem' }}><span className="emoji">🔒</span> NFT</span>
                       <Link href="/compte" style={{ color: '#f97316', fontSize: '0.75rem', textDecoration: 'none', fontWeight: 600 }}>
-                        S&apos;abonner →
+                        En savoir plus →
                       </Link>
                     </div>
                   )}
@@ -233,11 +231,11 @@ export default async function HomePage({
                   {profile ? profile.pseudo.toUpperCase() : 'MON COMPTE'}
                 </h2>
                 <p style={{ color: '#555', fontSize: '0.82rem', lineHeight: 1.6 }}>
-                  {profile && subscribed
-                    ? <><span className="emoji">⭐</span> Abonnement actif</>
+                  {profile && isNft
+                    ? <><span className="emoji">⭐</span> Accès NFT actif</>
 
                     : profile
-                    ? 'Activez votre abonnement.'
+                    ? 'Obtenez votre NFT.'
                     : 'Connexion ou inscription.'}
                 </p>
               </Link>

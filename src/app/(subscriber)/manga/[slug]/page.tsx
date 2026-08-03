@@ -5,7 +5,7 @@ import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getProfile } from '@/lib/auth';
-import { isSubscriber } from '@/lib/roles';
+import { isNftHolder } from '@/lib/roles';
 import { createClient, createServiceClient } from '@/lib/supabase/server';
 import { getMangaPageUrl } from '@/lib/supabase/storage';
 import { MangaReader } from '@/components/manga/MangaReader';
@@ -35,7 +35,7 @@ export async function generateMetadata({
     .eq('id', workId)
     .eq('published', true)
     .single() as unknown as Promise<{ data: Pick<WorkRow, 'title'> | null; error: unknown }>);
-  return { title: res.data ? `${res.data.title} — Otaku Shop` : 'Lecteur — Otaku Shop' };
+  return { title: res.data ? `${res.data.title} — Otaku Shop Studio` : 'Lecteur — Otaku Shop Studio' };
 }
 
 export default async function MangaReaderPage({
@@ -47,7 +47,7 @@ export default async function MangaReaderPage({
 
   // ── Garde niveau 2 ────────────────────────────────────────────────────────
   const profile = await getProfile();
-  if (!profile || !isSubscriber(profile.subscription_tier, profile.subscription_expires_at)) {
+  if (!profile || !isNftHolder(profile.subscription_tier)) {
     redirect('/compte');
   }
 

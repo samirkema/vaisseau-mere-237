@@ -79,62 +79,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ received: true });
     }
 
-    // ── Abonnement ──────────────────────────────────────────────────────────
-    if (!userId) {
-      console.error('[stripe/webhook] userId absent des métadonnées');
-      return NextResponse.json({ error: 'userId manquant' }, { status: 400 });
-    }
-
-    // Abonnement 30 jours à compter du paiement
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 30);
-
-    const svc = createServiceClient();
-
-    const [profileRes, paymentRes] = await Promise.all([
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (svc as any)
-        .from('profiles')
-        .update({
-          subscription_tier:       'subscriber',
-          subscription_expires_at: expiresAt.toISOString(),
-        })
-        .eq('id', userId)
-        .select('pseudo')
-        .single(),
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (svc as any)
-        .from('payments')
-        .insert({
-          user_id:      userId,
-          amount:       (session.amount_total ?? 0) / 100,
-          currency:     session.currency ?? 'eur',
-          method:       'stripe',
-          status:       'completed',
-          provider_ref: typeof session.payment_intent === 'string' ? session.payment_intent : null,
-        }),
-    ]);
-
-    if (profileRes.error) {
-      console.error('[stripe/webhook] profile update:', profileRes.error.message);
-      return NextResponse.json({ error: 'Erreur activation abonnement' }, { status: 500 });
-    }
-    if (paymentRes.error) {
-      console.error('[stripe/webhook] payment insert:', paymentRes.error.message);
-      // Ne pas bloquer Stripe pour un log de paiement manquant — l'accès est déjà accordé.
-    }
-
-    // Envoi du reçu email (fire-and-forget — ne pas bloquer la réponse Stripe)
-    const email    = session.customer_email ?? session.customer_details?.email ?? null;
-    const pseudo   = (profileRes.data as { pseudo?: string } | null)?.pseudo ?? 'abonné';
-    const amountEur = (session.amount_total ?? 0) / 100;
-    const payRef    = typeof session.payment_intent === 'string' ? session.payment_intent : null;
-
-    if (email) {
-      sendPaymentReceipt({ to: email, pseudo, amountEur, paymentRef: payRef, expiresAt })
-        .catch(err => console.error('[stripe/webhook] email reçu:', err));
-    }
+    // Accès par abonnement Stripe supprimé — modèle NFT-only.
+    // Les sessions sans tableauId sont acquittées sans effet côté profil.
+    console.warn('[stripe/webhook] session sans tableauId ignorée (modèle NFT-only), userId:', userId);
   }
 
   return NextResponse.json({ received: true });

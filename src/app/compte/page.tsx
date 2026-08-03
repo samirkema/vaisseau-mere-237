@@ -3,10 +3,9 @@ import { getProfile } from '@/lib/auth';
 import { isSubscriber } from '@/lib/roles';
 import Link from 'next/link';
 import { LogoutButton } from './LogoutButton';
-import { ActivationForm } from './ActivationForm';
 import { WalletConnect } from './WalletConnect';
 
-export const metadata = { title: 'Mon compte — Otaku Shop' };
+export const metadata = { title: 'Mon compte — Otaku Shop Studio' };
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -89,6 +88,11 @@ export default async function ComptePage() {
                         <span style={{ color: '#ccc', fontWeight: 600 }}>{formatDate(profile.subscription_expires_at)}</span>
                       </div>
                     )}
+                    {profile.subscription_tier === 'subscriber' && (
+                      <p style={{ color: '#666', fontSize: '0.75rem', lineHeight: 1.5, margin: '6px 0 0', padding: '10px 12px', background: 'rgba(249,115,22,0.05)', border: '1px solid rgba(249,115,22,0.1)', borderRadius: '8px' }}>
+                        L&apos;accès au contenu (manga, jeux, Club VIP) est désormais exclusivement réservé aux détenteurs de NFT. Connectez votre wallet ci-dessous pour obtenir l&apos;accès.
+                      </p>
+                    )}
                     {profile.subscription_tier === 'nft' && (
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem' }}>
                         <span style={{ color: '#666' }}>Wallet</span>
@@ -99,16 +103,6 @@ export default async function ComptePage() {
                         </span>
                       </div>
                     )}
-                  </div>
-                )}
-
-                {/* Code d'activation — utilisateurs non abonnés */}
-                {!subscribed && (
-                  <div>
-                    <p style={{ color: '#555', fontSize: '0.78rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '10px' }}>
-                      Code d&apos;activation
-                    </p>
-                    <ActivationForm />
                   </div>
                 )}
 
