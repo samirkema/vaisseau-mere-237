@@ -182,17 +182,19 @@ document.addEventListener('DOMContentLoaded', () => {
       modalSpecs.innerHTML = data.specs.map(spec => `<li><span class="spec-check">✓</span> ${spec}</li>`).join('');
     }
 
-    // Liens WhatsApp et Email pré-remplis
+    // Liens WhatsApp et Email pré-remplis avec le numéro et l'email officiels
+    const whatsappNumber = '237695341413';
+    const contactEmail = 'tfasseu@gmail.com';
     const msg = encodeURIComponent(`Bonjour Vaisseau Mère 237, je souhaite commander le tableau suivant :\n- ${data.title}\n- Prix : ${data.priceEur} / ${data.priceCfa}\nPouvez-vous m'indiquer les modalités de livraison et de paiement ?`);
     
     if (modalWhatsapp) {
-      modalWhatsapp.href = `https://wa.me/?text=${msg}`;
+      modalWhatsapp.href = `https://wa.me/${whatsappNumber}?text=${msg}`;
       modalWhatsapp.target = '_blank';
     }
 
     if (modalEmail) {
       const subject = encodeURIComponent(`Commande Tableau VM237 : ${data.title}`);
-      modalEmail.href = `mailto:contact@vaisseaumere237.com?subject=${subject}&body=${msg}`;
+      modalEmail.href = `mailto:${contactEmail}?subject=${subject}&body=${msg}`;
     }
 
     if (modalMangaLink) {
