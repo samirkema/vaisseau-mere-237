@@ -3,7 +3,6 @@ import Link from 'next/link';
 const navItems = [
   { href: '/admin',            label: 'Dashboard' },
   { href: '/admin/manga',      label: 'Mangas' },
-  { href: '/admin/tableaux',   label: 'Tableaux' },
   { href: '/admin/users',      label: 'Utilisateurs' },
   { href: '/admin/analytics',  label: 'Analytics' },
 ];
