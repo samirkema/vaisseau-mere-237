@@ -874,6 +874,83 @@ a.service-card:hover .service-card__link { text-decoration: underline; }
   color: var(--accent);
   transition: color var(--transition);
 }
+
+/* ===== SERVICES / BOUTIQUE — CTA VERS LE SHOP ===== */
+.services-cta-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.boutique-more {
+  text-align: center;
+  margin-top: 48px;
+}
+
+/* ===== PAGE SHOP ===== */
+.shop-page { padding-top: 70px; }
+.shop-hero {
+  padding: 100px 0 80px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.shop-hero .section-title { margin-bottom: 20px; }
+.shop-hero-intro {
+  font-size: 16px;
+  color: var(--text-2);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+.shop-section { padding: 100px 0; }
+.shop-section:nth-of-type(even) { background: var(--bg-2); }
+.shop-cats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.shop-cat {
+  display: block;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  transition: border-color var(--transition), transform var(--transition);
+}
+.shop-cat:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+.shop-cat-icon { font-size: 30px; margin-bottom: 18px; }
+.shop-cat h3 { font-size: 19px; font-weight: 600; margin-bottom: 10px; }
+.shop-cat p { font-size: 14px; color: var(--text-2); line-height: 1.65; }
+.shop-cat-link {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+}
+.shop-note {
+  margin-top: 56px;
+  padding: 24px 28px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-3);
+  line-height: 1.7;
+  text-align: center;
+}
+.back-link { color: var(--text-2) !important; }
+@media (max-width: 768px) {
+  .shop-cats { grid-template-columns: 1fr; }
+  .shop-hero { padding: 60px 0 56px; }
+  .shop-section { padding: 64px 0; }
+}
+
 @media (max-width: 640px) {
   .bio-modal-inner { grid-template-columns: 1fr; }
   .bio-modal-photo { aspect-ratio: 1; }
