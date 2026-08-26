@@ -188,7 +188,7 @@ export default function GaleriePage() {
             </Link>
           </div>
 
-          {/* CARTE 3 : PRESTATION SUR MESURE */}
+          {/* CARTE 3 : PROJET MANGA */}
           <div className="portal-card" style={{
             background: '#0a0a0a',
             border: '1px solid #1c1c1c',
@@ -200,7 +200,7 @@ export default function GaleriePage() {
           }}>
             <div>
               <div style={{ fontSize: '2.4rem', marginBottom: '16px' }}>
-                <span className="emoji">🎨</span>
+                <span className="emoji">✍️</span>
               </div>
               <h2 style={{
                 color: '#fff',
@@ -209,17 +209,17 @@ export default function GaleriePage() {
                 letterSpacing: '1px',
                 marginBottom: '12px',
               }}>
-                Prestation Personnalisée
+                Vous avez un Projet Manga ?
               </h2>
               <p style={{ color: '#777', fontSize: '0.88rem', lineHeight: 1.65, marginBottom: '28px' }}>
-                Vous souhaitez une œuvre sur mesure, une pochette, un logo ou une illustration personnalisée selon vos envies ?
+                Vous portez une histoire, un scénario, un webtoon ou un projet manga et souhaitez collaborer avec notre studio ? Contactez-nous directement pour en discuter.
               </p>
             </div>
             <a
-              href="mailto:kilimangarocontact@gmail.com?subject=Demande%20de%20prestation%20personnalis%C3%A9e%20%E2%80%94%20Vaisseau%20Manga%20237"
+              href="mailto:tfasseu@gmail.com?subject=Projet%20Manga%20%E2%80%94%20Vaisseau%20Manga%20237"
               className="btn-portal-secondary"
             >
-              Commander une prestation ✉️
+              Proposer un projet manga ✉️
             </a>
           </div>
 
