@@ -1,14 +1,15 @@
 # Migration otakushop → monorepo vaisseau-mere-237
 
-Date : 2026-08-26
+Date : 2026-08-26 — **migration et redéploiement effectués.**
 
 ## Ce qui a changé
 
 | Avant | Après |
 |---|---|
-| Dépôt `samirkema/otakushop` (Next.js, Vercel) | `apps/vaisseaumanga237/` dans ce dépôt |
+| Dépôt `samirkema/otakushop` (Next.js, déploiement manuel) | `apps/vaisseaumanga237/` dans ce dépôt |
 | Dépôt `samirkema/vaisseau-mere-237` racine = site statique | `apps/site/` dans ce dépôt |
-| Site vitrine sur **GitHub Pages** | Site vitrine sur **Vercel** (projet statique) |
+| Site vitrine sur **GitHub Pages** | Site vitrine sur **Vercel** |
+| Vercel non relié à Git (`npx vercel --prod` à la main) | **Auto-déploiement depuis `main`** |
 | `.github/workflows/` de l'app | remonté à la racine du dépôt |
 
 Historique otakushop préservé (merge subtree) :
@@ -16,74 +17,73 @@ Historique otakushop préservé (merge subtree) :
 
 ---
 
-## Redéploiement — checklist
+## Déploiement — état actuel
 
-### 1. `apps/site` — nouveau projet Vercel (statique)
+| App | Projet Vercel | Root Directory | URL de production |
+|---|---|---|---|
+| `apps/site` | `vaisseau-mere-237` | `apps/site` | https://vaisseau-mere-237.vercel.app |
+| `apps/vaisseaumanga237` | `otakushop` | `apps/vaisseaumanga237` | https://otakushop-vert.vercel.app |
 
-1. Vercel → **Add New Project** → importer `samirkema/vaisseau-mere-237`.
-2. **Root Directory** : `apps/site`.
-3. Framework Preset : **Other**. Build Command / Install Command : vides
-   (déjà forcé par `apps/site/vercel.json`).
-4. Deploy. Brancher le domaine principal (ex. `vaisseaumere237.com`).
-5. **Désactiver GitHub Pages** (Settings → Pages → Source : None) une fois
-   le domaine basculé sur Vercel.
+Les deux projets sont connectés à `samirkema/vaisseau-mere-237`, branche de
+production `main`. **Un push sur `main` redéploie automatiquement les deux**
+(Vercel ne rebuild que l'app dont le Root Directory a changé).
 
-### 2. `apps/vaisseaumanga237` — projet Vercel existant à reconfigurer
+> Le projet manga a été **réutilisé** plutôt que recréé : les 15 variables
+> d'environnement et l'URL `otakushop-vert.vercel.app` sont conservées, donc
+> les webhooks Stripe et NowPayments restent valides sans aucune modification.
 
-Réutiliser le projet Vercel `otakushop` (garde l'URL `otakushop-vert.vercel.app`
-et les variables déjà en place) :
+### Vérifications passées après bascule
 
-1. Vercel → projet `otakushop` → **Settings → Git** : connecter le dépôt
-   `samirkema/vaisseau-mere-237` (branche `main`).
-2. **Settings → General → Root Directory** : `apps/vaisseaumanga237`.
-3. **Settings → General** : renommer le projet en `vaisseaumanga237` (optionnel).
-4. Vérifier les variables d'environnement (Settings → Environment Variables) —
-   voir liste ci-dessous. Mettre à jour `NEXT_PUBLIC_APP_URL` avec le domaine final.
-5. Redeploy.
+- `apps/site` : `/`, `/shop.html`, `/style.css`, `/images/*` → 200
+- `apps/vaisseaumanga237` : `/`, `/galerie`, `/aide`, `/cgv` → 200 ;
+  `/manga` et `/club-vip` → 307 vers `/auth/login` (middleware actif)
 
-> Alternative : créer un nouveau projet Vercel et recopier toutes les variables.
+---
 
-### 3. Variables d'environnement (`apps/vaisseaumanga237`)
+## Reste à faire — actions nécessitant tes identifiants
 
-Source : `apps/vaisseaumanga237/.env.example`. À définir dans Vercel :
+### 1. Secrets GitHub Actions (workflow keep-alive Supabase)
 
-- `ADMIN_EMAIL`
-- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
-- `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`
-- `NOWPAYMENTS_API_KEY`, `NOWPAYMENTS_IPN_SECRET`
-- `RESEND_API_KEY`
-- `ACTIVATION_CODE_HASH`, `ACTIVATION_DAYS`
-- `ALCHEMY_API_KEY`, `NFT_CONTRACT_ADDRESS`, `NFT_REQUIRED_TOKEN_ID`
-- `CRON_SECRET`
-- `NEXT_PUBLIC_APP_URL` → **URL de prod du projet manga** (ex. `https://vaisseaumanga237.com`)
+`.github/workflows/supabase-keepalive.yml` a suivi dans ce dépôt mais ses
+secrets n'existent pas encore ici. Les valeurs sont déjà dans Vercel — cette
+commande les transfère **sans jamais les afficher** :
 
-Après bascule de domaine : mettre à jour les **webhooks** Stripe et NowPayments
-(URL d'endpoint) et le `success_url` / `ipn_callback_url` suivent `NEXT_PUBLIC_APP_URL`.
+```bash
+cd "apps/vaisseaumanga237" && npx vercel env pull /tmp/vm.env --environment=production --yes >/dev/null && set -a && . /tmp/vm.env && set +a && printf '%s' "$NEXT_PUBLIC_SUPABASE_URL" | gh secret set NEXT_PUBLIC_SUPABASE_URL --repo samirkema/vaisseau-mere-237 && printf '%s' "$NEXT_PUBLIC_SUPABASE_ANON_KEY" | gh secret set NEXT_PUBLIC_SUPABASE_ANON_KEY --repo samirkema/vaisseau-mere-237 && rm -f /tmp/vm.env && echo "secrets posés"
+```
 
-### 4. GitHub Actions — secrets à recréer
+### 2. `CRON_SECRET` absent de Vercel
 
-Le workflow `.github/workflows/supabase-keepalive.yml` a suivi dans ce dépôt.
-Recréer dans **Settings → Secrets and variables → Actions** de `vaisseau-mere-237` :
+`POST /api/nft/revalidate` lit `process.env.CRON_SECRET` et renvoie `401` s'il
+est absent (`src/app/api/nft/revalidate/route.ts:14-18`). La revalidation NFT
+(US 7.1 C3) est donc **inactive**. Écart pré-existant, sans lien avec la migration.
 
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+Pour l'activer :
 
-### 5. Liens sortants du site vitrine
+```bash
+openssl rand -hex 32 | tr -d '\n' | npx vercel env add CRON_SECRET production --cwd apps/vaisseaumanga237
+```
 
-`apps/site/index.html` et `apps/site/shop.html` pointent vers
-`https://otakushop-vert.vercel.app`. Si le projet manga change d'URL/domaine,
-mettre à jour ces deux liens.
+…puis créer le workflow cron qui appelle la route avec ce même secret en
+`Authorization: Bearer` (aucun workflow ne l'appelle aujourd'hui).
 
-### 6. Supabase
+### 3. Domaines personnalisés (optionnel)
 
-Inchangé — même projet Supabase, mêmes migrations (`apps/vaisseaumanga237/supabase/migrations/`).
-Aucune migration DB déclenchée par ce déplacement de fichiers.
+Aucun domaine custom n'est branché — les deux apps sont sur des URL `.vercel.app`.
+Si tu branches un domaine sur l'app manga, il faudra alors :
+
+- mettre à jour `NEXT_PUBLIC_APP_URL` dans Vercel ;
+- mettre à jour l'URL des webhooks Stripe et NowPayments ;
+- mettre à jour les liens vers l'app dans `apps/site/index.html` et
+  `apps/site/shop.html` (ils pointent sur `otakushop-vert.vercel.app`).
 
 ---
 
 ## Nettoyage post-migration
 
+- **GitHub Pages : désactivé** ✅ (`samirkema.github.io/vaisseau-mere-237` ne répond plus).
 - Archiver le dépôt `samirkema/otakushop` (Settings → Archive) une fois la
-  nouvelle chaîne validée en prod.
-- Le remote local `otakushop` ajouté pendant la migration peut être retiré :
-  `git remote remove otakushop`.
+  nouvelle chaîne validée dans la durée. Son historique est déjà dans ce dépôt.
+- Renommer le projet Vercel `otakushop` → `vaisseaumanga237` est possible, mais
+  **change l'URL de production** et donc casse les webhooks : à faire seulement
+  en même temps qu'un domaine custom (voir §3).
