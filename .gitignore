@@ -1,7 +1,39 @@
+# ---------------------------------------------------------------------------
+# Monorepo vaisseau-mere-237
+#   apps/site              → site vitrine statique
+#   apps/vaisseaumanga237  → app Next.js (a son propre .gitignore imbriqué)
+# ---------------------------------------------------------------------------
+
+# OS
 .DS_Store
+Capture d’écran*
+
+# Dépendances / build (toutes apps)
+node_modules/
+.next/
+out/
+build/
+coverage/
+*.tsbuildinfo
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel
+
+# Claude Code (local)
+.claude/settings.local.json
+
+# ---------------------------------------------------------------------------
+# Médias volumineux / brouillons non publiés
+# ---------------------------------------------------------------------------
 *.pdf
-!doc/*.pdf
+!apps/site/doc/*.pdf
 WhatsApp Image*
-!images/cover by martial/dydy-drill-tracklist.jpeg
-!images/cover by martial/remise-en-forme-cover.jpeg
+!apps/site/images/cover by martial/dydy-drill-tracklist.jpeg
+!apps/site/images/cover by martial/remise-en-forme-cover.jpeg
 fonts/
+/style /
