@@ -87,7 +87,21 @@ Si tu branches un domaine sur l'app manga, il faudra alors :
 
 ## Nettoyage post-migration
 
-- **GitHub Pages : désactivé** ✅ (`samirkema.github.io/vaisseau-mere-237` ne répond plus).
+- **GitHub Pages : conservé en redirection** ✅ — `samirkema.github.io/vaisseau-mere-237`
+  ne sert plus le site mais une page qui renvoie vers Vercel, pour ne pas casser
+  les liens déjà diffusés. Publié par `.github/workflows/pages-redirect.yml`
+  depuis `.github/pages-redirect/`, indépendamment de `apps/site`.
+
+  `404.html` étant identique à `index.html`, GitHub Pages le sert pour toute URL
+  inconnue et le script y reconstruit le chemin : `/vaisseau-mere-237/shop.html`
+  arrive bien sur `/shop.html`. Vérifié en navigateur sur les deux cas.
+
+  Limite : GitHub Pages est un hébergeur statique, il ne sait pas émettre de
+  vrai `301`. La redirection est faite en JavaScript (repli `<meta refresh>`
+  vers l'accueil sans JS), et les liens profonds répondent `404` avant de
+  rediriger. C'est transparent pour un visiteur, mais ce n'est pas une
+  redirection permanente au sens SEO. Un domaine personnalisé sur Vercel (§3)
+  est la seule vraie solution durable.
 - Archiver le dépôt `samirkema/otakushop` (Settings → Archive) une fois la
   nouvelle chaîne validée dans la durée. Son historique est déjà dans ce dépôt.
 - Renommer le projet Vercel `otakushop` → `vaisseaumanga237` est possible, mais
