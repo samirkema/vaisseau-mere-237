@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shop — Vaisseau Mère 237</title>
+  <title>Boutique Officielle — Vaisseau Mère 237</title>
+  <meta name="description" content="Découvrez le shop du Vaisseau Mère 237 : tableaux manga remixés, albums physiques, textile streetwear et tirages d'art limités.">
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,71 +13,344 @@
 <body class="shop-page">
 
   <!-- ===== HEADER ===== -->
-  <header class="header">
+  <header class="header" id="header">
     <a href="index.html#accueil" class="logo">
       <img src="images/logo-vm237.jpeg" alt="VM 237" class="logo-img-nav">
     </a>
-    <nav class="nav">
+    <nav class="nav" id="nav">
       <a href="index.html#artistes">Son</a>
       <a href="index.html#visuels">Visuel</a>
       <a href="index.html#projets">Projets</a>
       <a href="index.html#services">Services</a>
-      <a href="index.html#boutique" class="back-link">← Retour au site</a>
+      <a href="shop.html" class="active">Boutique</a>
+      <a href="index.html#contact" class="back-link">← Retour au site</a>
     </nav>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
   <!-- ===== HERO SHOP ===== -->
   <section class="shop-hero">
     <div class="container">
-      <span class="section-label">Boutique en ligne</span>
-      <h1 class="section-title">Shop</h1>
-      <p class="shop-hero-intro">
-        Musique, merch, éditions limitées et univers manga — tout ce que produit le Vaisseau, au même endroit.
-        Boutique en cours de construction : les premières commandes se font par contact.
-      </p>
-      <a href="index.html#contact" class="btn-primary">Nous contacter</a>
+      <div class="shop-hero-content">
+        <span class="section-label">Boutique Officielle</span>
+        <h1 class="section-title">Le Shop du Vaisseau</h1>
+        <p class="shop-hero-intro">
+          Artworks manga remixés, disques physiques, merch officiel et éditions collector d'art. 
+          Sélectionnez une catégorie pour explorer nos créations et commandez directement en quelques secondes.
+        </p>
+        <div class="shop-hero-actions">
+          <a href="#catalogue" class="btn-primary">Explorer le catalogue ↓</a>
+          <a href="https://vaisseaumanga237.vercel.app" target="_blank" rel="noopener" class="btn-secondary">
+            <span>🎌</span> Univers Manga ↗
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ===== CATÉGORIES ===== -->
-  <section class="shop-section">
+  <!-- ===== CATALOGUE & FILTRES ===== -->
+  <section class="shop-section" id="catalogue">
     <div class="container">
-      <span class="section-label">Catégories</span>
-      <h2 class="section-title">Explorer</h2>
 
-      <div class="shop-cats">
-        <a class="shop-cat" href="index.html#boutique">
-          <div class="shop-cat-icon">💿</div>
-          <h3>Musique</h3>
-          <p>Albums, vinyles et supports physiques des artistes du collectif.</p>
-          <span class="shop-cat-link">Bientôt disponible</span>
-        </a>
-        <a class="shop-cat" href="index.html#boutique">
-          <div class="shop-cat-icon">👕</div>
-          <h3>Merch</h3>
-          <p>Textile et accessoires aux couleurs du Vaisseau Mère 237.</p>
-          <span class="shop-cat-link">Bientôt disponible</span>
-        </a>
-        <a class="shop-cat" href="index.html#boutique">
-          <div class="shop-cat-icon">✦</div>
-          <h3>Éditions limitées</h3>
-          <p>Séries numérotées, tirages d'art et objets de collection.</p>
-          <span class="shop-cat-link">Bientôt disponible</span>
-        </a>
-        <a class="shop-cat" href="https://vaisseaumanga237.vercel.app" target="_blank" rel="noopener">
-          <div class="shop-cat-icon">🎌</div>
-          <h3>Manga</h3>
-          <p>Contenu et prestations autour des manga avec vaisseaumanga237.</p>
-          <span class="shop-cat-link">Visiter vaisseaumanga237 ↗</span>
-        </a>
+      <!-- Barre de catégories interactives -->
+      <div class="shop-filters-header">
+        <div>
+          <span class="section-label">Catégories</span>
+          <h2 class="section-subtitle">Filtrer par univers</h2>
+        </div>
+        <div class="shop-count-badge" id="visible-count">6 articles</div>
       </div>
 
-      <p class="shop-note">
-        Cette page est une première version. Le catalogue, le panier et le paiement en ligne
-        arrivent prochainement — en attendant, écris-nous pour toute commande.
-      </p>
+      <div class="shop-categories-nav" role="tablist" aria-label="Filtrer les produits">
+        <button class="shop-filter-btn active" data-category="all" role="tab" aria-selected="true">
+          <span class="filter-icon">⚡</span>
+          <span class="filter-text">Tous les articles</span>
+          <span class="filter-count">6</span>
+        </button>
+
+        <button class="shop-filter-btn" data-category="manga" role="tab" aria-selected="false">
+          <span class="filter-icon">🎌</span>
+          <span class="filter-text">Manga & Tableaux</span>
+          <span class="filter-count highlight-count">2</span>
+        </button>
+
+        <button class="shop-filter-btn" data-category="musique" role="tab" aria-selected="false">
+          <span class="filter-icon">💿</span>
+          <span class="filter-text">Musique & Albums</span>
+          <span class="filter-count">2</span>
+        </button>
+
+        <button class="shop-filter-btn" data-category="merch" role="tab" aria-selected="false">
+          <span class="filter-icon">👕</span>
+          <span class="filter-text">Merch & Textile</span>
+          <span class="filter-count">1</span>
+        </button>
+
+        <button class="shop-filter-btn" data-category="editions" role="tab" aria-selected="false">
+          <span class="filter-icon">✦</span>
+          <span class="filter-text">Éditions Limitées</span>
+          <span class="filter-count">1</span>
+        </button>
+      </div>
+
+      <!-- En-tête du carrousel avec titre de catégorie et flèches de défilement -->
+      <div class="shop-carousel-header">
+        <h3 class="shop-active-heading" id="active-category-title">Tous les articles</h3>
+        
+        <div class="shop-carousel-controls" aria-label="Contrôles de navigation">
+          <span class="carousel-hint">Glissez ou utilisez les flèches</span>
+          <button class="carousel-btn" id="carousel-prev" aria-label="Article précédent">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button class="carousel-btn" id="carousel-next" aria-label="Article suivant">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Carrousel horizontal ergonomique -->
+      <div class="shop-carousel-wrapper">
+        <div class="shop-carousel" id="shop-carousel" tabindex="0" role="region" aria-label="Liste défilante des produits">
+
+          <!-- 1. MANGA : DEKU & LES ENFANTS DU 237 -->
+          <article class="product-card" data-category="manga" data-product-id="manga-deku">
+            <div class="product-card-badge bestseller">Bestseller</div>
+            <div class="product-card-img-wrap">
+              <img src="images/shop/manga-deku-237.jpg" alt="Tableau Remix Deku & Les Enfants du 237" loading="lazy" class="product-img">
+              <button class="product-quick-view-btn view-product-btn" aria-label="Aperçu rapide">
+                <span>🔍 Aperçu rapide</span>
+              </button>
+            </div>
+            <div class="product-card-content">
+              <div class="product-category-tag">Manga · Tableau Remix</div>
+              <h4 class="product-title">Tableau Remix — Deku & Les Enfants du 237</h4>
+              <p class="product-excerpt">My Hero Academia rencontre Yaoundé. Tirage d'art haute résolution sur papier satiné 300g.</p>
+              
+              <div class="product-card-footer">
+                <div class="product-pricing">
+                  <span class="price-eur-val">15 €</span>
+                  <span class="price-cfa-val">10 000 FCFA</span>
+                </div>
+                <button class="btn-order order-product-btn" aria-label="Commander ce tableau">
+                  <span>Commander</span> →
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2. MANGA : NARUTO HOKAGE & ALLOCO 237 -->
+          <article class="product-card" data-category="manga" data-product-id="manga-naruto">
+            <div class="product-card-badge special">Édition Spéciale</div>
+            <div class="product-card-img-wrap">
+              <img src="images/shop/manga-naruto-alloco-237.jpg" alt="Tableau Remix Naruto Hokage & Alloco 237" loading="lazy" class="product-img">
+              <button class="product-quick-view-btn view-product-btn" aria-label="Aperçu rapide">
+                <span>🔍 Aperçu rapide</span>
+              </button>
+            </div>
+            <div class="product-card-content">
+              <div class="product-category-tag">Manga · Tableau Remix</div>
+              <h4 class="product-title">Tableau Remix — Naruto Hokage & Alloco 237</h4>
+              <p class="product-excerpt">Le 7e Hokage face à un plat d'alloco et plantains frits. Tirage d'art original vibrant.</p>
+              
+              <div class="product-card-footer">
+                <div class="product-pricing">
+                  <span class="price-eur-val">15 €</span>
+                  <span class="price-cfa-val">10 000 FCFA</span>
+                </div>
+                <button class="btn-order order-product-btn" aria-label="Commander ce tableau">
+                  <span>Commander</span> →
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3. MUSIQUE : CODE PIN VOL 1 & 2 -->
+          <article class="product-card" data-category="musique" data-product-id="musique-codepin">
+            <div class="product-card-badge collector">CD Collector</div>
+            <div class="product-card-img-wrap">
+              <img src="images/code pin volume 1.png" alt="Album NU9VE Code Pin Vol 1 et 2" loading="lazy" class="product-img">
+              <button class="product-quick-view-btn view-product-btn" aria-label="Aperçu rapide">
+                <span>🔍 Aperçu rapide</span>
+              </button>
+            </div>
+            <div class="product-card-content">
+              <div class="product-category-tag">Musique · CD Physique</div>
+              <h4 class="product-title">NU9VE — Code Pin Vol. 1 & 2</h4>
+              <p class="product-excerpt">Double album culte sous boîtier digipack 3 volets avec livret 16 pages et stickers offerts.</p>
+              
+              <div class="product-card-footer">
+                <div class="product-pricing">
+                  <span class="price-eur-val">10 €</span>
+                  <span class="price-cfa-val">6 500 FCFA</span>
+                </div>
+                <button class="btn-order order-product-btn" aria-label="Commander cet album">
+                  <span>Commander</span> →
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- 4. MUSIQUE : MAGIC ROOM EP -->
+          <article class="product-card" data-category="musique" data-product-id="musique-magicroom">
+            <div class="product-card-badge magic">Sorcellerie</div>
+            <div class="product-card-img-wrap">
+              <img src="images/magic room.png" alt="Mr Kof Magic Room EP" loading="lazy" class="product-img">
+              <button class="product-quick-view-btn view-product-btn" aria-label="Aperçu rapide">
+                <span>🔍 Aperçu rapide</span>
+              </button>
+            </div>
+            <div class="product-card-content">
+              <div class="product-category-tag">Musique · EP Physique</div>
+              <h4 class="product-title">Mr Kof — Magic Room (EP)</h4>
+              <p class="product-excerpt">Édition physique limitée de la Sorcellerie avec artwork signé Le Martien 237 + poster A4.</p>
+              
+              <div class="product-card-footer">
+                <div class="product-pricing">
+                  <span class="price-eur-val">10 €</span>
+                  <span class="price-cfa-val">6 500 FCFA</span>
+                </div>
+                <button class="btn-order order-product-btn" aria-label="Commander cet EP">
+                  <span>Commander</span> →
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- 5. MERCH : T-SHIRT OFFICIEL -->
+          <article class="product-card" data-category="merch" data-product-id="merch-tshirt">
+            <div class="product-card-badge textile">Coton 240g</div>
+            <div class="product-card-img-wrap">
+              <img src="images/logo-vm237.jpeg" alt="T-Shirt Officiel Vaisseau Mère 237" loading="lazy" class="product-img">
+              <button class="product-quick-view-btn view-product-btn" aria-label="Aperçu rapide">
+                <span>🔍 Aperçu rapide</span>
+              </button>
+            </div>
+            <div class="product-card-content">
+              <div class="product-category-tag">Merch · Textile</div>
+              <h4 class="product-title">T-Shirt Officiel Vaisseau Mère 237</h4>
+              <p class="product-excerpt">Coupe oversize streetwear, 100% coton lourd bio 240g avec logo brodé en vert & violet.</p>
+              
+              <div class="product-card-footer">
+                <div class="product-pricing">
+                  <span class="price-eur-val">20 €</span>
+                  <span class="price-cfa-val">13 000 FCFA</span>
+                </div>
+                <button class="btn-order order-product-btn" aria-label="Commander ce t-shirt">
+                  <span>Commander</span> →
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- 6. ÉDITIONS LIMITÉES : ARTBOOK -->
+          <article class="product-card" data-category="editions" data-product-id="editions-artbook">
+            <div class="product-card-badge limited">Numéroté 1/100</div>
+            <div class="product-card-img-wrap">
+              <img src="images/titre-vaisseau-mere.jpeg" alt="Artbook Collectif VM237 Vol 1" loading="lazy" class="product-img">
+              <button class="product-quick-view-btn view-product-btn" aria-label="Aperçu rapide">
+                <span>🔍 Aperçu rapide</span>
+              </button>
+            </div>
+            <div class="product-card-content">
+              <div class="product-category-tag">Édition Limitée · Livre d'art</div>
+              <h4 class="product-title">Artbook Collectif VM237 — Vol. 1</h4>
+              <p class="product-excerpt">120 pages de photographies d'art, croquis de recherche et visuels inédits. Tirage numéroté.</p>
+              
+              <div class="product-card-footer">
+                <div class="product-pricing">
+                  <span class="price-eur-val">30 €</span>
+                  <span class="price-cfa-val">20 000 FCFA</span>
+                </div>
+                <button class="btn-order order-product-btn" aria-label="Commander cet artbook">
+                  <span>Commander</span> →
+                </button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <!-- Bandeau d'informations & Garanties de service -->
+      <div class="shop-services-banner">
+        <div class="service-feature">
+          <div class="feature-icon">🚚</div>
+          <div>
+            <h4>Livraison Directe</h4>
+            <p>Remise en main propre à Yaoundé & Douala, expédition sécurisée à l'international.</p>
+          </div>
+        </div>
+        <div class="service-feature">
+          <div class="feature-icon">📱</div>
+          <div>
+            <h4>Commande Instantanée</h4>
+            <p>Paiement simplifié par Mobile Money (Orange / MTN), Virement bancaire ou Carte.</p>
+          </div>
+        </div>
+        <div class="service-feature">
+          <div class="feature-icon">✦</div>
+          <div>
+            <h4>Authenticité & Qualité</h4>
+            <p>Créations certifiées et imprimées sur papiers et supports de qualité musée.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
+
+  <!-- ===== MODALE DE PRODUIT & COMMANDE ===== -->
+  <div class="product-modal-container" id="product-modal" role="dialog" aria-modal="true" aria-labelledby="modal-product-title">
+    <div class="modal-overlay"></div>
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Fermer la modale">✕</button>
+      
+      <div class="modal-body-grid">
+        <div class="modal-media">
+          <img id="modal-product-img" src="" alt="Visuel du produit" class="modal-img">
+        </div>
+        <div class="modal-details">
+          <div class="modal-top-tags">
+            <span class="modal-cat" id="modal-product-category">Manga</span>
+            <span class="modal-badge-tag" id="modal-product-badge">Bestseller</span>
+          </div>
+          
+          <h3 class="modal-product-title" id="modal-product-title">Nom du produit</h3>
+          
+          <div class="modal-price-box" id="modal-product-price">
+            <!-- Rempli par JavaScript -->
+          </div>
+          
+          <p class="modal-desc" id="modal-product-desc">
+            Description détaillée du produit...
+          </p>
+
+          <div class="modal-specs-block">
+            <h5 class="specs-heading">Caractéristiques :</h5>
+            <ul class="specs-list" id="modal-product-specs">
+              <!-- Liste dynamique -->
+            </ul>
+          </div>
+
+          <div class="modal-order-actions">
+            <a href="#" id="modal-btn-whatsapp" class="btn-whatsapp" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+              <span>Commander sur WhatsApp</span>
+            </a>
+            <a href="#" id="modal-btn-email" class="btn-email">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              <span>Commander par Email</span>
+            </a>
+            <a href="https://vaisseaumanga237.vercel.app" id="modal-btn-manga" class="btn-manga-external" target="_blank" rel="noopener">
+              <span>🎌 Lire la version manga numérique ↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
@@ -90,7 +364,7 @@
           <a href="index.html#artistes">Artistes</a>
           <a href="index.html#projets">Projets</a>
           <a href="index.html#services">Services</a>
-          <a href="index.html#boutique">Boutique</a>
+          <a href="shop.html">Boutique</a>
           <a href="index.html#contact">Contact</a>
         </nav>
       </div>
@@ -101,5 +375,8 @@
     </div>
   </footer>
 
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script src="shop.js"></script>
 </body>
 </html>
