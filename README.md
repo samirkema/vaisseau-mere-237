@@ -5,7 +5,7 @@ Dépôt ombrelle du collectif **Vaisseau Mère 237**. Chaque division vit dans `
 | Chemin | Division | Techno | Production |
 |---|---|---|---|
 | [`apps/site`](apps/site) | Site vitrine (label, artistes, boutique) | HTML / CSS / JS statique | [vaisseau-mere-237.vercel.app](https://vaisseau-mere-237.vercel.app) |
-| [`apps/vaisseaumanga237`](apps/vaisseaumanga237) | Vaisseau Manga 237 (ex-Otaku Shop) | Next.js 16 · Supabase · Stripe · NowPayments · NFT/Alchemy · Resend | [otakushop-vert.vercel.app](https://otakushop-vert.vercel.app) |
+| [`apps/vaisseaumanga237`](apps/vaisseaumanga237) | Vaisseau Manga 237 (ex-Otaku Shop) | Next.js 16 · Supabase · Stripe · NowPayments · NFT/Alchemy · Resend | [vaisseaumanga237.vercel.app](https://vaisseaumanga237.vercel.app) |
 
 Les deux apps sont déployées depuis ce dépôt par Vercel, branche `main`, avec
 un Root Directory distinct par projet : **un push sur `main` redéploie ce qui

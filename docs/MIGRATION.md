@@ -22,7 +22,7 @@ Historique otakushop préservé (merge subtree) :
 | App | Projet Vercel | Root Directory | URL de production |
 |---|---|---|---|
 | `apps/site` | `vaisseau-mere-237` | `apps/site` | https://vaisseau-mere-237.vercel.app |
-| `apps/vaisseaumanga237` | `otakushop` | `apps/vaisseaumanga237` | https://otakushop-vert.vercel.app |
+| `apps/vaisseaumanga237` | `otakushop` | `apps/vaisseaumanga237` | https://vaisseaumanga237.vercel.app (alias) · https://otakushop-vert.vercel.app |
 
 Les deux projets sont connectés à `samirkema/vaisseau-mere-237`, branche de
 production `main`. **Un push sur `main` redéploie automatiquement les deux**
