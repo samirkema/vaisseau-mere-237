@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 
-export const metadata = { title: 'Galerie — Vaisseau Manga 237' };
+export const metadata = { title: 'Découvrez nos travaux — Vaisseau Manga 237' };
 
 export default async function GaleriePage() {
   const supabase = await createClient();
@@ -41,7 +41,7 @@ export default async function GaleriePage() {
           <h1 style={{
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             fontWeight: 900, letterSpacing: '6px', color: '#fff', margin: '0 0 12px',
-          }}>GALERIE</h1>
+          }}>DÉCOUVREZ NOS TRAVAUX</h1>
           <div style={{ width: '40px', height: '1px', background: '#f97316', margin: '0 auto 16px', opacity: 0.6 }} />
           <p style={{ color: '#444', fontSize: '0.85rem' }}>
             Tableaux et photomontages disponibles à la vente

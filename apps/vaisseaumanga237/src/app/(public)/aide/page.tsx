@@ -27,8 +27,8 @@ const GUIDE_CARDS = [
   },
   {
     icon: '🖼️',
-    title: 'La Galerie de Tableaux',
-    body: 'Accessible à tous sans NFT. Parcourez la collection complète de tableaux et photomontages disponibles à la vente. Chaque pièce est disponible au format physique.',
+    title: 'Découvrez nos travaux',
+    body: 'Accessible à tous sans NFT. Parcourez la collection complète de tableaux et photomontages originaux disponibles. Chaque pièce est disponible au format physique.',
   },
   {
     icon: '📖',
@@ -97,7 +97,7 @@ export default function AidePage() {
             <span className="emoji">🗺️</span> Comment fonctionne Vaisseau Manga 237 ?
           </h2>
           <p style={{ color: '#666', fontSize: '0.95rem', lineHeight: 1.7, maxWidth: '680px', margin: '0 auto' }}>
-            Vaisseau Manga 237 est un studio manga et art dédié aux passionnés. La galerie est ouverte à tous. La lecture manga en streaming illimité est réservée aux détenteurs du NFT Vaisseau Manga 237.
+            Vaisseau Manga 237 est un studio manga et art dédié aux passionnés. L&apos;espace « Découvrez nos travaux » est ouvert à tous. La lecture manga en streaming illimité est réservée aux détenteurs du NFT Vaisseau Manga 237.
           </p>
         </div>
 

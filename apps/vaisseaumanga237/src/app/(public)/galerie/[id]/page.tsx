@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { ImageGallery } from '@/components/galerie/ImageGallery';
 import { TableauCheckout } from '@/components/galerie/TableauCheckout';
 
-export const metadata = { title: 'Galerie — Vaisseau Manga 237' };
+export const metadata = { title: 'Découvrez nos travaux — Vaisseau Manga 237' };
 
 export default async function GalerieDetailPage({
   params,
@@ -75,7 +75,7 @@ export default async function GalerieDetailPage({
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
 
           <Link href="/galerie" style={{ color: '#444', fontSize: '0.8rem', textDecoration: 'none', display: 'inline-block', marginBottom: '32px' }}>
-            ← Retour à la galerie
+            ← Retour à « Découvrez nos travaux »
           </Link>
 
           {/* GALERIE D'IMAGES */}

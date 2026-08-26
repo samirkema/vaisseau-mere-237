@@ -37,7 +37,7 @@ export async function Navbar() {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '24px', fontSize: '0.875rem' }}>
           <Link href="/galerie" style={{ color: '#aaa', textDecoration: 'none' }}
-            className="hover:text-white transition-colors">Galerie</Link>
+            className="hover:text-white transition-colors">Découvrez nos travaux</Link>
           <Link href="/aide" style={{ color: '#aaa', textDecoration: 'none' }}
             className="hover:text-white transition-colors">Aide</Link>
 

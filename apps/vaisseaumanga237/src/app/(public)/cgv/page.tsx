@@ -45,9 +45,9 @@ export default function CgvPage() {
         <Section title="2. Objet">
           <p>
             Les présentes Conditions Générales de Vente (CGV) régissent les ventes réalisées sur le site
-            Vaisseau Manga 237 (vaisseaumanga237.fr), à savoir : (a) l&apos;abonnement d&apos;accès à du contenu numérique
+            Vaisseau Manga 237 (vaisseaumanga237.fr), à savoir : (a) l&apos;accès à du contenu numérique
             (mangas, webtoons, BD), et (b) la vente d&apos;œuvres physiques (tableaux, photomontages) présentées
-            dans la galerie. Toute commande passée sur le site implique l&apos;acceptation sans réserve des
+            dans la section « Découvrez nos travaux » et dans la boutique. Toute commande passée sur le site implique l&apos;acceptation sans réserve des
             présentes CGV.
           </p>
         </Section>
@@ -60,7 +60,7 @@ export default function CgvPage() {
           </p>
           <p style={{ marginTop: '10px' }}>
             <strong style={{ color: '#ccc' }}>Tableaux et photomontages</strong> — œuvres physiques vendues à
-            l&apos;unité, dans les formats et aux prix affichés sur chaque fiche produit de la galerie et de la boutique.
+            l&apos;unité, dans les formats et aux prix affichés sur chaque fiche produit de la section « Découvrez nos travaux » et de la boutique.
           </p>
         </Section>
 
