@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vaisseau Mère 237 — nouvelle adresse</title>
+<link rel="canonical" href="https://vaisseau-mere-237.vercel.app/">
+<meta name="robots" content="noindex">
+<!-- Repli sans JavaScript : renvoie vers l'accueil au bout de 2 s. -->
+<meta http-equiv="refresh" content="2; url=https://vaisseau-mere-237.vercel.app/">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: flex; align-items: center;
+    justify-content: center; padding: 2rem; background: #0a0a0a; color: #f4f4f4;
+    font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    text-align: center; line-height: 1.6;
+  }
+  .card { max-width: 32rem; }
+  .tag {
+    font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .75rem; letter-spacing: .18em; text-transform: uppercase;
+    color: #3AAB35; margin: 0 0 1.25rem;
+  }
+  h1 { font-size: clamp(1.5rem, 5vw, 2.25rem); margin: 0 0 1rem; font-weight: 700; }
+  p { margin: 0 0 1.75rem; color: #b8b8b8; }
+  a.btn {
+    display: inline-block; padding: .8rem 1.6rem; background: #3AAB35; color: #0a0a0a;
+    text-decoration: none; font-weight: 600; border-radius: 4px;
+  }
+  a.btn:hover, a.btn:focus { background: #2f8c2b; }
+  .url {
+    font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .8rem; color: #7a7a7a; margin-top: 1.5rem; word-break: break-all;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <p class="tag">Vaisseau Mère 237</p>
+    <h1>Le site a déménagé</h1>
+    <p>Redirection en cours vers la nouvelle adresse. Si rien ne se passe, utilise le bouton ci-dessous.</p>
+    <a class="btn" id="go" href="https://vaisseau-mere-237.vercel.app/">Continuer vers le site</a>
+    <p class="url">vaisseau-mere-237.vercel.app</p>
+  </div>
+<script>
+(function () {
+  var BASE   = '/vaisseau-mere-237';
+  var TARGET = 'https://vaisseau-mere-237.vercel.app';
+  var path   = window.location.pathname || '/';
+
+  // Retire le préfixe du dépôt : /vaisseau-mere-237/shop.html -> /shop.html
+  if (path.indexOf(BASE) === 0) path = path.slice(BASE.length);
+  if (path.charAt(0) !== '/') path = '/' + path;
+
+  var dest = TARGET + path + (window.location.search || '') + (window.location.hash || '');
+
+  // Met le bouton de repli sur la destination exacte, puis redirige.
+  var btn = document.getElementById('go');
+  if (btn) btn.setAttribute('href', dest);
+  window.location.replace(dest);
+})();
+</script>
+</body>
+</html>

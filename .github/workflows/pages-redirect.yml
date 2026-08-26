@@ -1,0 +1,54 @@
+name: Pages — redirection ancienne adresse
+
+# L'ancienne adresse du site (samirkema.github.io/vaisseau-mere-237) est
+# conservée et redirige vers l'hébergement Vercel. On ne publie PAS une copie
+# du site : uniquement une page de redirection, pour n'avoir qu'une seule
+# source de vérité (apps/site déployé par Vercel).
+#
+# index.html : redirige la racine.
+# 404.html   : GitHub Pages le sert pour TOUTE autre URL — le script y
+#              reconstruit le chemin, donc /shop.html et les anciens liens
+#              profonds arrivent au bon endroit.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/pages-redirect/**'
+      - '.github/workflows/pages-redirect.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Une seule publication Pages à la fois ; on ne coupe pas celle en cours.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Publier la redirection
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Préparer l'artefact (index.html + 404.html identiques)
+        run: |
+          mkdir -p _site
+          cp .github/pages-redirect/index.html _site/index.html
+          cp .github/pages-redirect/index.html _site/404.html
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
