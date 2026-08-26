@@ -15,40 +15,41 @@ function getResend(): Resend {
 
 const FROM = process.env.EMAIL_FROM ?? 'Vaisseau Manga 237 <noreply@vaisseaumanga237.io>';
 
-export async function sendSubscriptionConfirmation(opts: {
-  to:        string;
-  pseudo:    string;
-  expiresAt: Date;
+// Alerte l'administrateur qu'un paiement crypto est arrivé SANS que la commande
+// puisse être complétée (sous-paiement, prix incohérent). Sans cet e-mail, le
+// refus n'existerait que dans les journaux serveur : le client aurait envoyé de
+// l'argent et personne, côté vendeur, ne le saurait.
+export async function sendUnderpaidOrderAlert(opts: {
+  adminEmail:    string;
+  orderId:       string;
+  tableauTitle:  string;
+  expectedEur:   number;
+  reason:        string;
+  customerEmail: string | null;
 }) {
-  const expires = opts.expiresAt.toLocaleDateString('fr-FR', {
-    day:   '2-digit',
-    month: 'long',
-    year:  'numeric',
-  });
+  const date = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
 
   return getResend().emails.send({
     from:    FROM,
-    to:      opts.to,
-    subject: '🎉 Votre abonnement Vaisseau Manga 237 est activé !',
+    to:      opts.adminEmail,
+    subject: `⚠️ Paiement incomplet — commande ${opts.orderId.slice(0, 8)}`,
     html: `
       <div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:24px">
-        <h1 style="color:#4f46e5;margin-bottom:8px">Bienvenue, ${escapeHtml(opts.pseudo)} !</h1>
-        <p>Votre abonnement est maintenant actif. Profitez de l'accès complet à :</p>
-        <ul style="line-height:2">
-          <li>Lecture illimitée (mangas, webtoons, BD)</li>
-          <li>Studio My Remix et galerie communautaire</li>
-          <li>Jeux en ligne</li>
-        </ul>
-        <p style="color:#6b7280;font-size:14px">
-          Abonnement valable jusqu'au <strong>${expires}</strong>.
-        </p>
-        <a href="${process.env.NEXT_PUBLIC_APP_URL ?? 'https://vaisseaumanga237.io'}/manga"
-           style="display:inline-block;margin-top:16px;padding:12px 24px;background:#4f46e5;color:#fff;text-decoration:none;border-radius:8px">
-          Commencer à lire →
-        </a>
-        <p style="color:#9ca3af;font-size:12px;margin-top:32px">
-          Vous recevez cet email car vous avez activé un abonnement Vaisseau Manga 237.<br>
-          En cas de question, répondez à cet email.
+        <h1 style="color:#b45309;margin-bottom:8px">Paiement incomplet</h1>
+        <p>Un paiement crypto est arrivé mais la commande <strong>n'a pas été complétée</strong>.
+           Aucun e-mail de confirmation n'a été envoyé à l'acheteur.</p>
+        <table style="border-collapse:collapse;width:100%;margin-top:16px;font-size:14px">
+          <tr><td style="padding:6px 0;color:#6b7280">Commande</td><td><code>${escapeHtml(opts.orderId)}</code></td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280">Œuvre</td><td>${escapeHtml(opts.tableauTitle)}</td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280">Montant attendu</td><td><strong>${opts.expectedEur} €</strong></td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280">Acheteur</td><td>${escapeHtml(opts.customerEmail ?? '—')}</td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280">Motif</td><td>${escapeHtml(opts.reason)}</td></tr>
+          <tr><td style="padding:6px 0;color:#6b7280">Reçu le</td><td>${date}</td></tr>
+        </table>
+        <p style="color:#6b7280;font-size:14px;margin-top:20px">
+          La commande est marquée <code>underpaid</code>. Si l'acheteur complète son
+          paiement, elle repassera automatiquement en <code>completed</code>.
+          Sinon, un remboursement ou une relance est à décider manuellement.
         </p>
       </div>
     `,

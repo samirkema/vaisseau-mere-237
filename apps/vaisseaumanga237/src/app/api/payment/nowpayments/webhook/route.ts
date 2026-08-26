@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createHmac, timingSafeEqual } from 'crypto';
 import { createServiceClient } from '@/lib/supabase/server';
-import { sendTableauOrderToAdmin, sendTableauOrderConfirmation } from '@/lib/email';
+import { sendTableauOrderToAdmin, sendTableauOrderConfirmation, sendUnderpaidOrderAlert } from '@/lib/email';
 import { assessNowPaymentsIpn } from '@/lib/payment-validation';
 
 export const runtime = 'nodejs';
@@ -64,7 +64,7 @@ export async function POST(request: Request) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: order, error: readErr } = await (svc as any)
     .from('orders')
-    .select('amount_eur, status')
+    .select('amount_eur, status, tableau_id, customer_email')
     .eq('id', pendingId)
     .maybeSingle();
 
@@ -78,28 +78,87 @@ export async function POST(request: Request) {
     return NextResponse.json({ received: true });
   }
 
+  const orderRow = order as {
+    amount_eur?: number; tableau_id?: string | null; customer_email?: string | null;
+  };
+
+  // Le tableau désigné par order_id doit être celui de la commande, sinon les
+  // e-mails nommeraient une autre œuvre que celle réellement payée.
+  if (orderRow.tableau_id && orderRow.tableau_id !== tableauId) {
+    console.error(
+      `[nowpayments/webhook] incohérence order_id : tableau ${tableauId} ≠ commande ${orderRow.tableau_id}`,
+    );
+    return NextResponse.json({ error: 'order_id incohérent' }, { status: 400 });
+  }
+
   // Vérification du montant réellement payé (logique pure et testée).
-  const expectedEur = Number((order as { amount_eur?: number }).amount_eur ?? 0);
+  const expectedEur = Number(orderRow.amount_eur ?? 0);
   const assessment  = assessNowPaymentsIpn(body, expectedEur);
 
-  if (assessment.outcome !== 'settled') {
+  if (assessment.outcome === 'rejected') {
     // Sous-paiement ou prix incohérent : on ne complète JAMAIS la commande et on
-    // n'envoie aucun e-mail de confirmation — sinon on livre contre un acompte.
-    // La commande reste `pending` pour traitement manuel.
+    // n'envoie aucune confirmation à l'acheteur — sinon on livre contre un acompte.
+    // La commande est marquée `underpaid` et l'administrateur est prévenu :
+    // sans cet e-mail, le refus n'existerait que dans les journaux serveur.
     console.error(
-      `[nowpayments/webhook] commande ${pendingId} non complétée (${assessment.outcome}) :`,
-      assessment.reason,
+      `[nowpayments/webhook] commande ${pendingId} refusée :`, assessment.reason,
     );
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (svc as any)
+      .from('orders')
+      .update({ status: 'underpaid' })
+      .eq('id', pendingId)
+      .eq('status', 'pending');
+
+    const adminEmailAddr = process.env.ADMIN_EMAIL ?? null;
+    if (adminEmailAddr) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: t } = await (svc as any)
+        .from('tableaux').select('title').eq('id', tableauId).single();
+      await sendUnderpaidOrderAlert({
+        adminEmail:    adminEmailAddr,
+        orderId:       pendingId,
+        tableauTitle:  (t?.title as string | undefined) ?? tableauId,
+        expectedEur,
+        reason:        assessment.reason,
+        customerEmail: orderRow.customer_email ?? null,
+      }).catch(e => console.error('[nowpayments/webhook] alerte admin:', e));
+    } else {
+      console.error('[nowpayments/webhook] ADMIN_EMAIL absent — refus non notifié');
+    }
+
     // 200 : l'IPN est bien reçu et traité, inutile que NowPayments le rejoue.
     return NextResponse.json({ received: true, completed: false });
   }
 
+  if (assessment.outcome !== 'settled') {
+    // Statut non final (waiting, confirming…) : rien à faire, on acquitte.
+    return NextResponse.json({ received: true, completed: false });
+  }
+
+  // Encaissement accepté sans qu'aucun montant n'ait pu être recoupé : on le dit.
+  if (!assessment.amountVerified) {
+    console.warn(
+      `[nowpayments/webhook] commande ${pendingId} complétée sans vérification de montant `
+      + '(aucun price_amount/pay_amount exploitable dans l\'IPN)',
+    );
+  } else if (assessment.shortfallRatio && assessment.shortfallRatio > 0) {
+    console.warn(
+      `[nowpayments/webhook] commande ${pendingId} complétée avec un manque toléré de `
+      + `${(assessment.shortfallRatio * 100).toFixed(3)} %`,
+    );
+  }
+
+  // `underpaid` est accepté au même titre que `pending` : si l'acheteur complète
+  // son versement, l'IPN suivant doit pouvoir débloquer la commande. Sans cela,
+  // marquer `underpaid` condamnerait définitivement une commande régularisable.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: updated, error: updateErr } = await (svc as any)
     .from('orders')
     .update({ status: 'completed', payment_ref: paymentRef })
     .eq('id', pendingId)
-    .eq('status', 'pending')
+    .in('status', ['pending', 'underpaid'])
     .select('customer_email, format, amount_eur')
     .maybeSingle();
 

@@ -104,9 +104,7 @@ export function UsersAdminPanel({ initialUsers, total, isSuperAdmin }: Props) {
                     onChange={e => changeTier(u.id, e.target.value)}
                     className="text-xs border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-indigo-400"
                   >
-                    <option value="free">Gratuit</option>
-                    <option value="subscriber">Abonné</option>
-                    <option value="nft">NFT</option>
+                    <option value="free">Gratuit</option>                    <option value="nft">NFT</option>
                   </select>
                   {u.subscription_expires_at && (
                     <span className="block text-xs text-gray-400 mt-0.5">

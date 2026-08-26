@@ -32,7 +32,10 @@ export type NowPaymentsIpn = {
 };
 
 export type PaymentAssessment =
-  | { outcome: 'settled' }
+  // `amountVerified: false` signale que NowPayments n'a fourni aucun montant
+  // exploitable : on s'en remet alors au seul statut. L'appelant DOIT le
+  // journaliser — un encaissement non vérifié ne doit jamais passer en silence.
+  | { outcome: 'settled';  amountVerified: boolean; shortfallRatio: number | null }
   | { outcome: 'rejected'; reason: string }
   | { outcome: 'ignored';  reason: string };
 
@@ -76,8 +79,10 @@ export function assessNowPaymentsIpn(
   }
 
   // Contrôle du montant crypto effectivement reçu, quand NowPayments le fournit.
-  const payAmount     = toNumber(payload.pay_amount);
-  const actuallyPaid  = toNumber(payload.actually_paid);
+  const payAmount    = toNumber(payload.pay_amount);
+  const actuallyPaid = toNumber(payload.actually_paid);
+
+  let shortfallRatio: number | null = null;
   if (payAmount !== null && actuallyPaid !== null && payAmount > 0) {
     if (actuallyPaid < payAmount * CRYPTO_SHORTFALL_TOLERANCE) {
       return {
@@ -85,7 +90,14 @@ export function assessNowPaymentsIpn(
         reason: `Montant reçu ${actuallyPaid} < attendu ${payAmount}`,
       };
     }
+    // Manque résiduel toléré (0 si le compte est exact). Remonté à l'appelant
+    // pour être journalisé : la tolérance ne doit pas être un angle mort.
+    shortfallRatio = actuallyPaid < payAmount ? 1 - actuallyPaid / payAmount : 0;
   }
 
-  return { outcome: 'settled' };
+  // Le montant n'est considéré comme vérifié que si au moins un contrôle
+  // chiffré a réellement pu être effectué.
+  const amountVerified = priceAmount !== null || shortfallRatio !== null;
+
+  return { outcome: 'settled', amountVerified, shortfallRatio };
 }

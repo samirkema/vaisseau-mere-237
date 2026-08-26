@@ -70,6 +70,26 @@ de marge avant le seuil de 7 jours.
 
 ---
 
+## Commandes tableau — statut `underpaid`
+
+Un paiement crypto qui n'atteint pas le montant dû ne complète plus la commande
+(`lib/payment-validation.ts`). Dans ce cas :
+
+- la commande passe au statut **`underpaid`** au lieu de `completed` ;
+- **aucun e-mail de confirmation** n'est envoyé à l'acheteur ;
+- un e-mail d'alerte part vers `ADMIN_EMAIL` avec le motif et le montant attendu.
+
+Si l'acheteur complète ensuite son versement, l'IPN suivant débloque la commande
+automatiquement : la complétion accepte `pending` **et** `underpaid`. Sans cela,
+marquer `underpaid` condamnerait une commande pourtant régularisable.
+
+> Il n'existe aujourd'hui **aucun écran d'administration listant les commandes**.
+> La policy RLS de lecture admin existe (`011_orders_constraints.sql`) mais
+> aucune UI ne la consomme. Le suivi des commandes `underpaid` repose donc
+> entièrement sur l'e-mail d'alerte. Un écran `admin/commandes` reste à faire.
+
+---
+
 ## Reste à faire — actions nécessitant tes identifiants
 
 ### 1. `CRON_SECRET` absent de Vercel

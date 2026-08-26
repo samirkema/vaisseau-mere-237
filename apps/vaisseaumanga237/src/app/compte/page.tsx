@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { getProfile } from '@/lib/auth';
-import { isSubscriber } from '@/lib/roles';
+import { isSubscriber, isNftHolder } from '@/lib/roles';
 import Link from 'next/link';
 import { LogoutButton } from './LogoutButton';
 import { WalletConnect } from './WalletConnect';
@@ -15,7 +15,13 @@ export default async function ComptePage() {
   const profile = await getProfile();
   if (!profile) redirect('/auth/login');
 
+  // `subscribed` pilote l'affichage du bloc d'abonnement (un compte 'subscriber'
+  // hérité doit encore voir son statut et sa date d'expiration).
   const subscribed = isSubscriber(profile.subscription_tier, profile.subscription_expires_at);
+  // `hasContentAccess` reflète l'accès réel au contenu — même critère que le
+  // middleware et les Server Components. Les deux ne coïncident pas pour un
+  // compte 'subscriber' hérité, d'où la distinction.
+  const hasContentAccess = isNftHolder(profile.subscription_tier);
 
   const tierLabel: Record<string, string> = {
     free: 'Gratuit', subscriber: 'Abonné', nft: 'NFT',
@@ -80,7 +86,15 @@ export default async function ComptePage() {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem' }}>
                       <span style={{ color: '#666' }}>Statut</span>
-                      <span style={{ color: '#f97316', fontWeight: 700 }}>✓ Actif</span>
+                      {/* Le badge doit refléter l'accès RÉEL au contenu, réservé au
+                          tier 'nft' (middleware.ts:59). Afficher « ✓ Actif » à un
+                          compte 'subscriber' contredirait le message explicatif
+                          affiché juste en dessous. */}
+                      {hasContentAccess ? (
+                        <span style={{ color: '#f97316', fontWeight: 700 }}>✓ Actif</span>
+                      ) : (
+                        <span style={{ color: '#b45309', fontWeight: 700 }}>Accès NFT requis</span>
+                      )}
                     </div>
                     {profile.subscription_tier === 'subscriber' && profile.subscription_expires_at && (
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem' }}>

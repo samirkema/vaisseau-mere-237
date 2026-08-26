@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type Stripe from 'stripe';
 import { getStripe } from '@/lib/stripe';
 import { createServiceClient } from '@/lib/supabase/server';
-import { sendPaymentReceipt, sendTableauOrderToAdmin, sendTableauOrderConfirmation } from '@/lib/email';
+import { sendTableauOrderToAdmin, sendTableauOrderConfirmation } from '@/lib/email';
 
 // Le webhook doit lire le body brut pour que Stripe puisse vérifier la signature.
 // Next.js App Router ne pré-parse pas le body dans les Route Handlers.
