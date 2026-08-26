@@ -106,6 +106,15 @@ export async function POST(request: Request) {
 
   if (error) {
     console.error('[nft/verify] profile update:', error.message);
+    // 23505 = violation de la contrainte UNIQUE sur wallet_address
+    // (001_initial_schema.sql:18) : ce wallet est déjà rattaché à un autre
+    // compte. Un NFT n'ouvre qu'un seul accès — on le dit clairement.
+    if ((error as { code?: string }).code === '23505') {
+      return NextResponse.json(
+        { error: 'Ce wallet est déjà associé à un autre compte' },
+        { status: 409 },
+      );
+    }
     return NextResponse.json({ error: 'Erreur mise à jour profil' }, { status: 500 });
   }
 

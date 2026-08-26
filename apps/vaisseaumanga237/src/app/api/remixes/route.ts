@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createServiceClient } from '@/lib/supabase/server';
 import { getProfile } from '@/lib/auth';
-import { isSubscriber } from '@/lib/roles';
+import { isNftHolder } from '@/lib/roles';
 
 // GET  /api/remixes — liste publique des remixes (triés par votes)
 // POST /api/remixes — créer un remix (abonnés uniquement)
@@ -39,8 +39,10 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const profile = await getProfile();
-  if (!profile || !isSubscriber(profile.subscription_tier, profile.subscription_expires_at)) {
-    return NextResponse.json({ error: 'Abonnement requis' }, { status: 403 });
+  if (!profile || !isNftHolder(profile.subscription_tier)) {
+    // Modèle NFT-only : même critère que les pages (middleware.ts:59) et les
+    // Server Components, pour qu'une seule définition gouverne le contenu payant.
+    return NextResponse.json({ error: 'Accès réservé aux détenteurs du NFT' }, { status: 403 });
   }
 
   let form: FormData;

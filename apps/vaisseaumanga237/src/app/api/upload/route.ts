@@ -28,11 +28,10 @@ export async function POST(request: Request) {
   try {
     return await handleUpload(request);
   } catch (err) {
+    // Le détail reste côté serveur : un message d'exception peut exposer des
+    // chemins internes ou la configuration Storage.
     console.error('[api/upload] unhandled error:', err);
-    return NextResponse.json(
-      { error: err instanceof Error ? err.message : 'Erreur interne du serveur' },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: 'Erreur interne du serveur' }, { status: 500 });
   }
 }
 

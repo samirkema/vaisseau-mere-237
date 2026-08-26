@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createServiceClient } from '@/lib/supabase/server';
 import { getProfile } from '@/lib/auth';
-import { isSubscriber } from '@/lib/roles';
+import { isNftHolder } from '@/lib/roles';
 
 // POST /api/votes — voter pour un remix (abonnés, 1 vote par photo_id)
 
@@ -9,8 +9,10 @@ const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f
 
 export async function POST(request: Request) {
   const profile = await getProfile();
-  if (!profile || !isSubscriber(profile.subscription_tier, profile.subscription_expires_at)) {
-    return NextResponse.json({ error: 'Abonnement requis' }, { status: 403 });
+  if (!profile || !isNftHolder(profile.subscription_tier)) {
+    // Modèle NFT-only : même critère que les pages (middleware.ts:59) et les
+    // Server Components, pour qu'une seule définition gouverne le contenu payant.
+    return NextResponse.json({ error: 'Accès réservé aux détenteurs du NFT' }, { status: 403 });
   }
 
   let body: unknown;

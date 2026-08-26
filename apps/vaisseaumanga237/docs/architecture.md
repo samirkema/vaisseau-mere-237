@@ -8,7 +8,7 @@
 | Auth | **Supabase Auth** | Email verification + reset password natifs, sessions httpOnly cookie |
 | Base de données | **Supabase PostgreSQL** | Déjà connu, RLS puissant, gratuit |
 | Stockage images | **Supabase Storage** | Buckets sécurisés, URLs signées, plus de base64 en BDD |
-| Hébergement | **Vercel** | Optimal pour Next.js — déploiement manuel `npx vercel --prod` (GitHub non lié) |
+| Hébergement | **Vercel** | Optimal pour Next.js — auto-déploiement depuis GitHub, Root Directory `apps/vaisseaumanga237` |
 | Emails | **Resend** | Déjà en place, simple |
 | Paiement fiat | **Stripe** | Standard, fiable, Checkout hébergé |
 | Paiement crypto | **NowPayments** | BTC / ETH / autres — invoice API + IPN callback |
@@ -18,7 +18,7 @@
 
 ---
 
-## Pourquoi Next.js 15
+## Pourquoi Next.js 16
 
 ### Sécurité réelle via les Server Components
 

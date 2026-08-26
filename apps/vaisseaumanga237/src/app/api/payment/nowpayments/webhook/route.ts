@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { createHmac, timingSafeEqual } from 'crypto';
 import { createServiceClient } from '@/lib/supabase/server';
 import { sendTableauOrderToAdmin, sendTableauOrderConfirmation } from '@/lib/email';
+import { assessNowPaymentsIpn } from '@/lib/payment-validation';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -17,7 +18,8 @@ function verifySignature(body: Record<string, unknown>, signature: string, secre
   return timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
 }
 
-const PAID_STATUSES = new Set(['finished', 'confirmed', 'partially_paid']);
+// Le verdict de paiement est délégué à assessNowPaymentsIpn (logique pure, testée).
+// Voir lib/payment-validation.ts — `partially_paid` n'y est PAS traité comme payé.
 
 export async function POST(request: Request) {
   const secret = process.env.NOWPAYMENTS_IPN_SECRET ?? '';
@@ -36,12 +38,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Signature invalide' }, { status: 400 });
   }
 
-  const status  = body.payment_status as string | undefined;
-  const orderId = body.order_id       as string | undefined;
-
-  if (!PAID_STATUSES.has(status ?? '')) {
-    return NextResponse.json({ received: true });
-  }
+  const orderId = body.order_id as string | undefined;
 
   if (!orderId) {
     console.error('[nowpayments/webhook] order_id manquant');
@@ -62,8 +59,41 @@ export async function POST(request: Request) {
   const svc        = createServiceClient();
   const paymentRef = `nowpay-${body.payment_id ?? ''}`;
 
-  // Mettre à jour la commande pending — le montant est lu depuis la commande (pas le payload)
-  // pour éviter qu'un payload forgé écrase le montant réel
+  // Lire la commande AVANT de la compléter : le montant attendu vient de la base,
+  // jamais du payload — un payload forgé ne peut donc pas fixer son propre prix.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: order, error: readErr } = await (svc as any)
+    .from('orders')
+    .select('amount_eur, status')
+    .eq('id', pendingId)
+    .maybeSingle();
+
+  if (readErr) {
+    console.error('[nowpayments/webhook] lecture commande:', readErr.message);
+    return NextResponse.json({ error: 'Erreur lecture commande' }, { status: 500 });
+  }
+  if (!order) {
+    // Commande inconnue → on acquitte pour que NowPayments cesse de rejouer.
+    console.error('[nowpayments/webhook] commande introuvable:', pendingId);
+    return NextResponse.json({ received: true });
+  }
+
+  // Vérification du montant réellement payé (logique pure et testée).
+  const expectedEur = Number((order as { amount_eur?: number }).amount_eur ?? 0);
+  const assessment  = assessNowPaymentsIpn(body, expectedEur);
+
+  if (assessment.outcome !== 'settled') {
+    // Sous-paiement ou prix incohérent : on ne complète JAMAIS la commande et on
+    // n'envoie aucun e-mail de confirmation — sinon on livre contre un acompte.
+    // La commande reste `pending` pour traitement manuel.
+    console.error(
+      `[nowpayments/webhook] commande ${pendingId} non complétée (${assessment.outcome}) :`,
+      assessment.reason,
+    );
+    // 200 : l'IPN est bien reçu et traité, inutile que NowPayments le rejoue.
+    return NextResponse.json({ received: true, completed: false });
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: updated, error: updateErr } = await (svc as any)
     .from('orders')

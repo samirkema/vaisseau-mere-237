@@ -1,6 +1,6 @@
-# Plan d'Implémentation — Otaku Shop V2
+# Plan d'Implémentation — Vaisseau Manga 237 V2
 
-> Plan de construction dérivé de [architecture.md](architecture.md), [apportsV2site.md](apportsV2site.md) et [userstories.rtf](userstories.rtf).
+> Plan de construction dérivé de [architecture.md](architecture.md), [apportsV2site.md](apportsV2site.md) et [userstories.md](userstories.md).
 > Projet **greenfield** : `src/`, `tests/`, `assets/` sont vides. On part de zéro.
 
 ---
@@ -8,7 +8,7 @@
 ## 0. Principes directeurs
 
 1. **Sécurité côté serveur d'abord.** Toute autorisation repose sur les 3 niveaux (Middleware Edge → Server Components → RLS Supabase). Aucune décision de sécurité côté client.
-2. **Un seul projet, un seul déploiement.** Next.js 15 App Router + API Routes, hébergé sur Vercel.
+2. **Un seul projet, un seul déploiement.** Next.js 16 App Router + API Routes, hébergé sur Vercel.
 3. **Construction par tranches verticales.** Chaque phase livre une fonctionnalité testable de bout en bout (UI + API + BDD + RLS), pas une couche horizontale.
 4. **Le schéma BDD précède la feature.** On ne code pas une page sans sa table, sa policy RLS et son bucket Storage.
 5. **Definition of Done par tâche :** code typé (TS strict) + policy RLS associée + test (unit ou e2e) + revue des 3 niveaux de sécurité quand la route est protégée.
@@ -38,7 +38,7 @@ Le chemin critique est **P0 → P1**, puis **P2/P3/P4 parallélisables**, puis *
 ### Phase 0 — Fondations & outillage
 **Objectif :** un squelette Next.js déployable, vide mais propre.
 
-- [ ] `create-next-app` — Next.js 15, App Router, TypeScript strict, ESLint, Tailwind.
+- [ ] `create-next-app` — Next.js 16, App Router, TypeScript strict, ESLint, Tailwind.
 - [ ] Reproduire l'arborescence de `architecture.md` (`app/(public)`, `app/auth`, `app/(subscriber)`, `app/admin`, `app/api`, `components/`, `lib/`).
 - [ ] `lib/supabase/client.ts` (navigateur, `createBrowserClient` de `@supabase/ssr`) + `lib/supabase/server.ts` (service role, `createServerClient`, serveur seulement).
 - [ ] `lib/roles.ts` (constantes rôles + helpers TS `isAdmin`, `isSubscriber` — wrappers des fonctions SQL `is_admin()` / `is_subscriber()`).
