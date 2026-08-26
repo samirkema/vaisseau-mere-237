@@ -875,13 +875,7 @@ a.service-card:hover .service-card__link { text-decoration: underline; }
   transition: color var(--transition);
 }
 
-/* ===== SERVICES / BOUTIQUE — CTA VERS LE SHOP ===== */
-.services-cta-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+/* ===== BOUTIQUE — LIEN VERS LE SHOP ===== */
 .boutique-more {
   text-align: center;
   margin-top: 48px;
