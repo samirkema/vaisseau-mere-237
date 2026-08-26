@@ -45,12 +45,18 @@ production `main`. **Un push sur `main` redéploie automatiquement les deux**
 ### 1. Secrets GitHub Actions (workflow keep-alive Supabase)
 
 `.github/workflows/supabase-keepalive.yml` a suivi dans ce dépôt mais ses
-secrets n'existent pas encore ici. Les valeurs sont déjà dans Vercel — cette
-commande les transfère **sans jamais les afficher** :
+secrets n'existent pas encore ici (`gh secret list` renvoie vide). Les valeurs
+sont déjà dans Vercel — cette commande les recopie **sans jamais les afficher
+ni les laisser sur le disque** (testée : `vercel env pull` fonctionne, les deux
+variables sont bien présentes en production) :
 
 ```bash
-cd "apps/vaisseaumanga237" && npx vercel env pull /tmp/vm.env --environment=production --yes >/dev/null && set -a && . /tmp/vm.env && set +a && printf '%s' "$NEXT_PUBLIC_SUPABASE_URL" | gh secret set NEXT_PUBLIC_SUPABASE_URL --repo samirkema/vaisseau-mere-237 && printf '%s' "$NEXT_PUBLIC_SUPABASE_ANON_KEY" | gh secret set NEXT_PUBLIC_SUPABASE_ANON_KEY --repo samirkema/vaisseau-mere-237 && rm -f /tmp/vm.env && echo "secrets posés"
+cd apps/vaisseaumanga237 && T=$(mktemp) && trap 'rm -f "$T"' EXIT && npx vercel env pull "$T" --environment=production --yes >/dev/null 2>&1 && set -a && . "$T" && set +a && printf '%s' "$NEXT_PUBLIC_SUPABASE_URL" | gh secret set NEXT_PUBLIC_SUPABASE_URL --repo samirkema/vaisseau-mere-237 && printf '%s' "$NEXT_PUBLIC_SUPABASE_ANON_KEY" | gh secret set NEXT_PUBLIC_SUPABASE_ANON_KEY --repo samirkema/vaisseau-mere-237 && gh secret list --repo samirkema/vaisseau-mere-237
 ```
+
+Sans ces secrets, le workflow keep-alive échouera à son prochain déclenchement
+(cron tous les 5 jours) et le projet Supabase risque la mise en pause après
+7 jours d'inactivité.
 
 ### 2. `CRON_SECRET` absent de Vercel
 
