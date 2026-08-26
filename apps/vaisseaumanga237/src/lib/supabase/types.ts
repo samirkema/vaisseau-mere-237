@@ -26,6 +26,7 @@ export type Database = {
           subscription_tier: SubscriptionTier;
           subscription_expires_at: string | null;
           wallet_address: string | null;
+          last_revalidated_at: string | null;
           created_at: string;
         };
         Insert: Partial<Database['public']['Tables']['profiles']['Row']> & { id: string; pseudo: string };

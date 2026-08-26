@@ -92,23 +92,27 @@ marquer `underpaid` condamnerait une commande pourtant régularisable.
 
 ## Reste à faire — actions nécessitant tes identifiants
 
-### 1. `CRON_SECRET` absent de Vercel
+### 1. `CRON_SECRET` à poser dans Vercel
 
-`POST /api/nft/revalidate` lit `process.env.CRON_SECRET` et renvoie `401` s'il
-est absent (`src/app/api/nft/revalidate/route.ts:14-18`). La revalidation NFT
-(US 7.1 C3) est donc **inactive**. Écart pré-existant, sans lien avec la migration.
+La revalidation NFT (US 7.1 C3) est désormais **branchée dans le code** :
 
-Pour l'activer :
+- `GET /api/nft/revalidate` (la route répond en GET — Vercel Cron n'émet que des GET) ;
+- entrée cron quotidienne dans `apps/vaisseaumanga237/vercel.json` ;
+- curseur tournant `profiles.last_revalidated_at` (migration `013`) ;
+- tests : `tests/api/nft-revalidate.test.ts`.
+
+Il reste **une action manuelle** : poser le secret, sinon la route renvoie `401`
+(fail-closed) et le cron n'a aucun effet.
 
 ```bash
 openssl rand -hex 32 | tr -d '\n' | npx vercel env add CRON_SECRET production --cwd apps/vaisseaumanga237
 ```
 
-…puis créer le cron qui appelle la route avec ce même secret en
-`Authorization: Bearer` (rien ne l'appelle aujourd'hui).
+Vercel injecte alors `Authorization: Bearer <CRON_SECRET>` sur chaque appel cron,
+sans autre changement. Appliquer aussi la migration `013` dans le SQL Editor Supabase.
 
-Poser cette variable **verrouille aussi `/api/keepalive`** automatiquement,
-sans changement de code (voir la note de sécurité plus haut).
+Poser cette variable **verrouille aussi `/api/keepalive`** automatiquement
+(voir la note de sécurité plus haut).
 
 ### 2. Domaines personnalisés (optionnel)
 

@@ -111,15 +111,20 @@ Le chemin critique est **P0 → P1**, puis **P2/P3/P4 parallélisables**, puis *
 - [ ] **NowPayments abonnement** + webhook — logique d'activation abonnement via crypto (US 3.2, distinct de la vente tableau).
 - [ ] **Code d'activation** : `api/subscription/activate` (hash **salé argon2/bcrypt** comparé côté serveur en temps constant + rate-limiting par IP et par compte).
 - [ ] **Monnaie Maison (`otaku_coin`)** : `wallets` + `wallet_transactions` ; achat → débit du solde instantané + ledger transactionnel. (US 3.2 C1)
-- [ ] **Vérification NFT** — `api/nft/verify` :
+- [x] **Vérification NFT** — `api/nft/verify` :
   - Reçoit `{ walletAddress, signature, message }` depuis le client.
   - Vérifie la signature `ethers.js` côté serveur (prouve que l'utilisateur contrôle le wallet).
   - Interroge Alchemy (`ALCHEMY_API_KEY`, jamais exposée) pour confirmer la possession du NFT.
   - Si valide → `service_role` : `profiles SET subscription_tier = 'nft', wallet_address = …`
   - Si invalide → `403`. (US 7.1 C1)
-- [ ] **Revalidation NFT** — `api/nft/revalidate` (cron GitHub Actions toutes les 24h, service_role) :
-  - Pour chaque profil `nft` : re-vérifie la possession via Alchemy.
-  - Si wallet ne détient plus le NFT → `subscription_tier = 'free'`. (US 7.1 C3)
+- [x] **Revalidation NFT** — `GET api/nft/revalidate`, **Vercel Cron quotidien** (`vercel.json`),
+      `Authorization: Bearer <CRON_SECRET>` :
+  - Profils `nft` parcourus via curseur tournant (`profiles.last_revalidated_at`, migration 013),
+    par lots bornés par le budget d'exécution (9 s).
+  - Re-vérifie la possession via Alchemy ; wallet perdu/absent → `subscription_tier = 'free'`.
+  - Erreur Alchemy → accès conservé, profil non horodaté. (US 7.1 C3)
+  - Tests : `tests/api/nft-revalidate.test.ts`.
+  - **Action de déploiement :** poser `CRON_SECRET` dans Vercel (verrouille aussi `/api/keepalive`).
 - [ ] Pages tarifs + état d'abonnement dans `compte/` (afficher le tier courant : free / subscriber / nft).
 
 **Validation :** webhook Stripe simulé → `subscription_tier` passe à `subscriber` ; flux NFT simulé → tier passe à `nft` et les routes `/manga` s'ouvrent ; wallet revendu → cron rétrograde à `free` ; débit `otaku_coin` atomique (pas de solde négatif).

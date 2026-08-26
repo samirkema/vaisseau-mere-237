@@ -822,9 +822,13 @@ Flux de connexion NFT :
 4. Middleware lit le tier 'nft' en BDD et ouvre les routes protégées
 
 Revalidation périodique :
-  → Cron GitHub Actions toutes les 24h → POST /api/nft/revalidate (service_role)
-  → Pour chaque profil nft : re-vérifie la possession du NFT via Alchemy
-  → Si wallet ne détient plus le NFT → subscription_tier = 'free'
+  → Vercel Cron quotidien (vercel.json) → GET /api/nft/revalidate
+    Authorization: Bearer <CRON_SECRET> (injecté par Vercel dès que la variable existe)
+  → Profils nft parcourus du plus anciennement revalidé au plus récent
+    (colonne last_revalidated_at, curseur tournant), par lots bornés (budget 9 s)
+  → Pour chaque profil : re-vérifie la possession du NFT via Alchemy (service_role)
+  → Si wallet ne détient plus le NFT (ou plus de wallet) → subscription_tier = 'free'
+  → Erreur Alchemy → accès conservé, profil non horodaté (repasse en tête au run suivant)
 ```
 
 > **Sécurité :** la clé `ALCHEMY_API_KEY` n'est **jamais** dans une variable `NEXT_PUBLIC_*`. La V1 exposait la clé Alchemy côté client — c'est exactement ce que ce flux corrige.
