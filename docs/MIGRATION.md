@@ -8,9 +8,9 @@ Date : 2026-08-26 — **migration et redéploiement effectués.**
 |---|---|
 | Dépôt `samirkema/otakushop` (Next.js, déploiement manuel) | `apps/vaisseaumanga237/` dans ce dépôt |
 | Dépôt `samirkema/vaisseau-mere-237` racine = site statique | `apps/site/` dans ce dépôt |
-| Site vitrine sur **GitHub Pages** | Site vitrine sur **Vercel** |
+| Site vitrine sur **GitHub Pages** | Site vitrine sur **Vercel** ; l'ancienne adresse redirige |
 | Vercel non relié à Git (`npx vercel --prod` à la main) | **Auto-déploiement depuis `main`** |
-| `.github/workflows/` de l'app | remonté à la racine du dépôt |
+| Keep-alive Supabase par GitHub Actions (secrets dupliqués) | **Vercel Cron**, aucun secret dupliqué |
 
 Historique otakushop préservé (merge subtree) :
 `git log --follow -- apps/vaisseaumanga237/`
@@ -40,25 +40,39 @@ production `main`. **Un push sur `main` redéploie automatiquement les deux**
 
 ---
 
+## Keep-alive Supabase — Vercel Cron, aucun secret à dupliquer
+
+Supabase Free met un projet en pause après 7 jours sans requête.
+
+**Avant :** `.github/workflows/supabase-keepalive.yml` pingait Supabase tous les
+5 jours, ce qui imposait de recopier `NEXT_PUBLIC_SUPABASE_URL` et
+`NEXT_PUBLIC_SUPABASE_ANON_KEY` dans les secrets du dépôt — un deuxième endroit
+à sécuriser pour un simple ping.
+
+**Maintenant :** `GET /api/keepalive` (`src/app/api/keepalive/route.ts`),
+déclenchée **une fois par jour** par Vercel Cron (`vercel.json`). Elle lit les
+variables déjà présentes dans le projet Vercel : **aucun secret n'est dupliqué**,
+et le workflow GitHub a été supprimé.
+
+Bénéfice annexe : un ping quotidien au lieu d'un tous les 5 jours, donc bien plus
+de marge avant le seuil de 7 jours.
+
+> **Sécurité.** La route est ouverte tant que `CRON_SECRET` n'est pas défini.
+> Ce n'est pas une nouvelle surface d'attaque : elle n'utilise que la clé anon,
+> déjà publique par conception (`NEXT_PUBLIC_`, livrée au navigateur), et ne
+> renvoie aucune donnée — n'importe qui peut déjà interroger Supabase avec cette
+> clé. Le code vérifie `Authorization: Bearer <CRON_SECRET>` **dès que la
+> variable existe** (Vercel Cron envoie déjà cet en-tête), donc poser le secret
+> ci-dessous verrouille la route sans aucune modification de code.
+
+> **Plan Hobby.** Les crons Vercel y sont limités à un déclenchement quotidien,
+> et l'heure exacte n'est pas garantie. Sans importance pour un keep-alive.
+
+---
+
 ## Reste à faire — actions nécessitant tes identifiants
 
-### 1. Secrets GitHub Actions (workflow keep-alive Supabase)
-
-`.github/workflows/supabase-keepalive.yml` a suivi dans ce dépôt mais ses
-secrets n'existent pas encore ici (`gh secret list` renvoie vide). Les valeurs
-sont déjà dans Vercel — cette commande les recopie **sans jamais les afficher
-ni les laisser sur le disque** (testée : `vercel env pull` fonctionne, les deux
-variables sont bien présentes en production) :
-
-```bash
-cd apps/vaisseaumanga237 && T=$(mktemp) && trap 'rm -f "$T"' EXIT && npx vercel env pull "$T" --environment=production --yes >/dev/null 2>&1 && set -a && . "$T" && set +a && printf '%s' "$NEXT_PUBLIC_SUPABASE_URL" | gh secret set NEXT_PUBLIC_SUPABASE_URL --repo samirkema/vaisseau-mere-237 && printf '%s' "$NEXT_PUBLIC_SUPABASE_ANON_KEY" | gh secret set NEXT_PUBLIC_SUPABASE_ANON_KEY --repo samirkema/vaisseau-mere-237 && gh secret list --repo samirkema/vaisseau-mere-237
-```
-
-Sans ces secrets, le workflow keep-alive échouera à son prochain déclenchement
-(cron tous les 5 jours) et le projet Supabase risque la mise en pause après
-7 jours d'inactivité.
-
-### 2. `CRON_SECRET` absent de Vercel
+### 1. `CRON_SECRET` absent de Vercel
 
 `POST /api/nft/revalidate` lit `process.env.CRON_SECRET` et renvoie `401` s'il
 est absent (`src/app/api/nft/revalidate/route.ts:14-18`). La revalidation NFT
@@ -70,10 +84,13 @@ Pour l'activer :
 openssl rand -hex 32 | tr -d '\n' | npx vercel env add CRON_SECRET production --cwd apps/vaisseaumanga237
 ```
 
-…puis créer le workflow cron qui appelle la route avec ce même secret en
-`Authorization: Bearer` (aucun workflow ne l'appelle aujourd'hui).
+…puis créer le cron qui appelle la route avec ce même secret en
+`Authorization: Bearer` (rien ne l'appelle aujourd'hui).
 
-### 3. Domaines personnalisés (optionnel)
+Poser cette variable **verrouille aussi `/api/keepalive`** automatiquement,
+sans changement de code (voir la note de sécurité plus haut).
+
+### 2. Domaines personnalisés (optionnel)
 
 Aucun domaine custom n'est branché — les deux apps sont sur des URL `.vercel.app`.
 Si tu branches un domaine sur l'app manga, il faudra alors :
