@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8237", "--directory", "apps/site"],
+      "port": 8237
+    },
+    {
+      "name": "vaisseaumanga237",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "apps/vaisseaumanga237", "run", "dev"],
+      "port": 3000
+    }
+  ]
+}
