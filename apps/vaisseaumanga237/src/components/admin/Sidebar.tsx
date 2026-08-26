@@ -6,7 +6,6 @@ const navItems = [
   { href: '/admin/tableaux',   label: 'Tableaux' },
   { href: '/admin/users',      label: 'Utilisateurs' },
   { href: '/admin/analytics',  label: 'Analytics' },
-  { href: '/admin/jeux',       label: 'Jeux' },
 ];
 
 export function Sidebar() {

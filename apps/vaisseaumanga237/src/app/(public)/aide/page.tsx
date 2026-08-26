@@ -23,32 +23,17 @@ const GUIDE_CARDS = [
   {
     icon: '🔗',
     title: 'Accès NFT — Débloquer le contenu',
-    body: 'L\'accès au manga, à la zone Immersion et au Club VIP est exclusivement réservé aux détenteurs du NFT Vaisseau Manga 237. Connectez votre wallet MetaMask depuis l\'onglet <strong>NFT Holder</strong> de votre compte. La vérification est instantanée et l\'accès est permanent.',
+    body: 'L\'accès intégral au catalogue manga est exclusivement réservé aux détenteurs du NFT Vaisseau Manga 237. Connectez votre wallet MetaMask depuis l\'onglet <strong>NFT Holder</strong> de votre compte. La vérification est instantanée et l\'accès est permanent.',
   },
   {
     icon: '🖼️',
     title: 'La Galerie de Tableaux',
-    body: 'Accessible à tous sans NFT. Parcourez la collection complète de tableaux et photomontages disponibles à la vente. Chaque pièce est disponible en deux formats (A4 à 25€ et 40×50 cm à 50€). Les détenteurs de NFT peuvent réclamer certaines pièces gratuitement.',
+    body: 'Accessible à tous sans NFT. Parcourez la collection complète de tableaux et photomontages disponibles à la vente. Chaque pièce est disponible au format physique.',
   },
   {
     icon: '📖',
     title: 'Lire le Manga',
-    body: 'La section manga est réservée aux détenteurs de NFT Vaisseau Manga 237. Une fois votre wallet vérifié, vous accédez à l\'intégralité du contenu : mangas, webtoons et livres numériques en français, anglais et japonais. L\'accès est permanent tant que vous détenez le NFT.',
-  },
-  {
-    icon: '🎮',
-    title: 'La Zone Immersion',
-    body: 'Réservée aux détenteurs de NFT, la zone Immersion regroupe des expériences interactives exclusives. Le premier jeu disponible est <strong>My Remix</strong> : choisissez une photo de la galerie, dessinez par-dessus pour créer un photomontage unique, soumettez votre création et votez pour les meilleures œuvres de la communauté.',
-  },
-  {
-    icon: '👑',
-    title: 'Club VIP',
-    body: 'L\'espace VIP est exclusivement réservé aux détenteurs de NFT. Il donne accès aux commandes sur mesure (tableau, photomontage, illustration personnalisée) et aux événements exclusifs. Vérifiez votre NFT depuis <strong>Mon Compte</strong> pour y accéder.',
-  },
-  {
-    icon: '🎨',
-    title: 'Commandes Personnalisées',
-    body: 'Ce service est exclusivement réservé aux détenteurs de NFT Vaisseau Manga 237. Il vous permet de commander une œuvre entièrement sur mesure : tableau, photomontage ou illustration personnalisée selon votre vision. Connectez votre wallet pour vérifier votre NFT et accéder à ce service.',
+    body: 'La section manga est réservée aux détenteurs de NFT Vaisseau Manga 237. Une fois votre wallet vérifié, vous accédez à l\'intégralité du contenu : mangas, webtoons et livres numériques en streaming illimité. L\'accès est permanent tant que vous détenez le NFT.',
   },
 ];
 
@@ -96,7 +81,7 @@ export default function AidePage() {
           borderRadius: '20px',
           border: '1px solid rgba(251,146,60,0.4)',
         }}><span className="emoji">🆕</span> MISE À JOUR</span>
-        <span style={{ color: '#666', fontSize: '0.85rem' }}>Juin 2026</span>
+        <span style={{ color: '#666', fontSize: '0.85rem' }}>Août 2026</span>
       </div>
 
       {/* GUIDE */}
@@ -112,7 +97,7 @@ export default function AidePage() {
             <span className="emoji">🗺️</span> Comment fonctionne Vaisseau Manga 237 ?
           </h2>
           <p style={{ color: '#666', fontSize: '0.95rem', lineHeight: 1.7, maxWidth: '680px', margin: '0 auto' }}>
-            Vaisseau Manga 237 est un studio manga et art dédié aux passionnés. La galerie est ouverte à tous. Le contenu exclusif — manga, zone Immersion, Club VIP — est réservé aux détenteurs du NFT Vaisseau Manga 237.
+            Vaisseau Manga 237 est un studio manga et art dédié aux passionnés. La galerie est ouverte à tous. La lecture manga en streaming illimité est réservée aux détenteurs du NFT Vaisseau Manga 237.
           </p>
         </div>
 

@@ -104,7 +104,7 @@ export default async function ComptePage() {
                     )}
                     {profile.subscription_tier === 'subscriber' && (
                       <p style={{ color: '#666', fontSize: '0.75rem', lineHeight: 1.5, margin: '6px 0 0', padding: '10px 12px', background: 'rgba(249,115,22,0.05)', border: '1px solid rgba(249,115,22,0.1)', borderRadius: '8px' }}>
-                        L&apos;accès au contenu (manga, jeux, Club VIP) est désormais exclusivement réservé aux détenteurs de NFT. Connectez votre wallet ci-dessous pour obtenir l&apos;accès.
+                        L&apos;accès aux mangas est désormais exclusivement réservé aux détenteurs de NFT. Connectez votre wallet ci-dessous pour obtenir l&apos;accès.
                       </p>
                     )}
                     {profile.subscription_tier === 'nft' && (
@@ -152,45 +152,6 @@ export default async function ComptePage() {
                 </div>
               </div>
             </div>
-
-            {/* CLUB VIP */}
-            {profile.subscription_tier === 'nft' ? (
-              <Link href="/club-vip" style={{ textDecoration: 'none' }}>
-                <div style={{
-                  background: 'rgba(249,115,22,0.05)',
-                  border: '1px solid rgba(249,115,22,0.2)',
-                  borderRadius: '16px', padding: '20px 24px',
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  cursor: 'pointer',
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <span className="emoji" style={{ fontSize: '1.4rem' }}>👑</span>
-                    <div>
-                      <p style={{ color: '#f97316', fontWeight: 800, fontSize: '0.85rem', letterSpacing: '1.5px', margin: 0 }}>CLUB VIP</p>
-                      <p style={{ color: '#555', fontSize: '0.75rem', margin: '2px 0 0' }}>Commandes sur mesure & événements</p>
-                    </div>
-                  </div>
-                  <span style={{ color: '#f97316', fontSize: '1.1rem' }}>→</span>
-                </div>
-              </Link>
-            ) : (
-              <div style={{
-                background: '#0a0a0a',
-                border: '1px solid #1a1a1a',
-                borderRadius: '16px', padding: '20px 24px',
-                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                opacity: 0.45,
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <span className="emoji" style={{ fontSize: '1.4rem' }}>👑</span>
-                  <div>
-                    <p style={{ color: '#888', fontWeight: 800, fontSize: '0.85rem', letterSpacing: '1.5px', margin: 0 }}>CLUB VIP</p>
-                    <p style={{ color: '#444', fontSize: '0.75rem', margin: '2px 0 0' }}>Réservé aux détenteurs de NFT</p>
-                  </div>
-                </div>
-                <span style={{ color: '#333', fontSize: '0.75rem' }}>🔒</span>
-              </div>
-            )}
 
             {/* DÉCONNEXION */}
             <div style={{ background: '#0a0a0a', border: '1px solid #1a1a1a', borderRadius: '16px', padding: '24px' }}>

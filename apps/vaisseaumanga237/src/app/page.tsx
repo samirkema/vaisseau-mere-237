@@ -82,10 +82,9 @@ async function SearchResults({ q }: { q: string }) {
 }
 
 const ACTIONS = [
-  { id: 'galerie',  href: '/galerie', icon: '🖼️',  title: 'GALERIE',   desc: 'Collection complète de tableaux.', accent: '#f97316', requiresSub: false },
-  { id: 'manga',    href: '/manga',   icon: '📖',  title: 'MANGA',     desc: 'Mangas, webtoons et BD en streaming illimité dans l\'univers d\'Vaisseau Manga 237.',      accent: '#f97316', requiresSub: true  },
-  { id: 'jeux',     href: '/jeux',    icon: '🎮',  title: 'IMMERSION', desc: 'My Remix et jeux exclusifs dans l\'univers d\'Vaisseau Manga 237.',  accent: '#f97316', requiresSub: true  },
-  { id: 'aide',     href: '/aide',    icon: '💡',  title: 'AIDE',      desc: 'Guide complet sur la plateforme et le concept NFT.',  accent: '#f97316', requiresSub: false },
+  { id: 'galerie',  href: '/galerie', icon: '🖼️',  title: 'GALERIE',   desc: 'Collection complète de tableaux et œuvres physiques.', accent: '#f97316', requiresSub: false },
+  { id: 'manga',    href: '/manga',   icon: '📖',  title: 'MANGA',     desc: 'Mangas, webtoons et BD en streaming illimité.',        accent: '#f97316', requiresSub: true  },
+  { id: 'aide',     href: '/aide',    icon: '💡',  title: 'AIDE',      desc: 'Guide complet sur la plateforme et le concept NFT.',   accent: '#f97316', requiresSub: false },
 ];
 
 export default async function HomePage({
@@ -115,7 +114,7 @@ export default async function HomePage({
         {/* ── HERO ── */}
         <div style={{ textAlign: 'center', padding: '70px 20px 56px' }}>
           <p style={{ color: '#333', fontSize: '0.75rem', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '16px' }}>
-            Streaming · Tableaux · Jeux
+            Streaming · Tableaux · Manga
           </p>
           <h1 style={{
             fontSize: 'clamp(2rem, 5vw, 3rem)',
@@ -132,8 +131,8 @@ export default async function HomePage({
           <div style={{ width: '40px', height: '1px', background: '#f97316', margin: '14px auto 0' }} />
         </div>
 
-        {/* ── GRILLE D'ACTIONS ── */}
-        <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 20px 72px' }}>
+        {/* ── GRILLE D'ACTIONS (4 CARTES) ── */}
+        <div style={{ maxWidth: '1050px', margin: '0 auto', padding: '0 20px 72px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
 
             {ACTIONS.map((box) => {
@@ -175,41 +174,6 @@ export default async function HomePage({
               );
             })}
 
-            {/* CLUB VIP */}
-            <div className="action-card" style={{
-              background: isNft ? 'rgba(249,115,22,0.04)' : '#0a0a0a',
-              border: `1px solid ${isNft ? 'rgba(249,115,22,0.2)' : '#1a1a1a'}`,
-              borderRadius: '16px',
-              padding: '28px 24px',
-              opacity: isNft ? 1 : 0.5,
-            }}>
-              <Link href={isNft ? '/club-vip' : '/compte'} style={{ textDecoration: 'none', display: 'block' }}>
-                <div className="action-icon" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                  <span className="emoji">👑</span>
-                </div>
-                <h2 style={{
-                  color: isNft ? '#f97316' : '#333',
-                  fontSize: '0.85rem',
-                  fontWeight: 700,
-                  letterSpacing: '2.5px',
-                  marginBottom: '8px',
-                }}>
-                  CLUB VIP
-                </h2>
-                <p style={{ color: '#555', fontSize: '0.82rem', lineHeight: 1.6 }}>
-                  Commandes sur mesure & événements exclusifs.
-                </p>
-              </Link>
-              {!isNft && (
-                <div style={{ marginTop: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span style={{ color: '#333', fontSize: '0.75rem' }}><span className="emoji">🔒</span> NFT</span>
-                  <Link href="/compte" style={{ color: '#f97316', fontSize: '0.75rem', textDecoration: 'none', fontWeight: 600 }}>
-                    En savoir plus →
-                  </Link>
-                </div>
-              )}
-            </div>
-
             {/* MON COMPTE */}
             <div className="compte-card" style={{
               background: '#0a0a0a',
@@ -233,7 +197,6 @@ export default async function HomePage({
                 <p style={{ color: '#555', fontSize: '0.82rem', lineHeight: 1.6 }}>
                   {profile && isNft
                     ? <><span className="emoji">⭐</span> Accès NFT actif</>
-
                     : profile
                     ? 'Obtenez votre NFT.'
                     : 'Connexion ou inscription.'}

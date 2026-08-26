@@ -25,15 +25,14 @@ export async function middleware(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
 
   const path = req.nextUrl.pathname;
-  const needsNftContent = ['/manga', '/jeux', '/my-remix'].some(r => path.startsWith(r));
+  const needsNftContent = path.startsWith('/manga');
   const needsAdmin      = path.startsWith('/admin');
-  const needsNft        = path.startsWith('/club-vip');
 
-  if ((needsNftContent || needsAdmin || needsNft) && !user) {
+  if ((needsNftContent || needsAdmin) && !user) {
     return NextResponse.redirect(new URL('/auth/login', req.url));
   }
 
-  if (needsNftContent || needsAdmin || needsNft) {
+  if (needsNftContent || needsAdmin) {
     const { data } = await supabase
       .from('profiles')
       .select('role, subscription_tier, subscription_expires_at')
@@ -51,10 +50,6 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL('/', req.url));
     }
 
-    if (needsNft && profile?.subscription_tier !== 'nft') {
-      return NextResponse.redirect(new URL('/compte', req.url));
-    }
-
     if (needsNftContent && !needsAdmin) {
       const active = isNftHolder(profile?.subscription_tier);
       if (!active) return NextResponse.redirect(new URL('/compte', req.url));
@@ -65,5 +60,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/manga/:path*', '/jeux/:path*', '/my-remix/:path*', '/admin/:path*', '/club-vip/:path*'],
+  matcher: ['/manga/:path*', '/admin/:path*'],
 };

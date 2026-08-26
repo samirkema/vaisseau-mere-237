@@ -54,17 +54,13 @@ export default function CgvPage() {
 
         <Section title="3. Produits proposés">
           <p>
-            <strong style={{ color: '#ccc' }}>Abonnement contenu numérique</strong> — donne accès, pour une
-            durée de 1 an à compter de l&apos;activation, à l&apos;intégralité du catalogue manga/webtoon/BD ainsi
-            qu&apos;aux fonctionnalités réservées aux abonnés (zone Immersion, jeux, My Remix). L&apos;activation
-            se fait par code fourni après paiement, ou par vérification de possession d&apos;un NFT de la
-            collection Vaisseau Manga 237 (accès permanent, revalidé périodiquement).
+            <strong style={{ color: '#ccc' }}>Contenu numérique (Manga)</strong> — donne accès à l&apos;intégralité
+            du catalogue manga/webtoon/BD en streaming illimité. L&apos;accès est débloqué par vérification
+            de possession d&apos;un NFT de la collection Vaisseau Manga 237 (accès permanent, revalidé périodiquement).
           </p>
           <p style={{ marginTop: '10px' }}>
             <strong style={{ color: '#ccc' }}>Tableaux et photomontages</strong> — œuvres physiques vendues à
-            l&apos;unité, dans les formats et aux prix affichés sur chaque fiche produit de la galerie. Les
-            commandes sur mesure (réservées aux détenteurs de NFT) sont réalisées selon les spécifications
-            propres à chaque client après devis et accord préalable sur le prix.
+            l&apos;unité, dans les formats et aux prix affichés sur chaque fiche produit de la galerie et de la boutique.
           </p>
         </Section>
 

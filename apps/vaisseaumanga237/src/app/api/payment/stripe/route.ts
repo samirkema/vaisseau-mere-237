@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     payment_method_types: ['card'],
     line_items: [{ price: priceId, quantity: 1 }],
     success_url: `${APP_URL}/compte?payment=success`,
-    cancel_url:  `${APP_URL}/club-vip?payment=cancelled`,
+    cancel_url:  `${APP_URL}/compte?payment=cancelled`,
     // userId transmis dans les métadonnées pour l'identifier dans le webhook
     metadata: { userId: user.id },
     customer_email: user.email ?? undefined,

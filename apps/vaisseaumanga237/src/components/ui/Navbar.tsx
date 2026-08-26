@@ -44,14 +44,8 @@ export async function Navbar() {
           {profile ? (
             <>
               {isNft && (
-                <>
-                  <Link href="/manga" style={{ color: '#aaa', textDecoration: 'none' }}
-                    className="hover:text-white transition-colors">Manga</Link>
-                  <Link href="/jeux" style={{ color: '#aaa', textDecoration: 'none' }}
-                    className="hover:text-white transition-colors">Jeux</Link>
-                  <Link href="/club-vip" style={{ color: '#f97316', textDecoration: 'none', fontWeight: 600 }}
-                    className="hover:text-white transition-colors">Club VIP</Link>
-                </>
+                <Link href="/manga" style={{ color: '#aaa', textDecoration: 'none' }}
+                  className="hover:text-white transition-colors">Manga</Link>
               )}
               {isAdmin(profile.role) && (
                 <Link href="/admin" style={{ color: '#aaa', textDecoration: 'none' }}
