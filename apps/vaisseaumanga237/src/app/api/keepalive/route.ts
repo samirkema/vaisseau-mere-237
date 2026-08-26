@@ -19,7 +19,10 @@ import { timingSafeEqual } from 'crypto';
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
-  const secret = process.env.CRON_SECRET;
+  // trim() : un secret enregistré avec un retour à la ligne parasite ferait
+  // échouer la comparaison, et le cron tomberait en 401 — donc keep-alive mort
+  // en silence, puis Supabase en pause au bout de 7 jours. On neutralise ce cas.
+  const secret = process.env.CRON_SECRET?.trim();
 
   if (secret) {
     const expected = Buffer.from(`Bearer ${secret}`);
