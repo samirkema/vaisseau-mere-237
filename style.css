@@ -532,6 +532,22 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   color: var(--text-2);
   line-height: 1.65;
 }
+a.service-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.service-card--manga strong { color: var(--accent-2); }
+.service-card__link {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+}
+a.service-card:hover .service-card__link { text-decoration: underline; }
 
 .services-cta {
   text-align: center;
