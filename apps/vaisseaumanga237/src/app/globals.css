@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+:root {
+  --neon: #f97316;
+  --neon-dim: rgba(249, 115, 22, 0.25);
+  --purple: #fb923c;
+  --purple-dim: rgba(251, 146, 60, 0.25);
+  --bg: #000000;
+  --surface: #0d0d0d;
+  --surface-2: #111111;
+  --border: #1e1e1e;
+  --text: #ffffff;
+  --text-muted: #888888;
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background: #000;
+  color: #fff;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #1e1e1e; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(249, 115, 22, 0.4); }
+
+*:focus-visible {
+  outline: 2px solid #f97316;
+  outline-offset: 2px;
+}
+
+/* ── MODE CLAIR ── */
+[data-theme="light"] body {
+  filter: invert(1) hue-rotate(180deg);
+  background: #fff;
+}
+/* Re-inversion pour les images/vidéos/canvas pour ne pas les altérer */
+[data-theme="light"] img,
+[data-theme="light"] video,
+[data-theme="light"] canvas,
+[data-theme="light"] iframe {
+  filter: invert(1) hue-rotate(180deg);
+}
+/* Re-inversion pour les émojis — ils sont déjà colorés naturellement */
+[data-theme="light"] .emoji {
+  filter: invert(1) hue-rotate(180deg);
+  display: inline-block;
+}
+
+/* ── INPUTS DARK (site public uniquement) ── */
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+textarea,
+select {
+  background-color: #111;
+  color: #e0e0e0;
+  border-color: #2a2a2a;
+}
+input::placeholder,
+textarea::placeholder {
+  color: #3a3a3a;
+}
+
+/* ── ADMIN — toujours en mode clair, indépendant du thème ── */
+/* Reset des inputs : annule le style dark ci-dessus */
+.admin-layout input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+.admin-layout textarea,
+.admin-layout select {
+  background-color: #ffffff;
+  color: #111827;
+  border-color: #d1d5db;
+}
+.admin-layout input::placeholder,
+.admin-layout textarea::placeholder {
+  color: #9ca3af;
+}
+/* Mode clair : double inversion pour annuler le filter: invert du body */
+[data-theme="light"] .admin-layout {
+  filter: invert(1) hue-rotate(180deg);
+}
+/* Les images dans l'admin ne doivent pas être re-inversées */
+[data-theme="light"] .admin-layout img {
+  filter: none;
+}

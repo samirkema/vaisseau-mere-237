@@ -1,0 +1,25 @@
+name: Supabase Keep-Alive
+
+# Supabase Free tier met en pause les projets après 7 jours sans requête.
+# Ce workflow effectue une requête anodine toutes les 5 jours pour maintenir le projet actif.
+on:
+  schedule:
+    - cron: '0 6 */5 * *'   # Toutes les 5 jours à 06h00 UTC
+  workflow_dispatch:          # Déclenchement manuel si besoin
+
+jobs:
+  ping:
+    name: Ping Supabase
+    runs-on: ubuntu-latest
+    steps:
+      - name: Query Supabase REST API
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 \
+            -H "apikey: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" \
+            "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}/rest/v1/profiles?select=id&limit=1")
+          echo "HTTP status: $STATUS"
+          if [ "$STATUS" -lt 200 ] || [ "$STATUS" -ge 500 ]; then
+            echo "Unexpected status code: $STATUS" >&2
+            exit 1
+          fi
