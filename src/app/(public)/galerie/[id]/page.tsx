@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { ImageGallery } from '@/components/galerie/ImageGallery';
 import { TableauCheckout } from '@/components/galerie/TableauCheckout';
 
-export const metadata = { title: 'Galerie — Otaku Shop' };
+export const metadata = { title: 'Galerie — Vaisseau Manga 237' };
 
 export default async function GalerieDetailPage({
   params,

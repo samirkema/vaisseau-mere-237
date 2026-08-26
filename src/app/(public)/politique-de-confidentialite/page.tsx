@@ -1,4 +1,4 @@
-export const metadata = { title: 'Politique de confidentialité — Otaku Shop' };
+export const metadata = { title: 'Politique de confidentialité — Vaisseau Manga 237' };
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -16,7 +16,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 const SUBPROCESSORS = [
   { name: 'Supabase Inc.', role: 'Hébergement base de données, authentification, stockage des fichiers (images, mangas, avatars).' },
   { name: 'Vercel Inc.', role: 'Hébergement de l’application web.' },
-  { name: 'Stripe', role: 'Traitement des paiements par carte bancaire. Otaku Shop ne reçoit ni ne stocke aucune donnée bancaire.' },
+  { name: 'Stripe', role: 'Traitement des paiements par carte bancaire. Vaisseau Manga 237 ne reçoit ni ne stocke aucune donnée bancaire.' },
   { name: 'NowPayments', role: 'Traitement des paiements en cryptomonnaie.' },
   { name: 'Resend', role: 'Envoi des emails transactionnels (vérification de compte, réinitialisation de mot de passe, reçus de commande).' },
   { name: 'Alchemy', role: 'Interrogation de la blockchain pour vérifier la possession d’un NFT lors de la connexion d’un wallet.' },
@@ -78,7 +78,7 @@ export default function PolitiqueConfidentialitePage() {
             ))}
           </ul>
           <p style={{ marginTop: '10px' }}>
-            Otaku Shop ne vend ni ne loue vos données personnelles à des tiers à des fins commerciales.
+            Vaisseau Manga 237 ne vend ni ne loue vos données personnelles à des tiers à des fins commerciales.
           </p>
         </Section>
 

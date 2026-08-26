@@ -37,7 +37,7 @@ export function WalletConnect({ userId }: { userId: string }) {
       const walletAddress = accounts[0];
 
       // 2. Créer un message horodaté et lié à l'utilisateur (anti-replay)
-      const message = `Otaku Shop — Vérification wallet\nAdresse : ${walletAddress}\nUser : ${userId}\nTimestamp : ${Date.now()}`;
+      const message = `Vaisseau Manga 237 — Vérification wallet\nAdresse : ${walletAddress}\nUser : ${userId}\nTimestamp : ${Date.now()}`;
 
       // 3. Signer le message via MetaMask (personal_sign = EIP-191)
       const signature = await window.ethereum.request({

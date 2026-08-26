@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getProfile } from '@/lib/auth';
 
-export const metadata = { title: 'Club VIP — Otaku Shop' };
+export const metadata = { title: 'Club VIP — Vaisseau Manga 237' };
 
 export default async function ClubVipPage() {
   const profile = await getProfile();
@@ -39,7 +39,7 @@ export default async function ClubVipPage() {
           }}>CLUB VIP</h1>
           <div style={{ width: '40px', height: '1px', background: '#f97316', margin: '0 auto 18px', opacity: 0.6 }} />
           <p style={{ color: '#555', fontSize: '0.9rem', lineHeight: 1.7 }}>
-            Bienvenue dans l&apos;espace exclusif des détenteurs de NFT Otaku Shop.<br />
+            Bienvenue dans l&apos;espace exclusif des détenteurs de NFT Vaisseau Manga 237.<br />
             Des avantages uniques, pensés pour les vrais passionnés.
           </p>
         </div>

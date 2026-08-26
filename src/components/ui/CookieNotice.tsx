@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-const STORAGE_KEY = 'otaku_cookie_notice_ack';
+const STORAGE_KEY = 'vm237_cookie_notice_ack';
 
 export function CookieNotice() {
   const [visible, setVisible] = useState(false);

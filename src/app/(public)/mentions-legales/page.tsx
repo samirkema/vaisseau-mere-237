@@ -1,4 +1,4 @@
-export const metadata = { title: 'Mentions légales — Otaku Shop' };
+export const metadata = { title: 'Mentions légales — Vaisseau Manga 237' };
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -24,7 +24,7 @@ export default function MentionsLegalesPage() {
 
         <Section title="Éditeur du site">
           <p>
-            Le site Otaku Shop (otakushop.fr) est édité par :<br />
+            Le site Vaisseau Manga 237 (vaisseaumanga237.fr) est édité par :<br />
             Samir Tamboura, entrepreneur individuel<br />
             SIREN : 843 840 380<br />
             Adresse : 14 rue de la Blanchisserie, 31500 Toulouse, France<br />
@@ -55,9 +55,9 @@ export default function MentionsLegalesPage() {
 
         <Section title="Propriété intellectuelle">
           <p>
-            L&apos;ensemble des contenus présents sur le site Otaku Shop (textes, images, illustrations, mangas,
+            L&apos;ensemble des contenus présents sur le site Vaisseau Manga 237 (textes, images, illustrations, mangas,
             webtoons, tableaux, logos, éléments graphiques) est protégé par le droit d&apos;auteur et reste la
-            propriété exclusive de leurs auteurs respectifs ou de Otaku Shop, sauf mention contraire.
+            propriété exclusive de leurs auteurs respectifs ou de Vaisseau Manga 237, sauf mention contraire.
             Toute reproduction, représentation, modification ou diffusion, totale ou partielle, sans
             autorisation écrite préalable, est interdite et constitue une contrefaçon sanctionnée par les
             articles L.335-2 et suivants du Code de la propriété intellectuelle.
@@ -66,7 +66,7 @@ export default function MentionsLegalesPage() {
 
         <Section title="Responsabilité">
           <p>
-            Otaku Shop met tout en œuvre pour assurer l&apos;exactitude des informations diffusées sur le site,
+            Vaisseau Manga 237 met tout en œuvre pour assurer l&apos;exactitude des informations diffusées sur le site,
             mais ne saurait être tenu responsable des erreurs, omissions ou de l&apos;indisponibilité temporaire
             des contenus. L&apos;utilisateur est seul responsable de l&apos;usage qu&apos;il fait du site.
           </p>
@@ -75,7 +75,7 @@ export default function MentionsLegalesPage() {
         <Section title="Liens externes">
           <p>
             Le site peut contenir des liens vers des sites tiers (OpenSea, MetaMask, réseaux sociaux…).
-            Otaku Shop n&apos;exerce aucun contrôle sur ces sites et décline toute responsabilité quant à
+            Vaisseau Manga 237 n&apos;exerce aucun contrôle sur ces sites et décline toute responsabilité quant à
             leur contenu.
           </p>
         </Section>

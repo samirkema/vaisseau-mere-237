@@ -5,7 +5,7 @@ import { isNftHolder } from '@/lib/roles';
 import { createServiceClient } from '@/lib/supabase/server';
 import { RemixClientPage, type RemixData } from '@/components/canvas/RemixClientPage';
 
-export const metadata = { title: 'My Remix — Otaku Shop Studio' };
+export const metadata = { title: 'My Remix — Vaisseau Manga 237' };
 
 const STATIC_BASES = [
   { id: 'static-1', title: 'Mosquée au Caire',     thumbnail: '/remix-bases/1000044869.jpg' },

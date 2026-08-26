@@ -13,7 +13,7 @@ const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] });
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Otaku Shop Studio',
+  title: 'Vaisseau Manga 237',
   description: 'Studio manga & art — accès NFT exclusif',
 };
 

@@ -7,7 +7,7 @@ import { createClient } from '@/lib/supabase/server';
 import { WorkCard } from '@/components/catalogue/WorkCard';
 import type { MangaKind, Database } from '@/lib/supabase/types';
 
-export const metadata = { title: 'Catalogue Manga — Otaku Shop Studio' };
+export const metadata = { title: 'Catalogue Manga — Vaisseau Manga 237' };
 
 type WorkRow = Pick<
   Database['public']['Tables']['manga_works']['Row'],

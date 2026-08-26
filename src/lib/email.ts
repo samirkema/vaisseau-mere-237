@@ -13,7 +13,7 @@ function getResend(): Resend {
   return _resend;
 }
 
-const FROM = process.env.EMAIL_FROM ?? 'Otaku Shop <noreply@otakushop.io>';
+const FROM = process.env.EMAIL_FROM ?? 'Vaisseau Manga 237 <noreply@vaisseaumanga237.io>';
 
 export async function sendSubscriptionConfirmation(opts: {
   to:        string;
@@ -29,7 +29,7 @@ export async function sendSubscriptionConfirmation(opts: {
   return getResend().emails.send({
     from:    FROM,
     to:      opts.to,
-    subject: '🎉 Votre abonnement Otaku Shop est activé !',
+    subject: '🎉 Votre abonnement Vaisseau Manga 237 est activé !',
     html: `
       <div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:24px">
         <h1 style="color:#4f46e5;margin-bottom:8px">Bienvenue, ${escapeHtml(opts.pseudo)} !</h1>
@@ -42,12 +42,12 @@ export async function sendSubscriptionConfirmation(opts: {
         <p style="color:#6b7280;font-size:14px">
           Abonnement valable jusqu'au <strong>${expires}</strong>.
         </p>
-        <a href="${process.env.NEXT_PUBLIC_APP_URL ?? 'https://otakushop.io'}/manga"
+        <a href="${process.env.NEXT_PUBLIC_APP_URL ?? 'https://vaisseaumanga237.io'}/manga"
            style="display:inline-block;margin-top:16px;padding:12px 24px;background:#4f46e5;color:#fff;text-decoration:none;border-radius:8px">
           Commencer à lire →
         </a>
         <p style="color:#9ca3af;font-size:12px;margin-top:32px">
-          Vous recevez cet email car vous avez activé un abonnement Otaku Shop.<br>
+          Vous recevez cet email car vous avez activé un abonnement Vaisseau Manga 237.<br>
           En cas de question, répondez à cet email.
         </p>
       </div>
@@ -71,7 +71,7 @@ export async function sendPaymentReceipt(opts: {
   return getResend().emails.send({
     from:    FROM,
     to:      opts.to,
-    subject: `Reçu Otaku Shop — ${opts.amountEur.toFixed(2)} €`,
+    subject: `Reçu Vaisseau Manga 237 — ${opts.amountEur.toFixed(2)} €`,
     html: `
       <div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:24px">
         <h1 style="color:#4f46e5;margin-bottom:8px">Reçu de paiement</h1>
@@ -82,7 +82,7 @@ export async function sendPaymentReceipt(opts: {
           <tr><td style="padding:8px 0;color:#6b7280">Accès jusqu'au</td><td style="padding:8px 0;font-weight:600">${expires}</td></tr>
         </table>
         <p style="color:#9ca3af;font-size:12px;margin-top:32px">
-          Otaku Shop — conservez cet email comme justificatif.
+          Vaisseau Manga 237 — conservez cet email comme justificatif.
         </p>
       </div>
     `,

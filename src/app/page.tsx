@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/server';
 import { WorkCard } from '@/components/catalogue/WorkCard';
 import type { MangaKind, Database } from '@/lib/supabase/types';
 
-export const metadata = { title: 'Otaku Shop Studio — Mangas, Webtoons & BD' };
+export const metadata = { title: 'Vaisseau Manga 237 — Mangas, Webtoons & BD' };
 
 type WorkRow = Pick<
   Database['public']['Tables']['manga_works']['Row'],
@@ -83,8 +83,8 @@ async function SearchResults({ q }: { q: string }) {
 
 const ACTIONS = [
   { id: 'galerie',  href: '/galerie', icon: '🖼️',  title: 'GALERIE',   desc: 'Collection complète de tableaux.', accent: '#f97316', requiresSub: false },
-  { id: 'manga',    href: '/manga',   icon: '📖',  title: 'MANGA',     desc: 'Mangas, webtoons et BD en streaming illimité dans l\'univers d\'Otaku Shop Studio.',      accent: '#f97316', requiresSub: true  },
-  { id: 'jeux',     href: '/jeux',    icon: '🎮',  title: 'IMMERSION', desc: 'My Remix et jeux exclusifs dans l\'univers d\'Otaku Shop Studio.',  accent: '#f97316', requiresSub: true  },
+  { id: 'manga',    href: '/manga',   icon: '📖',  title: 'MANGA',     desc: 'Mangas, webtoons et BD en streaming illimité dans l\'univers d\'Vaisseau Manga 237.',      accent: '#f97316', requiresSub: true  },
+  { id: 'jeux',     href: '/jeux',    icon: '🎮',  title: 'IMMERSION', desc: 'My Remix et jeux exclusifs dans l\'univers d\'Vaisseau Manga 237.',  accent: '#f97316', requiresSub: true  },
   { id: 'aide',     href: '/aide',    icon: '💡',  title: 'AIDE',      desc: 'Guide complet sur la plateforme et le concept NFT.',  accent: '#f97316', requiresSub: false },
 ];
 
@@ -124,7 +124,7 @@ export default async function HomePage({
             textShadow: '0 0 30px rgba(249,115,22,0.4)',
             margin: '0 0 14px',
           }}>
-            OTAKU SHOP STUDIO
+            VAISSEAU MANGA 237
           </h1>
           <p style={{ color: '#555', fontSize: '0.8rem', letterSpacing: '2px', margin: '10px 0 0' }}>
             Le 9ème art débloqué par la blockchain

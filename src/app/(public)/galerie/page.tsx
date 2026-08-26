@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 
-export const metadata = { title: 'Galerie — Otaku Shop' };
+export const metadata = { title: 'Galerie — Vaisseau Manga 237' };
 
 export default async function GaleriePage() {
   const supabase = await createClient();

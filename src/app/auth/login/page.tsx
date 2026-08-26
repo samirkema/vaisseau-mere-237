@@ -1,6 +1,6 @@
 import { LoginForm } from '@/components/auth/LoginForm';
 
-export const metadata = { title: 'Connexion — Otaku Shop' };
+export const metadata = { title: 'Connexion — Vaisseau Manga 237' };
 
 export default async function LoginPage({
   searchParams,
@@ -14,7 +14,7 @@ export default async function LoginPage({
       <div style={{ width: '100%', maxWidth: '400px' }}>
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#fff', marginBottom: '6px', letterSpacing: '1px' }}>Connexion</h1>
-          <p style={{ color: '#555', fontSize: '0.875rem' }}>Accédez à votre espace Otaku Shop</p>
+          <p style={{ color: '#555', fontSize: '0.875rem' }}>Accédez à votre espace Vaisseau Manga 237</p>
         </div>
 
         {registered && (

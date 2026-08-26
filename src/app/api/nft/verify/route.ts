@@ -38,8 +38,8 @@ export async function POST(request: Request) {
   }
 
   // Valider le format du message et l'horodatage (protection anti-replay)
-  // Format attendu : "Otaku Shop — Vérification wallet\nAdresse : 0x…\nUser : <uuid>\nTimestamp : <ms>"
-  const MSG_RE = /^Otaku Shop — Vérification wallet\nAdresse : (0x[0-9a-fA-F]{40})\nUser : ([0-9a-f-]{36})\nTimestamp : (\d{13,14})$/;
+  // Format attendu : "Vaisseau Manga 237 — Vérification wallet\nAdresse : 0x…\nUser : <uuid>\nTimestamp : <ms>"
+  const MSG_RE = /^Vaisseau Manga 237 — Vérification wallet\nAdresse : (0x[0-9a-fA-F]{40})\nUser : ([0-9a-f-]{36})\nTimestamp : (\d{13,14})$/;
   const msgMatch = MSG_RE.exec(message);
   if (!msgMatch) {
     return NextResponse.json({ error: 'Format de message invalide' }, { status: 400 });

@@ -1,4 +1,4 @@
-# Architecture V2 — Otaku Shop
+# Architecture V2 — Vaisseau Manga 237
 
 ## Stack retenu
 

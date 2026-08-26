@@ -1,4 +1,4 @@
-export const metadata = { title: 'Conditions Générales de Vente — Otaku Shop' };
+export const metadata = { title: 'Conditions Générales de Vente — Vaisseau Manga 237' };
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -45,7 +45,7 @@ export default function CgvPage() {
         <Section title="2. Objet">
           <p>
             Les présentes Conditions Générales de Vente (CGV) régissent les ventes réalisées sur le site
-            Otaku Shop (otakushop.fr), à savoir : (a) l&apos;abonnement d&apos;accès à du contenu numérique
+            Vaisseau Manga 237 (vaisseaumanga237.fr), à savoir : (a) l&apos;abonnement d&apos;accès à du contenu numérique
             (mangas, webtoons, BD), et (b) la vente d&apos;œuvres physiques (tableaux, photomontages) présentées
             dans la galerie. Toute commande passée sur le site implique l&apos;acceptation sans réserve des
             présentes CGV.
@@ -58,7 +58,7 @@ export default function CgvPage() {
             durée de 1 an à compter de l&apos;activation, à l&apos;intégralité du catalogue manga/webtoon/BD ainsi
             qu&apos;aux fonctionnalités réservées aux abonnés (zone Immersion, jeux, My Remix). L&apos;activation
             se fait par code fourni après paiement, ou par vérification de possession d&apos;un NFT de la
-            collection Otaku Shop (accès permanent, revalidé périodiquement).
+            collection Vaisseau Manga 237 (accès permanent, revalidé périodiquement).
           </p>
           <p style={{ marginTop: '10px' }}>
             <strong style={{ color: '#ccc' }}>Tableaux et photomontages</strong> — œuvres physiques vendues à
@@ -70,7 +70,7 @@ export default function CgvPage() {
 
         <Section title="4. Prix">
           <p>
-            Les prix sont indiqués en euros, toutes taxes comprises le cas échéant. Otaku Shop se réserve le
+            Les prix sont indiqués en euros, toutes taxes comprises le cas échéant. Vaisseau Manga 237 se réserve le
             droit de modifier ses prix à tout moment ; les commandes déjà validées ne sont pas affectées par
             un changement de tarif ultérieur.
           </p>
@@ -79,7 +79,7 @@ export default function CgvPage() {
         <Section title="5. Commande et paiement">
           <p>
             Le paiement s&apos;effectue en ligne, par carte bancaire (Stripe) ou en cryptomonnaie (NowPayments).
-            Otaku Shop ne stocke aucune donnée bancaire : les paiements sont traités exclusivement par ces
+            Vaisseau Manga 237 ne stocke aucune donnée bancaire : les paiements sont traités exclusivement par ces
             prestataires. La commande est confirmée après validation du paiement par le prestataire concerné.
           </p>
         </Section>
@@ -113,7 +113,7 @@ export default function CgvPage() {
             livraison connue.
           </p>
           <p style={{ marginTop: '10px' }}>
-            Otaku Shop contacte le client par email dès la commande confirmée pour recueillir l&apos;adresse de
+            Vaisseau Manga 237 contacte le client par email dès la commande confirmée pour recueillir l&apos;adresse de
             livraison et l&apos;informer du transporteur retenu et du montant définitif des frais de port.
           </p>
         </Section>

@@ -1,4 +1,4 @@
-export const metadata = { title: 'Aide & Tutoriel — Otaku Shop Studio' };
+export const metadata = { title: 'Aide & Tutoriel — Vaisseau Manga 237' };
 
 function RichText({ text }: { text: string }) {
   const parts = text.split(/(<strong>.*?<\/strong>)/g);
@@ -23,7 +23,7 @@ const GUIDE_CARDS = [
   {
     icon: '🔗',
     title: 'Accès NFT — Débloquer le contenu',
-    body: 'L\'accès au manga, à la zone Immersion et au Club VIP est exclusivement réservé aux détenteurs du NFT Otaku Shop. Connectez votre wallet MetaMask depuis l\'onglet <strong>NFT Holder</strong> de votre compte. La vérification est instantanée et l\'accès est permanent.',
+    body: 'L\'accès au manga, à la zone Immersion et au Club VIP est exclusivement réservé aux détenteurs du NFT Vaisseau Manga 237. Connectez votre wallet MetaMask depuis l\'onglet <strong>NFT Holder</strong> de votre compte. La vérification est instantanée et l\'accès est permanent.',
   },
   {
     icon: '🖼️',
@@ -33,7 +33,7 @@ const GUIDE_CARDS = [
   {
     icon: '📖',
     title: 'Lire le Manga',
-    body: 'La section manga est réservée aux détenteurs de NFT Otaku Shop. Une fois votre wallet vérifié, vous accédez à l\'intégralité du contenu : mangas, webtoons et livres numériques en français, anglais et japonais. L\'accès est permanent tant que vous détenez le NFT.',
+    body: 'La section manga est réservée aux détenteurs de NFT Vaisseau Manga 237. Une fois votre wallet vérifié, vous accédez à l\'intégralité du contenu : mangas, webtoons et livres numériques en français, anglais et japonais. L\'accès est permanent tant que vous détenez le NFT.',
   },
   {
     icon: '🎮',
@@ -48,7 +48,7 @@ const GUIDE_CARDS = [
   {
     icon: '🎨',
     title: 'Commandes Personnalisées',
-    body: 'Ce service est exclusivement réservé aux détenteurs de NFT Otaku Shop. Il vous permet de commander une œuvre entièrement sur mesure : tableau, photomontage ou illustration personnalisée selon votre vision. Connectez votre wallet pour vérifier votre NFT et accéder à ce service.',
+    body: 'Ce service est exclusivement réservé aux détenteurs de NFT Vaisseau Manga 237. Il vous permet de commander une œuvre entièrement sur mesure : tableau, photomontage ou illustration personnalisée selon votre vision. Connectez votre wallet pour vérifier votre NFT et accéder à ce service.',
   },
 ];
 
@@ -66,7 +66,7 @@ export default function AidePage() {
           textTransform: 'uppercase',
           margin: '0 0 10px',
         }}>
-          Toutes les informations sur OTAKU SHOP STUDIO
+          Toutes les informations sur VAISSEAU MANGA 237
         </h1>
         <p style={{ color: '#666', marginBottom: '0' }}>
           Découvrez notre concept et apprenez à utiliser la plateforme.
@@ -109,10 +109,10 @@ export default function AidePage() {
             marginBottom: '14px',
             textShadow: '0 0 10px rgba(249,115,22,0.3)',
           }}>
-            <span className="emoji">🗺️</span> Comment fonctionne Otaku Shop Studio ?
+            <span className="emoji">🗺️</span> Comment fonctionne Vaisseau Manga 237 ?
           </h2>
           <p style={{ color: '#666', fontSize: '0.95rem', lineHeight: 1.7, maxWidth: '680px', margin: '0 auto' }}>
-            Otaku Shop Studio est un studio manga et art dédié aux passionnés. La galerie est ouverte à tous. Le contenu exclusif — manga, zone Immersion, Club VIP — est réservé aux détenteurs du NFT Otaku Shop.
+            Vaisseau Manga 237 est un studio manga et art dédié aux passionnés. La galerie est ouverte à tous. Le contenu exclusif — manga, zone Immersion, Club VIP — est réservé aux détenteurs du NFT Vaisseau Manga 237.
           </p>
         </div>
 

@@ -6,7 +6,7 @@ export function ThemeToggle() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   useEffect(() => {
-    const saved = (localStorage.getItem('otaku_theme') as 'dark' | 'light') ?? 'dark';
+    const saved = (localStorage.getItem('vm237_theme') as 'dark' | 'light') ?? 'dark';
     setTheme(saved);
   }, []);
 
@@ -14,7 +14,7 @@ export function ThemeToggle() {
     const next = theme === 'dark' ? 'light' : 'dark';
     setTheme(next);
     document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('otaku_theme', next);
+    localStorage.setItem('vm237_theme', next);
   }
 
   return (

@@ -21,7 +21,7 @@ export function Footer() {
         <Link href="/aide" style={{ color: '#666', textDecoration: 'none' }}>Aide</Link>
       </div>
       <p style={{ color: '#444', fontSize: '0.72rem' }}>
-        © {new Date().getFullYear()} Otaku Shop Studio — Samir Tamboura, entrepreneur individuel
+        © {new Date().getFullYear()} Vaisseau Manga 237 — Samir Tamboura, entrepreneur individuel
       </p>
     </footer>
   );

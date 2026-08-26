@@ -32,7 +32,7 @@ export async function Navbar() {
           textShadow: '0 0 10px rgba(249,115,22,0.5)',
           letterSpacing: '3px',
         }}>
-          OTAKU SHOP STUDIO
+          VAISSEAU MANGA 237
         </Link>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '24px', fontSize: '0.875rem' }}>

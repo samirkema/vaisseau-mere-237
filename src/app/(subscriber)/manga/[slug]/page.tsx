@@ -35,7 +35,7 @@ export async function generateMetadata({
     .eq('id', workId)
     .eq('published', true)
     .single() as unknown as Promise<{ data: Pick<WorkRow, 'title'> | null; error: unknown }>);
-  return { title: res.data ? `${res.data.title} — Otaku Shop Studio` : 'Lecteur — Otaku Shop Studio' };
+  return { title: res.data ? `${res.data.title} — Vaisseau Manga 237` : 'Lecteur — Vaisseau Manga 237' };
 }
 
 export default async function MangaReaderPage({

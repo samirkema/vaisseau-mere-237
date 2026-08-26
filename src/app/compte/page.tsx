@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { LogoutButton } from './LogoutButton';
 import { WalletConnect } from './WalletConnect';
 
-export const metadata = { title: 'Mon compte — Otaku Shop Studio' };
+export const metadata = { title: 'Mon compte — Vaisseau Manga 237' };
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });

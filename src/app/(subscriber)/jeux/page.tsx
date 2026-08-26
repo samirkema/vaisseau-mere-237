@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { getProfile } from '@/lib/auth';
 import { isNftHolder } from '@/lib/roles';
 
-export const metadata = { title: 'Immersion — Otaku Shop Studio' };
+export const metadata = { title: 'Immersion — Vaisseau Manga 237' };
 
 const GAMES = [
   {
@@ -58,7 +58,7 @@ export default async function JeuxPage() {
           </h1>
           <div style={{ width: '40px', height: '1px', background: '#f97316', margin: '0 auto 18px', opacity: 0.6 }} />
           <p style={{ color: '#444', fontSize: '0.9rem', maxWidth: '400px', margin: '0 auto' }}>
-            Exprimez votre talent, affrontez la communauté et vivez l&apos;univers Otaku Shop.
+            Exprimez votre talent, affrontez la communauté et vivez l&apos;univers Vaisseau Manga 237.
           </p>
         </div>
 
