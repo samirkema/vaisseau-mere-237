@@ -82,9 +82,9 @@ async function SearchResults({ q }: { q: string }) {
 }
 
 const ACTIONS = [
-  { id: 'galerie',  href: '/galerie', icon: '🖼️',  title: 'DÉCOUVREZ NOS TRAVAUX', desc: 'Collection complète de tableaux et œuvres physiques.', accent: '#f97316', requiresSub: false },
-  { id: 'manga',    href: '/manga',   icon: '📖',  title: 'MANGA',                 desc: 'Mangas, webtoons et BD en streaming illimité.',        accent: '#f97316', requiresSub: true  },
-  { id: 'aide',     href: '/aide',    icon: '💡',  title: 'AIDE',                  desc: 'Guide complet sur la plateforme et le concept NFT.',   accent: '#f97316', requiresSub: false },
+  { id: 'galerie',  href: '/galerie', icon: '🖼️',  title: 'DÉCOUVREZ NOS TRAVAUX', desc: 'Portfolio en préparation, boutique & créations sur mesure.', accent: '#f97316', requiresSub: false },
+  { id: 'manga',    href: '/manga',   icon: '📖',  title: 'MANGA',                 desc: 'Mangas, webtoons et BD en streaming illimité.',               accent: '#f97316', requiresSub: true  },
+  { id: 'aide',     href: '/aide',    icon: '💡',  title: 'AIDE',                  desc: 'Guide complet sur la plateforme et le concept NFT.',          accent: '#f97316', requiresSub: false },
 ];
 
 export default async function HomePage({
