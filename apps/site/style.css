@@ -141,10 +141,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-weight: 700;
 }
 .logo-img-nav {
-  height: 36px;
+  height: 48px;
   width: auto;
   display: block;
   mix-blend-mode: screen;
+  transition: transform var(--transition), filter var(--transition);
+}
+.logo:hover .logo-img-nav {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 8px rgba(58, 171, 53, 0.4));
 }
 .logo-main {
   font-size: 22px;
@@ -724,6 +729,11 @@ a.service-card:hover .service-card__link { text-decoration: underline; }
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+.footer-brand .logo-img-nav {
+  height: 56px;
+  width: auto;
+  align-self: flex-start;
 }
 .footer-brand .logo-main { font-size: 28px; font-family: var(--mono); font-weight: 700; }
 .footer-brand .logo-sub { font-size: 16px; font-family: var(--mono); color: var(--accent); }
