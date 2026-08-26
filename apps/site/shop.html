@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boutique Officielle — Vaisseau Mère 237</title>
-  <meta name="description" content="Découvrez le shop du Vaisseau Mère 237 : tableaux manga remixés, albums physiques, textile streetwear et tirages d'art limités.">
+  <meta name="description" content="Boutique officielle du Vaisseau Mère 237 : Tableaux d'art manga remixés, créations exclusives disponibles sur commande à Yaoundé et livraison internationale.">
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,13 +37,13 @@
         <span class="section-label">Boutique Officielle</span>
         <h1 class="section-title">Le Shop du Vaisseau</h1>
         <p class="shop-hero-intro">
-          Artworks manga remixés, disques physiques, merch officiel et éditions collector d'art. 
-          Sélectionnez une catégorie pour explorer nos créations et commandez directement en quelques secondes.
+          Tirages d'art et tableaux manga remixés, créations exclusives du collectif.
+          Explorez le catalogue ci-dessous et commandez directement en quelques clics via WhatsApp ou Email.
         </p>
         <div class="shop-hero-actions">
-          <a href="#catalogue" class="btn-primary">Explorer le catalogue ↓</a>
+          <a href="#catalogue" class="btn-primary">Découvrir les tableaux ↓</a>
           <a href="https://vaisseaumanga237.vercel.app" target="_blank" rel="noopener" class="btn-secondary">
-            <span>🎌</span> Univers Manga ↗
+            <span>🎌</span> Plateforme Manga ↗
           </a>
         </div>
       </div>
@@ -54,20 +54,20 @@
   <section class="shop-section" id="catalogue">
     <div class="container">
 
-      <!-- Barre de catégories interactives -->
+      <!-- Barre de filtres par catégorie -->
       <div class="shop-filters-header">
         <div>
-          <span class="section-label">Catégories</span>
-          <h2 class="section-subtitle">Filtrer par univers</h2>
+          <span class="section-label">Catalogue</span>
+          <h2 class="section-subtitle">Explorer les articles</h2>
         </div>
-        <div class="shop-count-badge" id="visible-count">6 articles</div>
+        <div class="shop-count-badge" id="visible-count">2 articles disponibles</div>
       </div>
 
       <div class="shop-categories-nav" role="tablist" aria-label="Filtrer les produits">
         <button class="shop-filter-btn active" data-category="all" role="tab" aria-selected="true">
           <span class="filter-icon">⚡</span>
           <span class="filter-text">Tous les articles</span>
-          <span class="filter-count">6</span>
+          <span class="filter-count">2</span>
         </button>
 
         <button class="shop-filter-btn" data-category="manga" role="tab" aria-selected="false">
@@ -78,208 +78,101 @@
 
         <button class="shop-filter-btn" data-category="musique" role="tab" aria-selected="false">
           <span class="filter-icon">💿</span>
-          <span class="filter-text">Musique & Albums</span>
-          <span class="filter-count">2</span>
+          <span class="filter-text">Musique</span>
+          <span class="filter-count filter-soon">Bientôt</span>
         </button>
 
         <button class="shop-filter-btn" data-category="merch" role="tab" aria-selected="false">
           <span class="filter-icon">👕</span>
-          <span class="filter-text">Merch & Textile</span>
-          <span class="filter-count">1</span>
+          <span class="filter-text">Merch</span>
+          <span class="filter-count filter-soon">Bientôt</span>
         </button>
 
         <button class="shop-filter-btn" data-category="editions" role="tab" aria-selected="false">
           <span class="filter-icon">✦</span>
           <span class="filter-text">Éditions Limitées</span>
-          <span class="filter-count">1</span>
+          <span class="filter-count filter-soon">Bientôt</span>
         </button>
       </div>
 
-      <!-- En-tête du carrousel avec titre de catégorie et flèches de défilement -->
-      <div class="shop-carousel-header">
+      <!-- En-tête de section active -->
+      <div class="shop-grid-header">
         <h3 class="shop-active-heading" id="active-category-title">Tous les articles</h3>
-        
-        <div class="shop-carousel-controls" aria-label="Contrôles de navigation">
-          <span class="carousel-hint">Glissez ou utilisez les flèches</span>
-          <button class="carousel-btn" id="carousel-prev" aria-label="Article précédent">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-          </button>
-          <button class="carousel-btn" id="carousel-next" aria-label="Article suivant">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-        </div>
+        <p class="shop-grid-subinfo">Défilement vertical · 3 à 4 articles par ligne</p>
       </div>
 
-      <!-- Carrousel horizontal ergonomique -->
-      <div class="shop-carousel-wrapper">
-        <div class="shop-carousel" id="shop-carousel" tabindex="0" role="region" aria-label="Liste défilante des produits">
-
-          <!-- 1. MANGA : DEKU & LES ENFANTS DU 237 -->
-          <article class="product-card" data-category="manga" data-product-id="manga-deku">
-            <div class="product-card-badge bestseller">Bestseller</div>
-            <div class="product-card-img-wrap">
-              <img src="images/shop/manga-deku-237.jpg" alt="Tableau Remix Deku & Les Enfants du 237" loading="lazy" class="product-img">
-              <button class="product-quick-view-btn view-product-btn" aria-label="Aperçu rapide">
-                <span>🔍 Aperçu rapide</span>
-              </button>
-            </div>
-            <div class="product-card-content">
-              <div class="product-category-tag">Manga · Tableau Remix</div>
-              <h4 class="product-title">Tableau Remix — Deku & Les Enfants du 237</h4>
-              <p class="product-excerpt">My Hero Academia rencontre Yaoundé. Tirage d'art haute résolution sur papier satiné 300g.</p>
-              
-              <div class="product-card-footer">
-                <div class="product-pricing">
-                  <span class="price-eur-val">15 €</span>
-                  <span class="price-cfa-val">10 000 FCFA</span>
-                </div>
-                <button class="btn-order order-product-btn" aria-label="Commander ce tableau">
-                  <span>Commander</span> →
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- 2. MANGA : NARUTO HOKAGE & ALLOCO 237 -->
-          <article class="product-card" data-category="manga" data-product-id="manga-naruto">
-            <div class="product-card-badge special">Édition Spéciale</div>
-            <div class="product-card-img-wrap">
-              <img src="images/shop/manga-naruto-alloco-237.jpg" alt="Tableau Remix Naruto Hokage & Alloco 237" loading="lazy" class="product-img">
-              <button class="product-quick-view-btn view-product-btn" aria-label="Aperçu rapide">
-                <span>🔍 Aperçu rapide</span>
-              </button>
-            </div>
-            <div class="product-card-content">
-              <div class="product-category-tag">Manga · Tableau Remix</div>
-              <h4 class="product-title">Tableau Remix — Naruto Hokage & Alloco 237</h4>
-              <p class="product-excerpt">Le 7e Hokage face à un plat d'alloco et plantains frits. Tirage d'art original vibrant.</p>
-              
-              <div class="product-card-footer">
-                <div class="product-pricing">
-                  <span class="price-eur-val">15 €</span>
-                  <span class="price-cfa-val">10 000 FCFA</span>
-                </div>
-                <button class="btn-order order-product-btn" aria-label="Commander ce tableau">
-                  <span>Commander</span> →
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- 3. MUSIQUE : CODE PIN VOL 1 & 2 -->
-          <article class="product-card" data-category="musique" data-product-id="musique-codepin">
-            <div class="product-card-badge collector">CD Collector</div>
-            <div class="product-card-img-wrap">
-              <img src="images/code pin volume 1.png" alt="Album NU9VE Code Pin Vol 1 et 2" loading="lazy" class="product-img">
-              <button class="product-quick-view-btn view-product-btn" aria-label="Aperçu rapide">
-                <span>🔍 Aperçu rapide</span>
-              </button>
-            </div>
-            <div class="product-card-content">
-              <div class="product-category-tag">Musique · CD Physique</div>
-              <h4 class="product-title">NU9VE — Code Pin Vol. 1 & 2</h4>
-              <p class="product-excerpt">Double album culte sous boîtier digipack 3 volets avec livret 16 pages et stickers offerts.</p>
-              
-              <div class="product-card-footer">
-                <div class="product-pricing">
-                  <span class="price-eur-val">10 €</span>
-                  <span class="price-cfa-val">6 500 FCFA</span>
-                </div>
-                <button class="btn-order order-product-btn" aria-label="Commander cet album">
-                  <span>Commander</span> →
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- 4. MUSIQUE : MAGIC ROOM EP -->
-          <article class="product-card" data-category="musique" data-product-id="musique-magicroom">
-            <div class="product-card-badge magic">Sorcellerie</div>
-            <div class="product-card-img-wrap">
-              <img src="images/magic room.png" alt="Mr Kof Magic Room EP" loading="lazy" class="product-img">
-              <button class="product-quick-view-btn view-product-btn" aria-label="Aperçu rapide">
-                <span>🔍 Aperçu rapide</span>
-              </button>
-            </div>
-            <div class="product-card-content">
-              <div class="product-category-tag">Musique · EP Physique</div>
-              <h4 class="product-title">Mr Kof — Magic Room (EP)</h4>
-              <p class="product-excerpt">Édition physique limitée de la Sorcellerie avec artwork signé Le Martien 237 + poster A4.</p>
-              
-              <div class="product-card-footer">
-                <div class="product-pricing">
-                  <span class="price-eur-val">10 €</span>
-                  <span class="price-cfa-val">6 500 FCFA</span>
-                </div>
-                <button class="btn-order order-product-btn" aria-label="Commander cet EP">
-                  <span>Commander</span> →
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- 5. MERCH : T-SHIRT OFFICIEL -->
-          <article class="product-card" data-category="merch" data-product-id="merch-tshirt">
-            <div class="product-card-badge textile">Coton 240g</div>
-            <div class="product-card-img-wrap">
-              <img src="images/logo-vm237.jpeg" alt="T-Shirt Officiel Vaisseau Mère 237" loading="lazy" class="product-img">
-              <button class="product-quick-view-btn view-product-btn" aria-label="Aperçu rapide">
-                <span>🔍 Aperçu rapide</span>
-              </button>
-            </div>
-            <div class="product-card-content">
-              <div class="product-category-tag">Merch · Textile</div>
-              <h4 class="product-title">T-Shirt Officiel Vaisseau Mère 237</h4>
-              <p class="product-excerpt">Coupe oversize streetwear, 100% coton lourd bio 240g avec logo brodé en vert & violet.</p>
-              
-              <div class="product-card-footer">
-                <div class="product-pricing">
-                  <span class="price-eur-val">20 €</span>
-                  <span class="price-cfa-val">13 000 FCFA</span>
-                </div>
-                <button class="btn-order order-product-btn" aria-label="Commander ce t-shirt">
-                  <span>Commander</span> →
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- 6. ÉDITIONS LIMITÉES : ARTBOOK -->
-          <article class="product-card" data-category="editions" data-product-id="editions-artbook">
-            <div class="product-card-badge limited">Numéroté 1/100</div>
-            <div class="product-card-img-wrap">
-              <img src="images/titre-vaisseau-mere.jpeg" alt="Artbook Collectif VM237 Vol 1" loading="lazy" class="product-img">
-              <button class="product-quick-view-btn view-product-btn" aria-label="Aperçu rapide">
-                <span>🔍 Aperçu rapide</span>
-              </button>
-            </div>
-            <div class="product-card-content">
-              <div class="product-category-tag">Édition Limitée · Livre d'art</div>
-              <h4 class="product-title">Artbook Collectif VM237 — Vol. 1</h4>
-              <p class="product-excerpt">120 pages de photographies d'art, croquis de recherche et visuels inédits. Tirage numéroté.</p>
-              
-              <div class="product-card-footer">
-                <div class="product-pricing">
-                  <span class="price-eur-val">30 €</span>
-                  <span class="price-cfa-val">20 000 FCFA</span>
-                </div>
-                <button class="btn-order order-product-btn" aria-label="Commander cet artbook">
-                  <span>Commander</span> →
-                </button>
-              </div>
-            </div>
-          </article>
-
-        </div>
+      <!-- Message "Bientôt disponible" pour les catégories sans articles immédiats -->
+      <div class="shop-empty-state" id="shop-empty-state" style="display: none;">
+        <div class="empty-icon">⏳</div>
+        <h4 id="empty-state-title">Articles en préparation</h4>
+        <p id="empty-state-desc">Cette catégorie sera disponible très prochainement. En attendant, découvrez nos tableaux d'art manga disponibles dès maintenant !</p>
+        <button class="btn-primary" id="btn-show-manga">Voir les tableaux disponibles →</button>
       </div>
 
-      <!-- Bandeau d'informations & Garanties de service -->
+      <!-- Grille de produits défilable vers le bas (3 à 4 par ligne) -->
+      <div class="shop-grid" id="shop-grid">
+
+        <!-- 1. MANGA : DEKU & LES ENFANTS DU 237 -->
+        <article class="product-card" data-category="manga" data-product-id="manga-deku">
+          <div class="product-card-badge bestseller">Disponible</div>
+          <div class="product-card-img-wrap">
+            <img src="images/shop/manga-deku-237.jpg" alt="Tableau Remix Deku & Les Enfants du 237" loading="lazy" class="product-img">
+            <button class="product-quick-view-btn view-product-btn" aria-label="Aperçu rapide">
+              <span>🔍 Aperçu rapide</span>
+            </button>
+          </div>
+          <div class="product-card-content">
+            <div class="product-category-tag">Manga · Tableau Remix</div>
+            <h4 class="product-title">Tableau Remix — Deku & Les Enfants du 237</h4>
+            <p class="product-excerpt">My Hero Academia rencontre Yaoundé. Tirage d'art haute résolution sur papier satiné 300g.</p>
+            
+            <div class="product-card-footer">
+              <div class="product-pricing">
+                <span class="price-eur-val">15 €</span>
+                <span class="price-cfa-val">10 000 FCFA</span>
+              </div>
+              <button class="btn-order order-product-btn" aria-label="Commander ce tableau">
+                <span>Commander</span> →
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2. MANGA : NARUTO HOKAGE & ALLOCO 237 -->
+        <article class="product-card" data-category="manga" data-product-id="manga-naruto">
+          <div class="product-card-badge special">Disponible</div>
+          <div class="product-card-img-wrap">
+            <img src="images/shop/manga-naruto-alloco-237.jpg" alt="Tableau Remix Naruto Hokage & Alloco 237" loading="lazy" class="product-img">
+            <button class="product-quick-view-btn view-product-btn" aria-label="Aperçu rapide">
+              <span>🔍 Aperçu rapide</span>
+            </button>
+          </div>
+          <div class="product-card-content">
+            <div class="product-category-tag">Manga · Tableau Remix</div>
+            <h4 class="product-title">Tableau Remix — Naruto Hokage & Alloco 237</h4>
+            <p class="product-excerpt">Le 7e Hokage face à un plat d'alloco et plantains frits. Tirage d'art original vibrant.</p>
+            
+            <div class="product-card-footer">
+              <div class="product-pricing">
+                <span class="price-eur-val">15 €</span>
+                <span class="price-cfa-val">10 000 FCFA</span>
+              </div>
+              <button class="btn-order order-product-btn" aria-label="Commander ce tableau">
+                <span>Commander</span> →
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Bandeau de garanties & Livraison -->
       <div class="shop-services-banner">
         <div class="service-feature">
           <div class="feature-icon">🚚</div>
           <div>
             <h4>Livraison Directe</h4>
-            <p>Remise en main propre à Yaoundé & Douala, expédition sécurisée à l'international.</p>
+            <p>Remise en main propre à Yaoundé & Douala, expédition protégée à l'international.</p>
           </div>
         </div>
         <div class="service-feature">
@@ -292,8 +185,8 @@
         <div class="service-feature">
           <div class="feature-icon">✦</div>
           <div>
-            <h4>Authenticité & Qualité</h4>
-            <p>Créations certifiées et imprimées sur papiers et supports de qualité musée.</p>
+            <h4>Tirages d'Art Certifiés</h4>
+            <p>Impression haute définition sur papier couché 300g de qualité galerie.</p>
           </div>
         </div>
       </div>
@@ -314,17 +207,17 @@
         <div class="modal-details">
           <div class="modal-top-tags">
             <span class="modal-cat" id="modal-product-category">Manga</span>
-            <span class="modal-badge-tag" id="modal-product-badge">Bestseller</span>
+            <span class="modal-badge-tag" id="modal-product-badge">Disponible</span>
           </div>
           
-          <h3 class="modal-product-title" id="modal-product-title">Nom du produit</h3>
+          <h3 class="modal-product-title" id="modal-product-title">Nom du tableau</h3>
           
           <div class="modal-price-box" id="modal-product-price">
             <!-- Rempli par JavaScript -->
           </div>
           
           <p class="modal-desc" id="modal-product-desc">
-            Description détaillée du produit...
+            Description détaillée du tableau...
           </p>
 
           <div class="modal-specs-block">
