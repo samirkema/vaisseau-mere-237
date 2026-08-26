@@ -880,6 +880,15 @@ a.service-card:hover .service-card__link { text-decoration: underline; }
   text-align: center;
   margin-top: 48px;
 }
+.btn-ghost--violet {
+  border-color: var(--accent-2);
+  color: var(--accent-2);
+}
+.btn-ghost--violet:hover {
+  border-color: var(--accent-2);
+  background: var(--accent-2);
+  color: #fff;
+}
 
 /* ===== PAGE SHOP ===== */
 .shop-page { padding-top: 70px; }
