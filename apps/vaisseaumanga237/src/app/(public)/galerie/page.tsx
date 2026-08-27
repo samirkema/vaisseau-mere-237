@@ -106,13 +106,13 @@ export default function GaleriePage() {
             fontSize: '0.85rem',
             lineHeight: 1.6,
           }}>
-            En attendant le déploiement de la galerie complète, retrouvez nos œuvres disponibles et nos services ci-dessous :
+            En attendant le déploiement de la galerie complète, retrouvez nos œuvres disponibles et notre catalogue de lecture ci-dessous :
           </p>
         </div>
 
-        {/* ── 3 CARTES D'ACTIONS RECOMMANDÉES ── */}
+        {/* ── CARTES D'ACTIONS ── */}
         <div style={{
-          maxWidth: '1080px',
+          maxWidth: '760px',
           margin: '0 auto',
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
@@ -186,41 +186,6 @@ export default function GaleriePage() {
             <Link href="/manga" className="btn-portal-secondary">
               Lire les Mangas →
             </Link>
-          </div>
-
-          {/* CARTE 3 : PROJET MANGA */}
-          <div className="portal-card" style={{
-            background: '#0a0a0a',
-            border: '1px solid #1c1c1c',
-            borderRadius: '18px',
-            padding: '36px 28px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-          }}>
-            <div>
-              <div style={{ fontSize: '2.4rem', marginBottom: '16px' }}>
-                <span className="emoji">✍️</span>
-              </div>
-              <h2 style={{
-                color: '#fff',
-                fontSize: '1.2rem',
-                fontWeight: 800,
-                letterSpacing: '1px',
-                marginBottom: '12px',
-              }}>
-                Vous avez un Projet Manga ?
-              </h2>
-              <p style={{ color: '#777', fontSize: '0.88rem', lineHeight: 1.65, marginBottom: '28px' }}>
-                Vous portez une histoire, un scénario, un webtoon ou un projet manga et souhaitez collaborer avec notre studio ? Contactez-nous directement pour en discuter.
-              </p>
-            </div>
-            <a
-              href="mailto:tfasseu@gmail.com?subject=Projet%20Manga%20%E2%80%94%20Vaisseau%20Manga%20237"
-              className="btn-portal-secondary"
-            >
-              Proposer un projet manga ✉️
-            </a>
           </div>
 
         </div>
