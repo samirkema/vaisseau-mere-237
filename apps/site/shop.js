@@ -1,45 +1,8 @@
 // ===== VAISSEAU MÈRE 237 — Shop Script =====
+// Grille filtrable. Un clic sur un article ouvre sa fiche : produit.html?id=<id>
+// (données dans shop-data.js, rendu dans produit.js).
 
 document.addEventListener('DOMContentLoaded', () => {
-  // --- Données des tableaux manga actuellement en vente ---
-  const productsData = {
-    'manga-deku': {
-      id: 'manga-deku',
-      title: 'Tableau Remix — Deku & Les Enfants du 237',
-      category: 'manga',
-      categoryLabel: 'Manga · Tableau Remix',
-      priceEur: '15 €',
-      priceCfa: '10 000 FCFA',
-      image: 'images/shop/manga-deku-237.jpg',
-      badge: 'Disponible',
-      description: "Tirage d'art exclusif fusionnant l'univers My Hero Academia (Izuku Midoriya) et l'authenticité de la vie urbaine à Yaoundé. Une création originale symbole de persévérance et de connexion culturelle.",
-      specs: [
-        'Impression Premium sur papier couché satiné 300g/m²',
-        'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
-        'Finitions anti-reflet haute fidélité des couleurs',
-        'Numéroté & certifié par le collectif Vaisseau Mère 237'
-      ],
-      linkManga: 'https://vaisseaumanga237.vercel.app'
-    },
-    'manga-naruto': {
-      id: 'manga-naruto',
-      title: 'Tableau Remix — Naruto Hokage & Alloco 237',
-      category: 'manga',
-      categoryLabel: 'Manga · Tableau Remix',
-      priceEur: '15 €',
-      priceCfa: '10 000 FCFA',
-      image: 'images/shop/manga-naruto-alloco-237.jpg',
-      badge: 'Disponible',
-      description: "Quand le 7e Hokage savoure la gastronomie camerounaise : une illustration inédite mêlant le héros de Konoha et un plat traditionnel de plantains frits (alloco/dodo).",
-      specs: [
-        'Impression d’art haute définition sur papier texturé 300g',
-        'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
-        'Couleurs vives résistantes aux UV',
-        'Emballage tube rigide renforcé pour expédition protégée'
-      ],
-      linkManga: 'https://vaisseaumanga237.vercel.app'
-    }
-  };
 
   const emptyCategoryMessages = {
     'musique': {
@@ -67,37 +30,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const countBadge = document.getElementById('visible-count');
   const categoryTitle = document.getElementById('active-category-title');
 
-  // Modale
-  const modal = document.getElementById('product-modal');
-  const modalOverlay = modal?.querySelector('.modal-overlay');
-  const modalClose = modal?.querySelector('.modal-close');
-  const modalImg = document.getElementById('modal-product-img');
-  const modalCategory = document.getElementById('modal-product-category');
-  const modalTitle = document.getElementById('modal-product-title');
-  const modalPrice = document.getElementById('modal-product-price');
-  const modalBadge = document.getElementById('modal-product-badge');
-  const modalDesc = document.getElementById('modal-product-desc');
-  const modalSpecs = document.getElementById('modal-product-specs');
-  const modalWhatsapp = document.getElementById('modal-btn-whatsapp');
-  const modalEmail = document.getElementById('modal-btn-email');
-  const modalMangaLink = document.getElementById('modal-btn-manga');
-
   // --- Filtrage par catégorie ---
   function filterCategory(cat) {
     let visibleCount = 0;
 
-    // Mise à jour des boutons de filtre
     filterBtns.forEach(btn => {
-      if (btn.dataset.category === cat) {
-        btn.classList.add('active');
-        btn.setAttribute('aria-selected', 'true');
-      } else {
-        btn.classList.remove('active');
-        btn.setAttribute('aria-selected', 'false');
-      }
+      const on = btn.dataset.category === cat;
+      btn.classList.toggle('active', on);
+      btn.setAttribute('aria-selected', on ? 'true' : 'false');
     });
 
-    // Mise à jour du titre de la section
     const categoryLabels = {
       'all': 'Tous les articles disponibles',
       'manga': 'Manga & Tableaux Remix',
@@ -109,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
       categoryTitle.textContent = categoryLabels[cat] || 'Articles';
     }
 
-    // Affichage/Masquage des cartes avec animation
     productCards.forEach(card => {
       const cardCat = card.dataset.category;
       if (cat === 'all' || cardCat === cat) {
@@ -128,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Gestion de l'état "Bientôt disponible"
     if (visibleCount === 0) {
       if (shopGrid) shopGrid.style.display = 'none';
       if (emptyState) {
@@ -140,9 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (emptyDesc) emptyDesc.textContent = msg.desc;
         emptyState.style.display = 'block';
       }
-      if (countBadge) {
-        countBadge.textContent = 'Bientôt disponible';
-      }
+      if (countBadge) countBadge.textContent = 'Bientôt disponible';
     } else {
       if (shopGrid) shopGrid.style.display = 'grid';
       if (emptyState) emptyState.style.display = 'none';
@@ -153,90 +91,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterCategory(btn.dataset.category);
-    });
+    btn.addEventListener('click', () => filterCategory(btn.dataset.category));
   });
+  btnShowManga?.addEventListener('click', () => filterCategory('manga'));
 
-  btnShowManga?.addEventListener('click', () => {
-    filterCategory('manga');
-  });
-
-  // --- Gestion de la Modale Produit ---
-  function openProductModal(productId) {
-    const data = productsData[productId];
-    if (!data || !modal) return;
-
-    if (modalImg) modalImg.src = data.image;
-    if (modalImg) modalImg.alt = data.title;
-    if (modalCategory) modalCategory.textContent = data.categoryLabel;
-    if (modalTitle) modalTitle.textContent = data.title;
-    if (modalPrice) modalPrice.innerHTML = `<span class="price-eur">${data.priceEur}</span> <span class="price-cfa">(${data.priceCfa})</span>`;
-    if (modalBadge) {
-      modalBadge.textContent = data.badge;
-      modalBadge.style.display = data.badge ? 'inline-block' : 'none';
-    }
-    if (modalDesc) modalDesc.textContent = data.description;
-
-    if (modalSpecs) {
-      modalSpecs.innerHTML = data.specs.map(spec => `<li><span class="spec-check">✓</span> ${spec}</li>`).join('');
-    }
-
-    // Liens WhatsApp et Email pré-remplis avec le numéro et l'email officiels
-    const whatsappNumber = '237695341413';
-    const contactEmail = 'tfasseu@gmail.com';
-    const msg = encodeURIComponent(`Bonjour Vaisseau Mère 237, je souhaite commander le tableau suivant :\n- ${data.title}\n- Prix : ${data.priceEur} / ${data.priceCfa}\nPouvez-vous m'indiquer les modalités de livraison et de paiement ?`);
-    
-    if (modalWhatsapp) {
-      modalWhatsapp.href = `https://wa.me/${whatsappNumber}?text=${msg}`;
-      modalWhatsapp.target = '_blank';
-    }
-
-    if (modalEmail) {
-      const subject = encodeURIComponent(`Commande Tableau VM237 : ${data.title}`);
-      modalEmail.href = `mailto:${contactEmail}?subject=${subject}&body=${msg}`;
-    }
-
-    if (modalMangaLink) {
-      if (data.linkManga) {
-        modalMangaLink.href = data.linkManga;
-        modalMangaLink.style.display = 'inline-flex';
-      } else {
-        modalMangaLink.style.display = 'none';
-      }
-    }
-
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeProductModal() {
-    if (!modal) return;
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  // Écouteurs pour ouvrir la modale
+  // --- Clic sur un article → fiche produit ---
   document.addEventListener('click', (e) => {
     const trigger = e.target.closest('.view-product-btn, .product-card-img-wrap, .order-product-btn');
-    if (trigger) {
-      const card = trigger.closest('.product-card');
-      const productId = card?.dataset.productId;
-      if (productId) {
-        e.preventDefault();
-        openProductModal(productId);
-      }
+    if (!trigger) return;
+    const card = trigger.closest('.product-card');
+    const productId = card?.dataset.productId;
+    if (productId) {
+      e.preventDefault();
+      window.location.href = `produit.html?id=${encodeURIComponent(productId)}`;
     }
   });
 
-  modalOverlay?.addEventListener('click', closeProductModal);
-  modalClose?.addEventListener('click', closeProductModal);
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeProductModal();
-  });
-
-  // URL Hash check : si l'utilisateur arrive avec #manga, filtrer directement
+  // --- Hash d'arrivée (#manga, #merch…) ---
   const hash = window.location.hash.replace('#', '');
   if (['manga', 'musique', 'merch', 'editions'].includes(hash)) {
     filterCategory(hash);
