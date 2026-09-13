@@ -143,7 +143,7 @@ export default function GaleriePage() {
                 Boutique Officielle
               </h2>
               <p style={{ color: '#777', fontSize: '0.88rem', lineHeight: 1.65, marginBottom: '28px' }}>
-                Découvrez et commandez les tirages d’art et tableaux manga remix actuels du collectif (Deku Yaoundé, Naruto Alloco...).
+                Découvrez et commandez les tirages d’art et tableaux manga remix actuels du collectif (Deku Yaoundé, Naruto Alloco, Miroir d’Eau...).
               </p>
             </div>
             <a

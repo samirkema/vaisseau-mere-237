@@ -47,6 +47,25 @@ window.VM_PRODUCTS = {
       'Emballage tube rigide renforcé pour expédition protégée',
     ],
   },
+  'manga-miroir-eau': {
+    id: 'manga-miroir-eau',
+    title: 'Tableau Remix — Miroir d’Eau & Ciel Manga',
+    category: 'manga',
+    categoryLabel: 'Manga · Tableau Remix',
+    priceEur: '15 €',
+    priceCfa: '10 000 FCFA',
+    badge: 'Disponible',
+    images: [
+      'images/shop/manga-miroir-eau-237.jpg',
+    ],
+    description: '',
+    specs: [
+      'Impression d’art haute définition sur papier couché satiné 300g/m²',
+      'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
+      'Finitions anti-reflet haute fidélité des couleurs',
+      'Numéroté & certifié par le collectif Vaisseau Mère 237',
+    ],
+  },
 };
 
 // Contacts commande (utilisés par produit.js pour pré-remplir WhatsApp / Email).

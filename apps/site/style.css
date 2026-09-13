@@ -597,6 +597,12 @@ a.service-card:hover .service-card__link { text-decoration: underline; }
   object-position: center top;
   display: block;
 }
+.boutique-img--contain {
+  object-fit: contain;
+  object-position: center center;
+  background: #0d0d0d;
+  padding: 10px;
+}
 .boutique-img-placeholder {
   aspect-ratio: 1;
   background: var(--bg-3);
@@ -1129,6 +1135,11 @@ a.service-card:hover .service-card__link { text-decoration: underline; }
   object-fit: cover;
   object-position: center top;
   transition: transform 0.4s ease;
+}
+.product-img--contain {
+  object-fit: contain;
+  object-position: center center;
+  padding: 12px;
 }
 .product-card:hover .product-img {
   transform: scale(1.05);
