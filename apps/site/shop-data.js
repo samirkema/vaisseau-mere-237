@@ -9,44 +9,6 @@
 //   specs        : liste de caractéristiques. Laisser [] pour masquer le bloc.
 
 window.VM_PRODUCTS = {
-  'manga-deku': {
-    id: 'manga-deku',
-    title: 'Tableau Remix — Deku & Les Enfants du 237',
-    category: 'manga',
-    categoryLabel: 'Manga · Tableau Remix',
-    priceEur: '15 €',
-    priceCfa: '10 000 FCFA',
-    badge: 'Disponible',
-    images: [
-      'images/shop/manga-deku-237.jpg',
-    ],
-    description: '',
-    specs: [
-      'Impression Premium sur papier couché satiné 300g/m²',
-      'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
-      'Finitions anti-reflet haute fidélité des couleurs',
-      'Numéroté & certifié par le collectif Vaisseau Mère 237',
-    ],
-  },
-  'manga-naruto': {
-    id: 'manga-naruto',
-    title: 'Tableau Remix — Naruto Hokage & Alloco 237',
-    category: 'manga',
-    categoryLabel: 'Manga · Tableau Remix',
-    priceEur: '15 €',
-    priceCfa: '10 000 FCFA',
-    badge: 'Disponible',
-    images: [
-      'images/shop/manga-naruto-alloco-237.jpg',
-    ],
-    description: '',
-    specs: [
-      'Impression d’art haute définition sur papier texturé 300g',
-      'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
-      'Couleurs vives résistantes aux UV',
-      'Emballage tube rigide renforcé pour expédition protégée',
-    ],
-  },
   'manga-miroir-eau': {
     id: 'manga-miroir-eau',
     title: 'Tableau Remix — Miroir d’Eau & Ciel Manga',
