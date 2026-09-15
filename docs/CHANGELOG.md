@@ -5,6 +5,30 @@ dépôt : **`apps/site`** (vitrine statique) et **`apps/vaisseaumanga237`** (Nex
 
 ---
 
+## Version du 16 septembre 2026 — « fiche produit + nettoyage »
+
+- **Boutique** : fiche article dédiée (`produit.html`) avec carrousel photo à la
+  place de la modale ; lien manga retiré du tunnel de commande.
+- **Retrait IP** : tableaux « Deku » et « Naruto » retirés (droits de propriété
+  intellectuelle) — données, cartes, aperçu sur l'accueil et fichiers image
+  (y compris les visuels sources restés publics par erreur) supprimés.
+- **Ajout** du tableau « Miroir d'Eau & Ciel Manga », seul article en vente.
+- **Nettoyage `apps/vaisseaumanga237`** suite à l'audit du 16/09
+  (`docs/audit/2026-09-16-audit-suivi.md`) :
+  - suppression de toute la chaîne de paiement devenue inatteignable
+    (`api/payment/stripe`, `api/payment/stripe/webhook`,
+    `api/payment/nowpayments/webhook`, `api/subscription`, `api/payment/crypto`,
+    `lib/payment-validation.ts`, `lib/email.ts`, `lib/stripe.ts` et leurs tests) ;
+  - Epic 3 (paiements hybrides) et Epic 6 (jeux) marquées **abandonnées** dans
+    `docs/userstories.md` ;
+  - bouton « Commander » de la carte produit renommé « Voir & commander »
+    (il ouvrait la fiche, pas une commande directe).
+- Reste ouvert (décision produit requise, pas appliqué) : migration de
+  suppression des tables Supabase orphelines (`tableaux`, `orders`, `remixes`,
+  `votes`, `wallets`, `wallet_transactions`, `activation_attempts`).
+
+---
+
 ## Version du 27 août 2026 — « recentrage manga »
 
 Cette version resserre les deux sites autour d'un seul objectif : **vendre des

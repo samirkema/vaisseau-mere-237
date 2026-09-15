@@ -27,7 +27,15 @@
 
 ---
 
-## 💳 Epic 3 : Écosystème Économique et Paiements Hybrides
+## 💳 Epic 3 : Écosystème Économique et Paiements Hybrides — ABANDONNÉE
+
+> **Statut (16/09/2026) :** abandonnée. Le modèle d'accès est passé exclusivement
+> par NFT (voir Epic 7). L'abonnement Stripe, l'activation par code, le paiement
+> crypto d'abonnement et la monnaie maison `otaku_coin` n'ont jamais été livrés
+> ou ont été retirés (`api/payment/stripe`, `api/subscription`,
+> `api/payment/crypto`, `api/payment/nowpayments/webhook`, `lib/payment-validation.ts`
+> supprimés — voir `docs/audit/2026-09-16-audit-suivi.md`, VM2-H1). Conservée
+> ici pour l'historique, non implémentée.
 
 **User Story 3.1 : Paiement Fiat (Monnaie classique via Stripe)**
 *En tant qu'utilisateur classique, je veux pouvoir acheter des chapitres ou m'abonner en payant en euros (ou autre devise) par carte bancaire afin d'utiliser la plateforme simplement.*
@@ -91,7 +99,12 @@
 
 ---
 
-## 🎮 Epic 6 : Gamification et Mode Jeu (V2)
+## 🎮 Epic 6 : Gamification et Mode Jeu (V2) — ABANDONNÉE
+
+> **Statut (16/09/2026) :** abandonnée. Le module jeux, My Remix et les
+> composants canvas associés ont été retirés du produit (`(subscriber)/jeux`,
+> `(subscriber)/my-remix`, `components/canvas/*`, `api/remixes`, `api/votes`,
+> `admin/jeux` supprimés). Conservée ici pour l'historique, non implémentée.
 
 **User Story 6.1 : Mode Développeur (Jeux)**
 *En tant que développeur, je veux accéder à un mode développeur pour les jeux afin de tester mes créations avant leur mise en ligne.*

@@ -752,56 +752,19 @@ visiteur (non connecté)
 
 ---
 
-## Gestion des paiements
+## Gestion des paiements — RETIRÉE (16/09/2026)
 
-### Abonnement (accès manga/jeux/remix)
-
-```
-Fiat (Stripe)
-  → Stripe Checkout (Hosted, jamais les données carte dans le code)
-  → Webhook POST /api/payment/stripe/webhook  ← vérifie signature whsec_
-  → Met à jour subscription_tier + subscription_expires_at + table payments
-  → Email de reçu (Resend) à l'abonné
-
-Crypto (NowPayments)
-  → Invoice NowPayments
-  → IPN callback POST /api/payment/nowpayments/webhook  ← vérifie HMAC-SHA512
-  → Même logique abonnement
-
-Code d'activation
-  → POST /api/subscription/activate { method: 'code', code: '...' }
-  → Hash salé serveur, comparaison en temps constant, rate-limiting IP + compte
-```
-
-### Vente de tableau (achat unique)
-
-```
-Stripe (carte)
-  → POST /api/payment/tableau/stripe { tableauId, formatIndex, customerEmail }
-     ↳ Prix lu en base (jamais fourni par le client)
-     ↳ price_data dynamique (pas de Price ID pré-créé)
-     ↳ customer_email pré-rempli dans Checkout
-  → Stripe Checkout → success /galerie/{id}?payment=success
-  → Webhook /api/payment/stripe/webhook détecte metadata.tableauId
-     ↳ INSERT orders (status=completed)
-     ↳ Email admin (ADMIN_EMAIL) — notification de vente
-     ↳ Email acheteur — confirmation + détails livraison
-
-Crypto (NowPayments)
-  → POST /api/payment/tableau/crypto { tableauId, formatIndex, customerEmail }
-     ↳ INSERT orders (status=pending) avec customer_email
-     ↳ Crée invoice NowPayments avec ipn_callback_url automatique
-  → Acheteur paie → NowPayments envoie IPN
-  → Webhook /api/payment/nowpayments/webhook
-     ↳ Vérifie HMAC-SHA512 (NOWPAYMENTS_IPN_SECRET)
-     ↳ UPDATE orders SET status=completed WHERE id=pendingId
-     ↳ Email admin + email acheteur (si email fourni)
-
-Sécurité communes
-  → Le montant est TOUJOURS lu en base côté serveur
-  → Le client envoie tableauId + formatIndex, jamais un prix
-  → Dédoublonnage sur payment_ref (idempotent si IPN/webhook rejoué)
-```
+L'abonnement Stripe/crypto, le code d'activation et la vente de tableaux
+(Stripe + NowPayments) ont été supprimés : `api/payment/stripe`,
+`api/payment/stripe/webhook`, `api/payment/nowpayments/webhook`,
+`api/subscription`, `api/payment/crypto`, `api/payment/tableau/*`,
+`lib/payment-validation.ts`, `lib/email.ts`, `lib/stripe.ts`. Aucune route ne
+produisait plus les données que ces webhooks attendaient depuis le retrait de
+la vente de tableaux côté admin (audit `docs/audit/2026-09-16-audit-suivi.md`,
+finding VM2-H1). L'accès payant est désormais exclusivement par NFT (voir
+« Vérification NFT » plus bas). Tables Supabase `tableaux`/`orders`
+correspondantes : orphelines, migration de suppression prête mais non
+appliquée (`supabase/migrations/014_drop_orphan_tables.sql`).
 
 ---
 

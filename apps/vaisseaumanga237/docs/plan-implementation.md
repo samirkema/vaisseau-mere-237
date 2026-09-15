@@ -104,13 +104,14 @@ Le chemin critique est **P0 → P1**, puis **P2/P3/P4 parallélisables**, puis *
 ### Phase 4 — Paiements, abonnement & accès NFT
 **Objectif :** un utilisateur peut payer en fiat, en BTC, ou en Monnaie Maison, ou prouver la possession d'un NFT, et son accès s'ouvre. **→ US 3.1, 3.2, 7.1.**
 
-- [x] **Stripe Checkout abonnement** + `api/payment/stripe/webhook` → met à jour `subscription_tier` + `subscription_expires_at` + log `payments`. (US 3.1 C1)
-- [x] **Vente tableau par carte** — `api/payment/tableau/stripe` (price_data dynamique depuis DB, email acheteur collecté) + branche `tableauId` dans le webhook Stripe → INSERT `orders`, email admin + acheteur.
-- [x] **Vente tableau en crypto** — `api/payment/tableau/crypto` (invoice NowPayments, `ipn_callback_url` automatique, commande pending avec email) + `api/payment/nowpayments/webhook` (HMAC-SHA512, UPDATE orders completed).
-- [x] **Table `orders`** (migration 010) : suivi des commandes tableau (format, montant, email, ref paiement, statut pending/completed).
-- [ ] **NowPayments abonnement** + webhook — logique d'activation abonnement via crypto (US 3.2, distinct de la vente tableau).
-- [ ] **Code d'activation** : `api/subscription/activate` (hash **salé argon2/bcrypt** comparé côté serveur en temps constant + rate-limiting par IP et par compte).
-- [ ] **Monnaie Maison (`otaku_coin`)** : `wallets` + `wallet_transactions` ; achat → débit du solde instantané + ledger transactionnel. (US 3.2 C1)
+- [x] ~~Stripe Checkout abonnement + vente tableau (Stripe/crypto) + table `orders`~~
+      — **retirés le 16/09/2026** (US 3.1/3.2 abandonnées, voir `userstories.md`
+      et `docs/audit/2026-09-16-audit-suivi.md` VM2-H1) : plus aucune route ne
+      produisait les données attendues par les webhooks, qui restaient publics
+      pour rien. `api/payment/*`, `api/subscription`, `lib/payment-validation.ts`,
+      `lib/email.ts`, `lib/stripe.ts` supprimés.
+- [ ] ~~NowPayments abonnement, Code d'activation, Monnaie Maison (`otaku_coin`)~~
+      — jamais livrés, abandonnés avec Epic 3.
 - [x] **Vérification NFT** — `api/nft/verify` :
   - Reçoit `{ walletAddress, signature, message }` depuis le client.
   - Vérifie la signature `ethers.js` côté serveur (prouve que l'utilisateur contrôle le wallet).
