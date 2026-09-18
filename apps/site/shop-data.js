@@ -28,6 +28,96 @@ window.VM_PRODUCTS = {
       'Numéroté & certifié par le collectif Vaisseau Mère 237',
     ],
   },
+  'photo-rue-crepuscule': {
+    id: 'photo-rue-crepuscule',
+    title: 'New-Bell au Crépuscule',
+    category: 'editions',
+    categoryLabel: 'Édition Limitée · Photographie',
+    priceEur: '15 €',
+    priceCfa: '10 000 FCFA',
+    badge: 'Disponible',
+    images: [
+      'images/shop/rue-crepuscule-237.jpg',
+    ],
+    description: '',
+    specs: [
+      'Tirage photo original, collectif Vaisseau Mère 237',
+      'Impression fine art sur papier couché satiné 300g/m²',
+      'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
+    ],
+  },
+  'photo-rue-coucher-soleil': {
+    id: 'photo-rue-coucher-soleil',
+    title: 'Rue au Coucher de Soleil',
+    category: 'editions',
+    categoryLabel: 'Édition Limitée · Photographie',
+    priceEur: '15 €',
+    priceCfa: '10 000 FCFA',
+    badge: 'Disponible',
+    images: [
+      'images/shop/rue-coucher-soleil-237.jpg',
+    ],
+    description: '',
+    specs: [
+      'Tirage photo original, collectif Vaisseau Mère 237',
+      'Impression fine art sur papier couché satiné 300g/m²',
+      'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
+    ],
+  },
+  'photo-facade-bicec': {
+    id: 'photo-facade-bicec',
+    title: 'Façade BICEC',
+    category: 'editions',
+    categoryLabel: 'Édition Limitée · Photographie',
+    priceEur: '15 €',
+    priceCfa: '10 000 FCFA',
+    badge: 'Disponible',
+    images: [
+      'images/shop/facade-bicec-237.jpg',
+    ],
+    description: '',
+    specs: [
+      'Tirage photo original, collectif Vaisseau Mère 237',
+      'Impression fine art sur papier couché satiné 300g/m²',
+      'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
+    ],
+  },
+  'photo-carrefour-nocturne': {
+    id: 'photo-carrefour-nocturne',
+    title: 'Carrefour Nocturne',
+    category: 'editions',
+    categoryLabel: 'Édition Limitée · Photographie',
+    priceEur: '15 €',
+    priceCfa: '10 000 FCFA',
+    badge: 'Disponible',
+    images: [
+      'images/shop/carrefour-nocturne-237.jpg',
+    ],
+    description: '',
+    specs: [
+      'Tirage photo original, collectif Vaisseau Mère 237',
+      'Impression fine art sur papier couché satiné 300g/m²',
+      'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
+    ],
+  },
+  'photo-rue-mouvement': {
+    id: 'photo-rue-mouvement',
+    title: 'Rue en Mouvement',
+    category: 'editions',
+    categoryLabel: 'Édition Limitée · Photographie',
+    priceEur: '15 €',
+    priceCfa: '10 000 FCFA',
+    badge: 'Disponible',
+    images: [
+      'images/shop/rue-mouvement-237.jpg',
+    ],
+    description: '',
+    specs: [
+      'Tirage photo original, effet anaglyphe, collectif Vaisseau Mère 237',
+      'Impression fine art sur papier couché satiné 300g/m²',
+      'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
+    ],
+  },
 };
 
 // Contacts commande (utilisés par produit.js pour pré-remplir WhatsApp / Email).
