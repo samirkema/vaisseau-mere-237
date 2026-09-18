@@ -2,8 +2,11 @@
 // Partagé entre shop.html (grille filtrable) et produit.html (fiche détaillée).
 //
 // Pour chaque article :
-//   images       : tableau de chemins. La fiche produit affiche un carrousel
-//                  (flèches ← → uniquement s'il y a plus d'une image).
+//   thumb        : image de la carte dans la grille boutique (vignette recadrée
+//                  uniquement — jamais utilisée ailleurs).
+//   images       : tableau de chemins vers les photos complètes. La fiche
+//                  produit (clic sur la carte) affiche un carrousel de ces
+//                  images (flèches ← → uniquement s'il y en a plus d'une).
 //   description  : texte libre. Laisser "" tant que le texte n'est pas fourni ;
 //                  le bloc reste masqué sur la fiche.
 //   specs        : liste de caractéristiques. Laisser [] pour masquer le bloc.
@@ -11,6 +14,7 @@
 window.VM_PRODUCTS = {
   'manga-miroir-eau': {
     id: 'manga-miroir-eau',
+    thumb: 'images/shop/manga-miroir-eau-vignette.jpg',
     title: 'Tableau Remix — Miroir d’Eau & Ciel Manga',
     category: 'manga',
     categoryLabel: 'Manga · Tableau Remix',
@@ -30,6 +34,7 @@ window.VM_PRODUCTS = {
   },
   'photo-rue-crepuscule': {
     id: 'photo-rue-crepuscule',
+    thumb: 'images/shop/rue-crepuscule-vignette.jpg',
     title: 'New-Bell au Crépuscule',
     category: 'editions',
     categoryLabel: 'Édition Limitée · Photographie',
@@ -48,6 +53,7 @@ window.VM_PRODUCTS = {
   },
   'photo-rue-coucher-soleil': {
     id: 'photo-rue-coucher-soleil',
+    thumb: 'images/shop/rue-coucher-soleil-vignette.jpg',
     title: 'Rue au Coucher de Soleil',
     category: 'editions',
     categoryLabel: 'Édition Limitée · Photographie',
@@ -66,6 +72,7 @@ window.VM_PRODUCTS = {
   },
   'photo-facade-bicec': {
     id: 'photo-facade-bicec',
+    thumb: 'images/shop/facade-bicec-vignette.jpg',
     title: 'Façade BICEC',
     category: 'editions',
     categoryLabel: 'Édition Limitée · Photographie',
@@ -84,6 +91,7 @@ window.VM_PRODUCTS = {
   },
   'photo-carrefour-nocturne': {
     id: 'photo-carrefour-nocturne',
+    thumb: 'images/shop/carrefour-nocturne-vignette.jpg',
     title: 'Carrefour Nocturne',
     category: 'editions',
     categoryLabel: 'Édition Limitée · Photographie',
@@ -102,6 +110,7 @@ window.VM_PRODUCTS = {
   },
   'photo-rue-mouvement': {
     id: 'photo-rue-mouvement',
+    thumb: 'images/shop/rue-mouvement-vignette.jpg',
     title: 'Rue en Mouvement',
     category: 'editions',
     categoryLabel: 'Édition Limitée · Photographie',
