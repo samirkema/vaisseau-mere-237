@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoryLabels = {
       'all': 'Tous les articles disponibles',
       'manga': 'Manga & Tableaux Remix',
+      'photos': 'Photographie',
       'musique': 'Musique & Albums Physiques',
       'merch': 'Merch & Textile',
       'editions': 'Éditions Limitées'
@@ -109,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Hash d'arrivée (#manga, #merch…) ---
   const hash = window.location.hash.replace('#', '');
-  if (['manga', 'musique', 'merch', 'editions'].includes(hash)) {
+  if (['manga', 'photos', 'musique', 'merch', 'editions'].includes(hash)) {
     filterCategory(hash);
   } else {
     filterCategory('all');
