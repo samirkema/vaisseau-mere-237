@@ -165,6 +165,82 @@ window.VM_PRODUCTS = {
       'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
     ],
   },
+  'art-etude-42': {
+    id: 'art-etude-42',
+    thumb: 'images/shop/art-etude-42.jpg',
+    title: 'Étude n°42',
+    category: 'editions',
+    categoryLabel: 'Édition Limitée · Illustration',
+    priceEur: '30 €',
+    priceCfa: '20 000 FCFA',
+    badge: 'Disponible',
+    images: [
+      'images/shop/art-etude-42.jpg',
+    ],
+    description: '',
+    specs: [
+      'Illustration originale par Crispyart, artiste partenaire du Vaisseau Mère 237',
+      'Impression fine art sur papier couché satiné 300g/m²',
+      'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
+    ],
+  },
+  'art-indulged': {
+    id: 'art-indulged',
+    thumb: 'images/shop/art-indulged.jpg',
+    title: 'Indulged',
+    category: 'editions',
+    categoryLabel: 'Édition Limitée · Illustration',
+    priceEur: '30 €',
+    priceCfa: '20 000 FCFA',
+    badge: 'Disponible',
+    images: [
+      'images/shop/art-indulged.jpg',
+    ],
+    description: '',
+    specs: [
+      'Illustration originale par Crispyart, artiste partenaire du Vaisseau Mère 237',
+      'Impression fine art sur papier couché satiné 300g/m²',
+      'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
+    ],
+  },
+  'art-leila': {
+    id: 'art-leila',
+    thumb: 'images/shop/art-leila.jpg',
+    title: 'Leila',
+    category: 'editions',
+    categoryLabel: 'Édition Limitée · Illustration',
+    priceEur: '30 €',
+    priceCfa: '20 000 FCFA',
+    badge: 'Disponible',
+    images: [
+      'images/shop/art-leila.jpg',
+    ],
+    description: '',
+    specs: [
+      'Illustration originale par Crispyart, artiste partenaire du Vaisseau Mère 237',
+      'Impression fine art sur papier couché satiné 300g/m²',
+      'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
+    ],
+  },
+  'art-lone-wolf': {
+    id: 'art-lone-wolf',
+    thumb: 'images/shop/art-lone-wolf.jpg',
+    title: 'Lone Wolf',
+    category: 'editions',
+    categoryLabel: 'Édition Limitée · Illustration',
+    priceEur: '30 €',
+    priceCfa: '20 000 FCFA',
+    badge: 'Disponible',
+    images: [
+      'images/shop/art-lone-wolf.jpg',
+    ],
+    description: '',
+    specs: [
+      'Illustration originale par Crispyart, artiste partenaire du Vaisseau Mère 237',
+      'Impression fine art sur papier couché satiné 300g/m²',
+      'Format standard A3 (29,7 × 42 cm) — A2 disponible sur demande',
+    ],
+  },
 };
 
 // Contacts commande (utilisés par produit.js pour pré-remplir WhatsApp / Email).
